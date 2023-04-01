@@ -78,7 +78,8 @@ type
     MembershipComboBox: TcxComboBox;
     Label1: TLabel;
     cxButton1: TcxButton;
-    procedure Button1Click(Sender: TObject);
+    Button1: TButton;
+    procedure cxButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure MembershipComboBoxPropertiesDrawItem(AControl: TcxCustomComboBox;
@@ -89,6 +90,7 @@ type
     procedure MembershipComboBoxPropertiesInitPopup(Sender: TObject);
     procedure DoCustomDrawBorder(AViewInfo: TcxContainerViewInfo; ACanvas: TcxCanvas; const R: TRect; var AHandled: Boolean;
       out ABorderWidth: Integer);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -100,11 +102,18 @@ var
 
 implementation
 
-uses CommonFunction;
+uses
+   CommonFunction, MemberController;
 
 {$R *.dfm}
 
 procedure TfmMemberInsert.Button1Click(Sender: TObject);
+begin
+  //MemberController.MemberInsert();
+  MemberController.TMemberController.Create(self);
+end;
+
+procedure TfmMemberInsert.cxButton1Click(Sender: TObject);
 begin
   ModalResult := mrOK;
 end;

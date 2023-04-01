@@ -6,7 +6,9 @@ uses
   MemberManagingForm in 'View\Member\MemberManagingForm.pas' {fmMemberManaging},
   CommonFunction in 'CommonFunction.pas',
   MemberInsertForm in 'View\Member\MemberInsertForm.pas' {fmMemberInsert},
-  BlurForm in 'View\BlurForm.pas' {fmBlur};
+  BlurForm in 'View\BlurForm.pas' {fmBlur},
+  MemberController in 'Controller\MemberController.pas',
+  MemberModule in 'DataModule\MemberModule.pas' {dmMember: TDataModule};
 
 {$R *.res}
 
@@ -17,5 +19,6 @@ begin
   Application.CreateForm(TfmMemberManaging, fmMemberManaging);
   Application.CreateForm(TfmMemberInsert, fmMemberInsert);
   Application.CreateForm(TfmBlur, fmBlur);
+  Application.CreateForm(TdmMember, dmMember);
   Application.Run;
 end.

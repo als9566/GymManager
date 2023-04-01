@@ -62,7 +62,8 @@ var
 
 implementation
 
-uses CommonFunction, MainForm;
+uses
+  CommonFunction, MainForm;
 
 {$R *.dfm}
 

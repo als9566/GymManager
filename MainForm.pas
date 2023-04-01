@@ -71,7 +71,8 @@ implementation
 
 {$R *.dfm}
 
-uses MemberManagingForm, CommonFunction;
+uses
+  MemberManagingForm, CommonFunction;
 
 //깜빡임 제거
 //로직 가운데에 넣기

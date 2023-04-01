@@ -44,7 +44,6 @@ object fmMemberInsert: TfmMemberInsert
     Anchors = [akLeft, akTop, akRight, akBottom]
     Rounding = 26
     TabOrder = 0
-    ExplicitHeight = 636
     object Label1: TLabel
       Left = 27
       Top = 23
@@ -626,6 +625,15 @@ object fmMemberInsert: TfmMemberInsert
       OptionsImage.Layout = blGlyphBottom
       PaintStyle = bpsGlyph
       TabOrder = 1
+      OnClick = cxButton1Click
+    end
+    object Button1: TButton
+      Left = 452
+      Top = 23
+      Width = 75
+      Height = 25
+      Caption = #51200#51109
+      TabOrder = 2
       OnClick = Button1Click
     end
   end
