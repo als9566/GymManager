@@ -57,14 +57,11 @@ type
     StartDateEdit: TcxDateEdit;
     MembershipLabel: TLabel;
     MembershipPanel: TCurvyPanel;
-    MembershipRadioGroup: TcxRadioGroup;
     GenderRadioGroup: TcxRadioGroup;
     LockerDayPanel: TCurvyPanel;
-    LockerDayDateEdit: TcxDateEdit;
     LockerDayLabel: TLabel;
     WearLabel: TLabel;
     WearPanel: TCurvyPanel;
-    WearDateEdit: TcxDateEdit;
     LockerDayRadioGroup: TcxRadioGroup;
     WearRadioGroup: TcxRadioGroup;
     Tel1Panel: TCurvyPanel;
@@ -79,6 +76,15 @@ type
     Label1: TLabel;
     cxButton1: TcxButton;
     Button1: TButton;
+    LockerDayEdit: TEdit;
+    LockerHiddenLabel: TLabel;
+    WearEdit: TEdit;
+    WearHiddenLabel: TLabel;
+    PTLabel: TLabel;
+    PTPanel: TCurvyPanel;
+    PTEdit: TEdit;
+    PTHiddenLabel: TLabel;
+    PTRadioGroup: TcxRadioGroup;
     procedure cxButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -91,6 +97,7 @@ type
     procedure DoCustomDrawBorder(AViewInfo: TcxContainerViewInfo; ACanvas: TcxCanvas; const R: TRect; var AHandled: Boolean;
       out ABorderWidth: Integer);
     procedure Button1Click(Sender: TObject);
+    procedure RadioGroupPropertiesEditValueChanged(Sender: TObject);
   private
     { Private declarations }
   public
@@ -110,7 +117,7 @@ uses
 procedure TfmMemberInsert.Button1Click(Sender: TObject);
 begin
   //MemberController.MemberInsert();
-  MemberController.TMemberController.Create(self);
+  MemberController.TMemberController.MemberInsert(self);
 end;
 
 procedure TfmMemberInsert.cxButton1Click(Sender: TObject);
@@ -128,6 +135,32 @@ procedure TfmMemberInsert.FormShow(Sender: TObject);
 begin
   DrawRounded(Self,50);
   AnimateWindow(Self.Handle, 200, AW_ACTIVATE or AW_BLEND);
+end;
+
+{** 라디오버튼 입력값에 따라 히든입력창 visible 설정이벤트
+  @param [Sender] TObject
+* }
+procedure TfmMemberInsert.RadioGroupPropertiesEditValueChanged(
+  Sender: TObject);
+begin
+  if TcxRadioGroup(Sender).Name = 'LockerDayRadioGroup' then
+  begin
+    LockerDayPanel.Visible    := LockerDayRadioGroup.Buttons[0].Checked;
+    LockerDayEdit.Visible     := LockerDayRadioGroup.Buttons[0].Checked;
+    LockerHiddenLabel.Visible := LockerDayRadioGroup.Buttons[0].Checked;
+  end
+  else if TcxRadioGroup(Sender).Name = 'WearRadioGroup' then
+  begin
+    WearPanel.Visible       := WearRadioGroup.Buttons[0].Checked;
+    WearEdit.Visible        := WearRadioGroup.Buttons[0].Checked;
+    WearHiddenLabel.Visible := WearRadioGroup.Buttons[0].Checked;
+  end
+  else if TcxRadioGroup(Sender).Name = 'PTRadioGroup' then
+  begin
+    PTPanel.Visible       := PTRadioGroup.Buttons[0].Checked;
+    PTEdit.Visible        := PTRadioGroup.Buttons[0].Checked;
+    PTHiddenLabel.Visible := PTRadioGroup.Buttons[0].Checked;
+  end;
 end;
 
 {** 콤보박스 PopUp 포커스 색상 및 배경색 커스텀

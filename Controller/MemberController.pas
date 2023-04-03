@@ -7,49 +7,54 @@ uses Forms, Windows, Messages, SysUtils, Variants, Classes, Controls, Dialogs, M
 type
   TMemberController = class
   private
-    FView: TfmMemberInsert;
-  public
-    constructor Create(const AView: TfmMemberInsert);
-  end;
 
-// MemberInsert
-//procedure MemberInsert();
+  public
+    constructor MemberInsert(const AView: TfmMemberInsert);
+  end;
 
 implementation
 
 uses
   CommonFunction, MemberModule;
 
-constructor TMemberController.Create(const AView: TfmMemberInsert);
-begin
-  FView := AView;
-
-  ShowMEssage(FView.NameEdit.Text);
-
-  //FView.btnLogin.OnClick := Login;
-end;
-
 {** MemberInsert
 * }
-//procedure MemberInsert();
-//begin
-//  { TODO insert 로직
-//    데이터모듈에 type class 생성해서 사용하기
-//
-//    ex )
-//    MemberModule.pas
-//    type
-//      TMember = class
-//        sName : String;
-//      ....
-//
-//    MemberController.ps
-//    TMember.sName := ;
-//
-//  }
-//  //ShowMessage(MemberInsertForm.fmMemberInsert.NameEdit.Text);
-//  //ShowMessage(MemberInsertForm.fmMemberInsert.NameEdit.text);
-//  //MemberInsertForm.TfmMemberInsert.UnitName;
-//end;
+constructor TMemberController.MemberInsert(const AView: TfmMemberInsert);
+var
+  Member: TMember;
+begin
+  Member := TMember.Create;
+  try
+    Member.name := AView.NameEdit.Text;
+    Member.gender := AView.GenderRadioGroup.EditValue;
+    Member.birthday := AView.BirthdayDateEdit.Text;
+    Member.tel := AView.Tel1Edit.Text + '-' + AView.Tel2Edit.Text + '-' + AView.Tel3Edit.Text;
+    Member.address := AView.AddressEdit.Text;
+    Member.start_date := AView.StartDateEdit.Text;
+    Member.membership := StrToInt(AView.MembershipComboBox.Text);
+
+    if AView.LockerDayRadioGroup.Buttons[0].Checked then
+      Member.locker := StrToInt(AView.LockerDayEdit.Text);
+
+    if AView.WearRadioGroup.Buttons[0].Checked then
+      Member.wear := StrToInt(AView.WearEdit.Text);
+
+    if AView.PTRadioGroup.Buttons[0].Checked then
+      Member.pt := StrToInt(AView.PTEdit.Text);
+
+    if MemberModule.Member.Insert(Member) = true then
+    begin
+      ShowMessage('정상 등록되었습니다.');
+      AView.close;
+    end
+    else
+    begin
+      ShowMessage('등록중 에러가 발생하였습니다.');
+    end;
+
+  finally
+    Member.Free;
+  end;
+end;
 
 end.

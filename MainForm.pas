@@ -79,24 +79,6 @@ uses
 //LockWindowUpdate(0);
 //LockWindowUpdate(Handle);
 
-//메뉴열기
-//fmMemberManaging := TfmMemberManaging.Create(Application);
-
-//가운데로 위치
-//Panel5.Top := (self.Height - panel5.Height) div 2;
-//Panel5.Left := (self.Width - panel5.Width) div 2;
-
-//화면블러
-//  imgBlur.BringToFront;
-//
-//  imgBlur.Visible := true;
-//
-//  imgBlur.Top := 0;
-//  imgBlur.Left := 0;
-//
-//  imgBlur.Width := GymManagerForm.Width;
-//  imgBlur.Height := GymManagerForm.Height;
-
 procedure TGymManagerForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;
@@ -108,28 +90,6 @@ var
   Item: TButtonItem;
 begin
   GymManagerForm.Borderstyle := bsNone;
-
-  //실행파일 위치의 SQLite DB설정
-  FDConnection1.Params.Database := ExtractFilePath(Application.ExeName)+ 'test.db';
-
-  //메뉴버튼 생성
-  with FDQuery1 do
-  begin
-    Open('select * from menu');
-    if not Eof then
-    begin
-      While not EOF do
-      begin
-        Item := catMenuItems.Categories[0].Items.Add;
-        Item.Caption := FieldByName('menu_name').AsString;
-        //Item.Hint := Format('Menu %d %d', [i,j]);
-        //TCategoryButtons.OnButtonClicked 이벤트를 이용하면 각 TButtonItem에 이벤트를 걸지 않아도 됩니다.
-        Next;
-      end;
-    end;
-
-  end;
-
 end;
 
 {** 메뉴 열고닫기

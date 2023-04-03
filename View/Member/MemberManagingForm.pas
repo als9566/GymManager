@@ -43,7 +43,6 @@ type
     GridPanel: TPanel;
     MemberGrid: TStringGrid;
     NewInsertBtn: TcxButton;
-    //procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
@@ -129,14 +128,10 @@ begin
          MemberGrid.Canvas.Brush.Color := clWhite;
          MemberGrid.Canvas.Font.Color := clBlack;
          MemberGrid.Canvas.FillRect(Rect);
-         //Frame3D(MemberGrid.Canvas, Rect, clBtnHighlight, clBtnShadow, 1);
      end
      // 선택된 셀은 하이라이트 색
      else if (State = [gdSelected]) then
      begin
-//         MemberGrid.Canvas.Brush.Color := clHighlight;
-//         MemberGrid.Canvas.Font.Color := clHighlightText;
-//         MemberGrid.Canvas.FillRect(Rect);
          MemberGrid.Canvas.Brush.Color := clWhite;
          MemberGrid.Canvas.Font.Color := clBlack;
          MemberGrid.Canvas.FillRect(Rect);
@@ -144,9 +139,6 @@ begin
      // 나머지 셀은 기본 색으로
      else
      begin
-//         MemberGrid.Canvas.Brush.Color := StringGrid1.Color;
-//         MemberGrid.Canvas.Font.Color := StringGrid1.Font.Color;
-//         MemberGrid.Canvas.FillRect(Rect);
          MemberGrid.Canvas.Brush.Color := clWhite;
          MemberGrid.Canvas.Font.Color := clBlack;
          MemberGrid.Canvas.FillRect(Rect);
@@ -163,22 +155,6 @@ end;
 procedure TfmMemberManaging.NewInsertBtnClick(Sender: TObject);
 begin
 
-//  fmMemberInsert := TfmMemberInsert.Create(nil);
-//
-//  //DrawRounded(fmMemberInsert,250);
-//
-//  GymManagerForm.imgBlur.BringToFront;
-//  GymManagerForm.imgBlur.Top := 0;
-//  GymManagerForm.imgBlur.Left := 0;
-//  GymManagerForm.imgBlur.Width := GymManagerForm.Width;
-//  GymManagerForm.imgBlur.Height := GymManagerForm.Height;
-//  GymManagerForm.imgBlur.Visible := true;
-//
-//  fmMemberInsert.ShowModal;
-//
-//  fmMemberInsert.Free;
-//  GymManagerForm.imgBlur.Visible := false;
-
   fmBlur := TfmBlur.Create(Self);
   fmBlur.Top := GymManagerForm.Top;
   fmBlur.Left := GymManagerForm.Left;
@@ -186,7 +162,6 @@ begin
   fmBlur.Width := GymManagerForm.Width;
   fmBlur.imgBlur.Tag := 1;
   fmBlur.Show;
-
 
 end;
 

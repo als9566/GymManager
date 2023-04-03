@@ -58,10 +58,10 @@ object fmMemberInsert: TfmMemberInsert
       ParentFont = False
     end
     object EditPanel: TcxScrollBox
-      Left = 26
-      Top = 64
+      Left = 19
+      Top = 62
       Width = 599
-      Height = 554
+      Height = 425
       AutoScroll = False
       BorderStyle = cxcbsNone
       HorzScrollBar.Range = 551
@@ -151,8 +151,8 @@ object fmMemberInsert: TfmMemberInsert
         ParentFont = False
       end
       object LockerDayLabel: TLabel
-        Left = 28
-        Top = 307
+        Left = 52
+        Top = 317
         Width = 26
         Height = 17
         Caption = #46973#52964
@@ -164,8 +164,8 @@ object fmMemberInsert: TfmMemberInsert
         ParentFont = False
       end
       object WearLabel: TLabel
-        Left = 266
-        Top = 307
+        Left = 290
+        Top = 317
         Width = 39
         Height = 17
         Caption = #50868#46041#48373
@@ -202,9 +202,64 @@ object fmMemberInsert: TfmMemberInsert
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object LockerHiddenLabel: TLabel
+        Left = 216
+        Top = 317
+        Width = 26
+        Height = 17
+        Caption = #44060#50900
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
+      object WearHiddenLabel: TLabel
+        Left = 467
+        Top = 317
+        Width = 26
+        Height = 17
+        Caption = #44060#50900
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
+      object PTLabel: TLabel
+        Left = 52
+        Top = 365
+        Width = 14
+        Height = 17
+        Caption = 'PT'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = []
+        ParentFont = False
+      end
+      object PTHiddenLabel: TLabel
+        Left = 216
+        Top = 365
+        Width = 13
+        Height = 17
+        Caption = #54924
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -13
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = []
+        ParentFont = False
+        Visible = False
+      end
       object LockerDayRadioGroup: TcxRadioGroup
-        Left = 60
-        Top = 304
+        Left = 84
+        Top = 314
         Alignment = alCenterCenter
         Properties.Columns = 2
         Properties.Items = <
@@ -216,10 +271,12 @@ object fmMemberInsert: TfmMemberInsert
             Caption = 'N'
             Value = 'N'
           end>
+        Properties.OnEditValueChanged = RadioGroupPropertiesEditValueChanged
+        ItemIndex = 1
         Style.BorderStyle = ebsNone
-        TabOrder = 10
+        TabOrder = 9
         Height = 21
-        Width = 152
+        Width = 77
       end
       object NamePanel: TCurvyPanel
         Left = 26
@@ -356,7 +413,7 @@ object fmMemberInsert: TfmMemberInsert
         Height = 33
         BorderColor = clMedGray
         Rounding = 6
-        TabOrder = 9
+        TabOrder = 8
         object MembershipComboBox: TcxComboBox
           Left = 9
           Top = 7
@@ -392,24 +449,6 @@ object fmMemberInsert: TfmMemberInsert
           Width = 255
         end
       end
-      object MembershipRadioGroup: TcxRadioGroup
-        Left = 316
-        Top = 218
-        Properties.Columns = 2
-        Properties.Items = <
-          item
-            Caption = #44592#44036
-            Value = '0'
-          end
-          item
-            Caption = 'PT'
-            Value = '1'
-          end>
-        Style.BorderStyle = ebsNone
-        TabOrder = 8
-        Height = 34
-        Width = 152
-      end
       object GenderRadioGroup: TcxRadioGroup
         Left = 383
         Top = 25
@@ -417,92 +456,81 @@ object fmMemberInsert: TfmMemberInsert
         Properties.Items = <
           item
             Caption = #45224
-            Value = '0'
+            Value = #45224
           end
           item
             Caption = #50668
-            Value = '1'
+            Value = #50668
           end>
+        ItemIndex = 0
         Style.BorderStyle = ebsNone
         TabOrder = 1
         Height = 34
         Width = 178
       end
       object LockerDayPanel: TCurvyPanel
-        Left = 26
-        Top = 330
-        Width = 217
+        Left = 156
+        Top = 308
+        Width = 54
         Height = 33
         BorderColor = clMedGray
         Rounding = 6
-        TabOrder = 11
-        object LockerDayDateEdit: TcxDateEdit
-          Left = 10
-          Top = 5
-          EditValue = 36526d
+        TabOrder = 10
+        Visible = False
+        object LockerDayEdit: TEdit
+          Left = 9
+          Top = 6
+          Width = 37
+          Height = 21
+          Alignment = taRightJustify
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
           ParentFont = False
-          Properties.Alignment.Horz = taCenter
-          Style.BorderStyle = ebsNone
-          Style.Font.Charset = DEFAULT_CHARSET
-          Style.Font.Color = clWindowText
-          Style.Font.Height = -13
-          Style.Font.Name = #47569#51008' '#44256#46357
-          Style.Font.Style = []
-          Style.LookAndFeel.NativeStyle = False
-          Style.LookAndFeel.SkinName = 'DevExpressStyle'
-          Style.ButtonStyle = btsDefault
-          Style.IsFontAssigned = True
-          StyleDisabled.LookAndFeel.NativeStyle = False
-          StyleDisabled.LookAndFeel.SkinName = 'DevExpressStyle'
-          StyleFocused.LookAndFeel.NativeStyle = False
-          StyleFocused.LookAndFeel.SkinName = 'DevExpressStyle'
-          StyleHot.LookAndFeel.NativeStyle = False
-          StyleHot.LookAndFeel.SkinName = 'DevExpressStyle'
           TabOrder = 0
+          Text = '1'
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
-          Width = 201
         end
       end
       object WearPanel: TCurvyPanel
-        Left = 264
-        Top = 330
-        Width = 217
+        Left = 407
+        Top = 308
+        Width = 54
         Height = 33
         BorderColor = clMedGray
         Rounding = 6
-        TabOrder = 13
-        object WearDateEdit: TcxDateEdit
-          Left = 10
-          Top = 5
-          EditValue = 36526d
+        TabOrder = 12
+        Visible = False
+        object WearEdit: TEdit
+          Left = 9
+          Top = 6
+          Width = 37
+          Height = 21
+          Alignment = taRightJustify
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
           ParentFont = False
-          Properties.Alignment.Horz = taCenter
-          Style.BorderStyle = ebsNone
-          Style.Font.Charset = DEFAULT_CHARSET
-          Style.Font.Color = clWindowText
-          Style.Font.Height = -13
-          Style.Font.Name = #47569#51008' '#44256#46357
-          Style.Font.Style = []
-          Style.LookAndFeel.NativeStyle = False
-          Style.LookAndFeel.SkinName = 'DevExpressStyle'
-          Style.ButtonStyle = btsDefault
-          Style.IsFontAssigned = True
-          StyleDisabled.LookAndFeel.NativeStyle = False
-          StyleDisabled.LookAndFeel.SkinName = 'DevExpressStyle'
-          StyleFocused.LookAndFeel.NativeStyle = False
-          StyleFocused.LookAndFeel.SkinName = 'DevExpressStyle'
-          StyleHot.LookAndFeel.NativeStyle = False
-          StyleHot.LookAndFeel.SkinName = 'DevExpressStyle'
           TabOrder = 0
+          Text = '1'
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
-          Width = 201
         end
       end
       object WearRadioGroup: TcxRadioGroup
-        Left = 311
-        Top = 304
+        Left = 335
+        Top = 314
         Alignment = alCenterCenter
         Ctl3D = True
         ParentCtl3D = False
@@ -516,10 +544,12 @@ object fmMemberInsert: TfmMemberInsert
             Caption = 'N'
             Value = 'N'
           end>
+        Properties.OnEditValueChanged = RadioGroupPropertiesEditValueChanged
+        ItemIndex = 1
         Style.BorderStyle = ebsNone
-        TabOrder = 12
+        TabOrder = 11
         Height = 21
-        Width = 152
+        Width = 72
       end
       object Tel1Panel: TCurvyPanel
         Left = 266
@@ -598,6 +628,57 @@ object fmMemberInsert: TfmMemberInsert
           Font.Style = []
           ParentFont = False
           TabOrder = 0
+          OnEnter = EditBorderFocusIn
+          OnExit = EditBorderFocusOut
+        end
+      end
+      object PTRadioGroup: TcxRadioGroup
+        Left = 82
+        Top = 362
+        Alignment = alCenterCenter
+        Properties.Columns = 2
+        Properties.Items = <
+          item
+            Caption = 'Y'
+            Value = 'Y'
+          end
+          item
+            Caption = 'N'
+            Value = 'N'
+          end>
+        Properties.OnEditValueChanged = RadioGroupPropertiesEditValueChanged
+        ItemIndex = 1
+        Style.BorderStyle = ebsNone
+        TabOrder = 14
+        Height = 21
+        Width = 79
+      end
+      object PTPanel: TCurvyPanel
+        Left = 156
+        Top = 356
+        Width = 54
+        Height = 33
+        BorderColor = clMedGray
+        Rounding = 6
+        TabOrder = 13
+        Visible = False
+        object PTEdit: TEdit
+          Left = 9
+          Top = 6
+          Width = 37
+          Height = 21
+          Alignment = taRightJustify
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          Text = '1'
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
         end

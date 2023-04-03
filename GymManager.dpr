@@ -8,7 +8,8 @@ uses
   MemberInsertForm in 'View\Member\MemberInsertForm.pas' {fmMemberInsert},
   BlurForm in 'View\BlurForm.pas' {fmBlur},
   MemberController in 'Controller\MemberController.pas',
-  MemberModule in 'DataModule\MemberModule.pas' {dmMember: TDataModule};
+  MemberModule in 'DataModule\MemberModule.pas' {dmMember: TDataModule},
+  MainModule in 'DataModule\MainModule.pas' {dmMain: TDataModule};
 
 {$R *.res}
 
@@ -20,5 +21,6 @@ begin
   Application.CreateForm(TfmMemberInsert, fmMemberInsert);
   Application.CreateForm(TfmBlur, fmBlur);
   Application.CreateForm(TdmMember, dmMember);
+  Application.CreateForm(TdmMain, dmMain);
   Application.Run;
 end.
