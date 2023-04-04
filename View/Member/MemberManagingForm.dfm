@@ -36,6 +36,7 @@ object fmMemberManaging: TfmMemberManaging
     Width = 781
     Height = 658
     Anchors = [akLeft, akTop, akRight, akBottom]
+    BevelOuter = bvNone
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
@@ -45,14 +46,14 @@ object fmMemberManaging: TfmMemberManaging
     object MenuNameLabel: TLabel
       Left = 16
       Top = 9
-      Width = 76
-      Height = 25
+      Width = 68
+      Height = 22
       Caption = #54924#50896#44288#47532
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
-      Font.Height = -19
-      Font.Name = #47569#51008' '#44256#46357
-      Font.Style = [fsBold]
+      Font.Height = -20
+      Font.Name = #48176#45804#51032#48124#51313' '#54620#45208#45716' '#50676#54620#49332
+      Font.Style = []
       ParentFont = False
     end
     object Shape1: TShape
@@ -483,10 +484,11 @@ object fmMemberManaging: TfmMemberManaging
       end
     end
     object NewInsertBtn: TcxButton
-      Left = 416
+      Left = 432
       Top = 9
       Width = 75
       Height = 25
+      Anchors = [akTop, akRight]
       Caption = #49888#44508#46321#47197
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DevExpressStyle'

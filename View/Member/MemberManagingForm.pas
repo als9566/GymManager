@@ -76,14 +76,14 @@ procedure TfmMemberManaging.FormResize(Sender: TObject);
 var h,w : double;
    p : integer;
 begin
-  DrawRounded(backPanel, 50);
+  //DrawRounded(backPanel, 50);
 end;
 
 procedure TfmMemberManaging.FormShow(Sender: TObject);
 var
   I: Integer;
 begin
-  DrawRounded(backPanel, 50);
+  //DrawRounded(backPanel, 50);
 
   // StringGrid
   with MemberGrid do

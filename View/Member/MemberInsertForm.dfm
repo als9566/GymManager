@@ -47,14 +47,14 @@ object fmMemberInsert: TfmMemberInsert
     object Label1: TLabel
       Left = 27
       Top = 23
-      Width = 120
-      Height = 28
+      Width = 101
+      Height = 22
       Caption = #49888#44508#54924#50896#46321#47197
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 6446686
       Font.Height = -20
-      Font.Name = #47569#51008' '#44256#46357
-      Font.Style = [fsBold]
+      Font.Name = #48176#45804#51032#48124#51313' '#54620#45208#45716' '#50676#54620#49332
+      Font.Style = []
       ParentFont = False
     end
     object EditPanel: TcxScrollBox

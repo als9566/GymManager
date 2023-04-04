@@ -20,7 +20,8 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, dxGDIPlusClasses, cxImage, MemberInsertForm;
+  dxSkinXmas2008Blue, dxGDIPlusClasses, cxImage,
+  MemberInsertForm, LockerCreateForm;
 
 type
   TfmBlur = class(TForm)
@@ -36,6 +37,7 @@ type
 var
   fmBlur: TfmBlur;
   fmMemberInsert: TfmMemberInsert;
+  fmLockerCreate: TfmLockerCreate;
 
 implementation
 
@@ -49,6 +51,7 @@ begin
   {** 이미지 태그값마다 다르게 모달창 생성
   @imgBlur.Tag
    : 1 == MemberInsertForm [회원등록]
+   : 2 == LockerCreateForm [락커생성]
   * }
   if imgBlur.Tag = 1 then
   begin
@@ -56,6 +59,13 @@ begin
     fmMemberInsert.Top := (GymManagerForm.Height - fmMemberInsert.Height) div 2 + GymManagerForm.Top;
     fmMemberInsert.Left := (GymManagerForm.Width - fmMemberInsert.Width) div 2 + GymManagerForm.Left;
     fmMemberInsert.ShowModal;
+  end
+  else if imgBlur.Tag = 2 then
+  begin
+    fmLockerCreate := TfmLockerCreate.Create(Self);
+    fmLockerCreate.Top := (GymManagerForm.Height - fmLockerCreate.Height) div 2 + GymManagerForm.Top;
+    fmLockerCreate.Left := (GymManagerForm.Width - fmLockerCreate.Width) div 2 + GymManagerForm.Left;
+    fmLockerCreate.ShowModal;
   end;
 
   close;
