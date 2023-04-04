@@ -9,7 +9,9 @@ uses
   BlurForm in 'View\BlurForm.pas' {fmBlur},
   MemberController in 'Controller\MemberController.pas',
   MemberModule in 'DataModule\MemberModule.pas' {dmMember: TDataModule},
-  MainModule in 'DataModule\MainModule.pas' {dmMain: TDataModule};
+  MainModule in 'DataModule\MainModule.pas' {dmMain: TDataModule},
+  LockerManagingForm in 'View\Locker\LockerManagingForm.pas' {fmLockerManaging},
+  LockerCreateForm in 'View\Locker\LockerCreateForm.pas' {fmLockerCreate};
 
 {$R *.res}
 
@@ -17,10 +19,9 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TGymManagerForm, GymManagerForm);
-  Application.CreateForm(TfmMemberManaging, fmMemberManaging);
-  Application.CreateForm(TfmMemberInsert, fmMemberInsert);
-  Application.CreateForm(TfmBlur, fmBlur);
   Application.CreateForm(TdmMember, dmMember);
   Application.CreateForm(TdmMain, dmMain);
+  Application.CreateForm(TfmLockerManaging, fmLockerManaging);
+  Application.CreateForm(TfmLockerCreate, fmLockerCreate);
   Application.Run;
 end.
