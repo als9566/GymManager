@@ -27,8 +27,6 @@ object fmLockerCreate: TfmLockerCreate
     Anchors = [akLeft, akTop, akRight, akBottom]
     Rounding = 26
     TabOrder = 0
-    ExplicitWidth = 637
-    ExplicitHeight = 514
     DesignSize = (
       622
       475)
@@ -43,21 +41,6 @@ object fmLockerCreate: TfmLockerCreate
       Font.Height = -20
       Font.Name = #48176#45804#51032#48124#51313' '#54620#45208#45716' '#50676#54620#49332
       Font.Style = []
-      ParentFont = False
-    end
-    object Label2: TLabel
-      Left = 167
-      Top = 25
-      Width = 11
-      Height = 18
-      Caption = 'X'
-      Color = clGray
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clBlack
-      Font.Height = -17
-      Font.Name = #48176#45804#51032#48124#51313' '#54620#45208#52404' Air'
-      Font.Style = []
-      ParentColor = False
       ParentFont = False
     end
     object cxButton1: TcxButton
@@ -106,35 +89,41 @@ object fmLockerCreate: TfmLockerCreate
       Transparent = True
       VertScrollBar.Tracking = True
     end
-    object LockerX: TCurvyEdit
-      Left = 115
-      Top = 20
-      Width = 41
-      Height = 24
-      BorderColor = clSilver
-      Rounding = 4
+    object XPlusBtn: TButton
+      Left = 132
+      Top = 22
+      Width = 75
+      Height = 25
+      Caption = 'XPlusBtn'
       TabOrder = 3
-      TabStop = False
-      Version = '1.2.1.0'
-      Controls = <>
-      ImeName = ''
-      Text = ''
-      OnChange = LockerCreateXY
+      OnClick = XPlusBtnClick
     end
-    object LockerY: TCurvyEdit
-      Left = 187
-      Top = 20
-      Width = 41
-      Height = 24
-      BorderColor = clSilver
-      Rounding = 4
+    object YPlusBtn: TButton
+      Left = 213
+      Top = 22
+      Width = 75
+      Height = 25
+      Caption = 'YPlusBtn'
       TabOrder = 4
-      TabStop = False
-      Version = '1.2.1.0'
-      Controls = <>
-      ImeName = ''
-      Text = ''
-      OnChange = LockerCreateXY
+      OnClick = YPlusBtnClick
+    end
+    object XMinusBtn: TButton
+      Left = 294
+      Top = 22
+      Width = 75
+      Height = 25
+      Caption = 'XMinusBtn'
+      TabOrder = 5
+      OnClick = XMinusBtnClick
+    end
+    object YMinusBtn: TButton
+      Left = 375
+      Top = 22
+      Width = 75
+      Height = 25
+      Caption = 'YMinusBtn'
+      TabOrder = 6
+      OnClick = YMinusBtnClick
     end
   end
 end

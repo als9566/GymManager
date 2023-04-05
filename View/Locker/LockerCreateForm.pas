@@ -30,13 +30,15 @@ type
     cxButton1: TcxButton;
     Button1: TButton;
     LockerPanel: TcxScrollBox;
-    LockerX: TCurvyEdit;
-    Label2: TLabel;
-    LockerY: TCurvyEdit;
+    XMinusBtn: TButton;
+    YMinusBtn: TButton;
     procedure cxButton1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
-    procedure LockerCreateXY(Sender: TObject);
+    procedure XPlusBtnClick(Sender: TObject);
+    procedure YPlusBtnClick(Sender: TObject);
+    procedure XMinusBtnClick(Sender: TObject);
+    procedure YMinusBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,6 +48,8 @@ type
 
 var
   fmLockerCreate: TfmLockerCreate;
+  LockerX : Integer = 0;
+  LockerY : Integer = 0;
 
 implementation
 
@@ -71,49 +75,136 @@ begin
   AnimateWindow(Self.Handle, 200, AW_ACTIVATE or AW_BLEND);
 end;
 
-{** X x Y 락커 동적 생성 이벤트
-  @param [Sender] LockerX, LockerY
+{** X축 락커생성
+  @param [Sender] XPlusBtn
 * }
-procedure TfmLockerCreate.LockerCreateXY(Sender: TObject);
+procedure TfmLockerCreate.XPlusBtnClick(Sender: TObject);
 var
-  itemp : Integer;
-  X, Y : Integer;
-  iCount : Integer;
+  LockerCnt : Integer;
+  I : Integer;
+  J : Integer;
 begin
-  iCount := 0;
-
-  if (LockerX.Text <> '') and (LockerY.Text <> '') then
+  if (LockerX = 0) and (LockerY = 0) then
   begin
-    for X := 0 to Length(arrCurvyPanel)-1 do
+    Inc(LockerX); Inc(LockerY);
+    with TCurvyPanel.Create(Self) do
     begin
-      arrCurvyPanel[X].Free;
+      Parent := LockerPanel;
+      Height := 60;
+      Width := 80;
+      Left := 10;
+      Top := 10;
+      Name := Format('LockerPanel_%d_%d',[1,1]);
+      BorderColor := $00E7E7E7;
+      Color := $00E3E3E3;
+      Rounding := 4;
+    end;
+  end
+  else
+  begin
+    J := 0;
+    LockerCnt := (LockerX + 1) * LockerY;
+
+    for I := (LockerX * LockerY) to LockerCnt-1 do
+    begin
+      with TCurvyPanel.Create(Self) do begin
+        Parent := LockerPanel;
+        Height := 60;
+        Width := 80;
+        Left := 10 + (88 * LockerX);
+        Top := 10 + (68 * J);
+        Name := Format('LockerPanel_%d_%d',[LockerX+1,J+1]);
+        BorderColor := $00E7E7E7;
+        Color := $00E3E3E3;
+        Rounding := 4;
+      end;
+      Inc(J);
     end;
 
-    itemp := StrToInt(LockerX.Text) * StrToInt(LockerY.Text);
-    SetLength(arrCurvyPanel, itemp);
+    Inc(LockerX);
+  end;
+end;
 
-    for Y := 0 to StrToInt(LockerY.Text)-1 do
+{** Y축 락커생성
+  @param [Sender] YPlusBtn
+* }
+procedure TfmLockerCreate.YPlusBtnClick(Sender: TObject);
+var
+  LockerCnt : Integer;
+  I : Integer;
+  J : Integer;
+begin
+
+  if (LockerX = 0) and (LockerY = 0) then
+  begin
+    Inc(LockerX); Inc(LockerY);
+    with TCurvyPanel.Create(Self) do
     begin
-      for X := 0 to StrToInt(LockerX.Text)-1 do
-      begin
-        arrCurvyPanel[iCount] := TCurvyPanel.Create(nil);
-        with arrCurvyPanel[iCount] do
-        begin
-            //Parent := Self;
-            Parent := LockerPanel;
-            Height := 60;
-            Width := 80;
-            Left := 10 + (88 * X);
-            Top := 10 + (68 * Y);
-            Name := Format('LockerPanel_%d',[iCount]);
-            Caption := 'OOO' + IntToStr(iCount);
-            BorderColor := $00E7E7E7;
-            Color := $00E3E3E3;
-            Rounding := 4;
-            //OnClick := GetCtrlName;
-        end;
-        Inc(iCount);
+      Parent := LockerPanel;
+      Height := 60;
+      Width := 80;
+      Left := 10;
+      Top := 10;
+      Name := Format('LockerPanel_%d_%d',[1,1]);
+      BorderColor := $00E7E7E7;
+      Color := $00E3E3E3;
+      Rounding := 4;
+    end;
+  end
+  else
+  begin
+    J := 0;
+    LockerCnt := LockerX * (LockerY + 1);
+
+    for I := (LockerX * LockerY) to LockerCnt-1 do
+    begin
+      with TCurvyPanel.Create(Self) do begin
+        Parent := LockerPanel;
+        Height := 60;
+        Width := 80;
+        Left := 10 + (88 * J);
+        Top := 10 + (68 * LockerY);
+        Name := Format('LockerPanel_%d_%d',[J+1,LockerY+1]);
+        BorderColor := $00E7E7E7;
+        Color := $00E3E3E3;
+        Rounding := 4;
       end;
+      Inc(J);
+    end;
+    Inc(LockerY);
+  end;
+end;
+
+{** X축 락커삭제
+  @param [Sender] XMinusBtn
+* }
+procedure TfmLockerCreate.XMinusBtnClick(Sender: TObject);
+var
+  I : integer;
+begin
+  for I := 0 to TCurvyPanel(Sender).Parent.ControlCount - 1 do
+  begin
+    //TODO 컴포넌트 이름이 LockerX축이라면 삭제
+    if TCurvyPanel(Sender).Parent.Controls[i].Name = '' then
+    begin
+      TCurvyPanel(Sender).Parent.Controls[i].Free;
+    end;
+  end;
+end;
+
+{** Y축 락커삭제
+  @param [Sender] YMinusBtn
+* }
+procedure TfmLockerCreate.YMinusBtnClick(Sender: TObject);
+var
+  I : integer;
+begin
+  for I := 0 to TCurvyPanel(Sender).Parent.ControlCount - 1 do
+  begin
+    //TODO 컴포넌트 이름이 LockerY축이라면 삭제
+    if TCurvyPanel(Sender).Parent.Controls[i].Name = '' then
+    begin
+      TCurvyPanel(Sender).Parent.Controls[i].Free;
     end;
   end;
 end;
