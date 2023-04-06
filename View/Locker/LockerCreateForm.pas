@@ -21,7 +21,7 @@ uses
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, cxControls, cxScrollBox, Vcl.StdCtrls, cxButtons,
-  CurvyControls;
+  CurvyControls, Vcl.ExtCtrls;
 
 type
   TfmLockerCreate = class(TForm)
@@ -29,9 +29,14 @@ type
     Label1: TLabel;
     cxButton1: TcxButton;
     Button1: TButton;
-    LockerPanel: TcxScrollBox;
+    ScrollBox: TcxScrollBox;
     XMinusBtn: TButton;
     YMinusBtn: TButton;
+    LockerPanel: TPanel;
+    XPlusBtn: TCurvyPanel;
+    YPlusBtn: TCurvyPanel;
+    Label2: TLabel;
+    Label3: TLabel;
     procedure cxButton1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -65,6 +70,7 @@ end;
 
 procedure TfmLockerCreate.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
+  LockerX := 0; LockerY := 0;
   AnimateWindow(Self.Handle, 200, AW_HIDE or AW_BLEND);
   Action := CaFree;
 end;
@@ -98,6 +104,16 @@ begin
       BorderColor := $00E7E7E7;
       Color := $00E3E3E3;
       Rounding := 4;
+
+      XPlusBtn.Left := Left + Width + 20;
+      XPlusBtn.Top := 10;
+      XPlusBtn.Height := Height-5;
+      XPlusBtn.Width := 25;
+
+      YPlusBtn.Left := Left;
+      YPlusBtn.Top := Top + Height + 20;
+      YPlusBtn.Height := 25;
+      YPlusBtn.Width := Width-5;
     end;
   end
   else
@@ -117,12 +133,22 @@ begin
         BorderColor := $00E7E7E7;
         Color := $00E3E3E3;
         Rounding := 4;
+
+        XPlusBtn.Left := Left + Width + 20;
+        XPlusBtn.Top := 10;
+        XPlusBtn.Height := Top + Height-5;
+        XPlusBtn.Width := 25;
+
+        YPlusBtn.Width := Left + Width-5;
       end;
       Inc(J);
     end;
 
     Inc(LockerX);
   end;
+
+  LockerPanel.Width  := 10 + (88 * LockerX) + 80;
+  LockerPanel.Height := 10 + (LockerY * 68) + 60;
 end;
 
 {** Y绵 遏目积己
@@ -149,6 +175,16 @@ begin
       BorderColor := $00E7E7E7;
       Color := $00E3E3E3;
       Rounding := 4;
+
+      YPlusBtn.Left := Left;
+      YPlusBtn.Top := Top + Height + 20;
+      YPlusBtn.Height := 25;
+      YPlusBtn.Width := Width-5;
+
+      XPlusBtn.Left := Left + Width + 20;
+      XPlusBtn.Top := 10;
+      XPlusBtn.Height := Height-5;
+      XPlusBtn.Width := 25;
     end;
   end
   else
@@ -168,11 +204,21 @@ begin
         BorderColor := $00E7E7E7;
         Color := $00E3E3E3;
         Rounding := 4;
+
+        YPlusBtn.Left := 10;
+        YPlusBtn.Top := Top + Height + 20;
+        YPlusBtn.Height := 25;
+        YPlusBtn.Width := Left + Width-5;
+
+        XPlusBtn.Height := Top + Height-5;
       end;
       Inc(J);
     end;
     Inc(LockerY);
   end;
+
+  LockerPanel.Width  := 10 + (88 * LockerX) + 80;
+  LockerPanel.Height := 10 + (LockerY * 68) + 60;
 end;
 
 {** X绵 遏目昏力

@@ -75,9 +75,9 @@ object fmLockerCreate: TfmLockerCreate
       Caption = #51200#51109
       TabOrder = 1
     end
-    object LockerPanel: TcxScrollBox
+    object ScrollBox: TcxScrollBox
       Left = 18
-      Top = 72
+      Top = 68
       Width = 586
       Height = 385
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -88,24 +88,60 @@ object fmLockerCreate: TfmLockerCreate
       TabOrder = 2
       Transparent = True
       VertScrollBar.Tracking = True
-    end
-    object XPlusBtn: TButton
-      Left = 132
-      Top = 22
-      Width = 75
-      Height = 25
-      Caption = 'XPlusBtn'
-      TabOrder = 3
-      OnClick = XPlusBtnClick
-    end
-    object YPlusBtn: TButton
-      Left = 213
-      Top = 22
-      Width = 75
-      Height = 25
-      Caption = 'YPlusBtn'
-      TabOrder = 4
-      OnClick = YPlusBtnClick
+      object LockerPanel: TPanel
+        Left = 0
+        Top = 0
+        Width = 566
+        Height = 309
+        BevelOuter = bvNone
+        TabOrder = 0
+        object XPlusBtn: TCurvyPanel
+          Left = 10
+          Top = 10
+          Width = 80
+          Height = 60
+          BorderColor = 15066597
+          Color = 16382457
+          Rounding = 4
+          TabOrder = 0
+          object Label2: TLabel
+            Left = 0
+            Top = 0
+            Width = 80
+            Height = 60
+            Align = alClient
+            Alignment = taCenter
+            Caption = '+'
+            Layout = tlCenter
+            OnClick = XPlusBtnClick
+            ExplicitWidth = 8
+            ExplicitHeight = 13
+          end
+        end
+        object YPlusBtn: TCurvyPanel
+          Left = 10
+          Top = 10
+          Width = 80
+          Height = 60
+          BorderColor = 15066597
+          Color = 16382457
+          Rounding = 4
+          TabOrder = 1
+          object Label3: TLabel
+            Left = 0
+            Top = 0
+            Width = 80
+            Height = 60
+            Align = alClient
+            Alignment = taCenter
+            Caption = '+'
+            Layout = tlCenter
+            OnClick = YPlusBtnClick
+            ExplicitWidth = 8
+            ExplicitHeight = 13
+          end
+        end
+      end
     end
     object XMinusBtn: TButton
       Left = 294
@@ -113,7 +149,7 @@ object fmLockerCreate: TfmLockerCreate
       Width = 75
       Height = 25
       Caption = 'XMinusBtn'
-      TabOrder = 5
+      TabOrder = 3
       OnClick = XMinusBtnClick
     end
     object YMinusBtn: TButton
@@ -122,7 +158,7 @@ object fmLockerCreate: TfmLockerCreate
       Width = 75
       Height = 25
       Caption = 'YMinusBtn'
-      TabOrder = 6
+      TabOrder = 4
       OnClick = YMinusBtnClick
     end
   end

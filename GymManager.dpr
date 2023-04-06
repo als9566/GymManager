@@ -22,6 +22,5 @@ begin
   Application.CreateForm(TdmMember, dmMember);
   Application.CreateForm(TdmMain, dmMain);
   Application.CreateForm(TfmLockerManaging, fmLockerManaging);
-  Application.CreateForm(TfmLockerCreate, fmLockerCreate);
   Application.Run;
 end.
