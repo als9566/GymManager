@@ -151,8 +151,8 @@ object fmMemberInsert: TfmMemberInsert
         ParentFont = False
       end
       object LockerDayLabel: TLabel
-        Left = 52
-        Top = 317
+        Left = 43
+        Top = 356
         Width = 26
         Height = 17
         Caption = #46973#52964
@@ -203,8 +203,8 @@ object fmMemberInsert: TfmMemberInsert
         ParentFont = False
       end
       object LockerHiddenLabel: TLabel
-        Left = 216
-        Top = 317
+        Left = 208
+        Top = 356
         Width = 26
         Height = 17
         Caption = #44060#50900
@@ -231,8 +231,8 @@ object fmMemberInsert: TfmMemberInsert
         Visible = False
       end
       object PTLabel: TLabel
-        Left = 52
-        Top = 365
+        Left = 44
+        Top = 317
         Width = 14
         Height = 17
         Caption = 'PT'
@@ -244,8 +244,8 @@ object fmMemberInsert: TfmMemberInsert
         ParentFont = False
       end
       object PTHiddenLabel: TLabel
-        Left = 216
-        Top = 365
+        Left = 208
+        Top = 317
         Width = 13
         Height = 17
         Caption = #54924
@@ -258,8 +258,8 @@ object fmMemberInsert: TfmMemberInsert
         Visible = False
       end
       object LockerDayRadioGroup: TcxRadioGroup
-        Left = 84
-        Top = 314
+        Left = 75
+        Top = 353
         Alignment = alCenterCenter
         Properties.Columns = 2
         Properties.Items = <
@@ -469,8 +469,8 @@ object fmMemberInsert: TfmMemberInsert
         Width = 178
       end
       object LockerDayPanel: TCurvyPanel
-        Left = 156
-        Top = 308
+        Left = 148
+        Top = 347
         Width = 54
         Height = 33
         BorderColor = clMedGray
@@ -633,8 +633,8 @@ object fmMemberInsert: TfmMemberInsert
         end
       end
       object PTRadioGroup: TcxRadioGroup
-        Left = 82
-        Top = 362
+        Left = 74
+        Top = 314
         Alignment = alCenterCenter
         Properties.Columns = 2
         Properties.Items = <
@@ -654,8 +654,8 @@ object fmMemberInsert: TfmMemberInsert
         Width = 79
       end
       object PTPanel: TCurvyPanel
-        Left = 156
-        Top = 356
+        Left = 148
+        Top = 308
         Width = 54
         Height = 33
         BorderColor = clMedGray

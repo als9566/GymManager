@@ -59,7 +59,7 @@ var
 implementation
 
 uses
-  CommonFunction;
+  CommonFunction, ShadowBox;
 
 {$R *.dfm}
 
@@ -79,6 +79,13 @@ procedure TfmLockerCreate.FormShow(Sender: TObject);
 begin
   DrawRounded(Self,50);
   AnimateWindow(Self.Handle, 200, AW_ACTIVATE or AW_BLEND);
+
+  with TShadowBox.Create(Self) do
+    Control := XPlusBtn;
+  with TShadowBox.Create(Self) do
+    Control := YPlusBtn;
+
+
 end;
 
 {** X축 락커생성
@@ -160,7 +167,6 @@ var
   I : Integer;
   J : Integer;
 begin
-
   if (LockerX = 0) and (LockerY = 0) then
   begin
     Inc(LockerX); Inc(LockerY);

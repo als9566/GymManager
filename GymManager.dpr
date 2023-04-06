@@ -11,7 +11,9 @@ uses
   MemberModule in 'DataModule\MemberModule.pas' {dmMember: TDataModule},
   MainModule in 'DataModule\MainModule.pas' {dmMain: TDataModule},
   LockerManagingForm in 'View\Locker\LockerManagingForm.pas' {fmLockerManaging},
-  LockerCreateForm in 'View\Locker\LockerCreateForm.pas' {fmLockerCreate};
+  LockerCreateForm in 'View\Locker\LockerCreateForm.pas' {fmLockerCreate},
+  GBlur2 in 'Function\GBlur2.pas',
+  ShadowBox in 'Function\ShadowBox.pas';
 
 {$R *.res}
 
