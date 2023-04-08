@@ -38,15 +38,12 @@ type
     Panel4: TPanel;
     SV: TSplitView;
     catMenuItems: TCategoryButtons;
-    FDConnection1: TFDConnection;
-    FDQuery1: TFDQuery;
     imlIcons: TImageList;
     imgMenu: TImage;
     MinimizeImgBtn: TImage;
     MaximizeImgBtn: TImage;
     ColseImgBtn: TImage;
     BarBtnImageList: TImageList;
-    imgBlur: TcxImage;
     procedure FormShow(Sender: TObject);
     procedure Panel1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
