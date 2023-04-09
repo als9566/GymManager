@@ -33,14 +33,14 @@ object fmLockerCreate: TfmLockerCreate
     object Label1: TLabel
       Left = 27
       Top = 23
-      Width = 69
-      Height = 22
+      Width = 80
+      Height = 28
       Caption = #46973#52964#49373#49457
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 6446686
       Font.Height = -20
-      Font.Name = #48176#45804#51032#48124#51313' '#54620#45208#45716' '#50676#54620#49332
-      Font.Style = []
+      Font.Name = #47569#51008' '#44256#46357
+      Font.Style = [fsBold]
       ParentFont = False
     end
     object cxButton1: TcxButton
@@ -89,7 +89,7 @@ object fmLockerCreate: TfmLockerCreate
       Transparent = True
       VertScrollBar.Tracking = True
       object LockerPanel: TPanel
-        Left = 0
+        Left = 3
         Top = 0
         Width = 566
         Height = 309
@@ -109,6 +109,7 @@ object fmLockerCreate: TfmLockerCreate
             Top = 0
             Width = 80
             Height = 60
+            Cursor = crHandPoint
             Align = alClient
             Alignment = taCenter
             Caption = '+'
@@ -132,6 +133,7 @@ object fmLockerCreate: TfmLockerCreate
             Top = 0
             Width = 80
             Height = 60
+            Cursor = crHandPoint
             Align = alClient
             Alignment = taCenter
             Caption = '+'
@@ -142,24 +144,6 @@ object fmLockerCreate: TfmLockerCreate
           end
         end
       end
-    end
-    object XMinusBtn: TButton
-      Left = 294
-      Top = 22
-      Width = 75
-      Height = 25
-      Caption = 'XMinusBtn'
-      TabOrder = 3
-      OnClick = XMinusBtnClick
-    end
-    object YMinusBtn: TButton
-      Left = 375
-      Top = 22
-      Width = 75
-      Height = 25
-      Caption = 'YMinusBtn'
-      TabOrder = 4
-      OnClick = YMinusBtnClick
     end
   end
 end

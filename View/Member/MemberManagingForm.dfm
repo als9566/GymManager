@@ -46,14 +46,14 @@ object fmMemberManaging: TfmMemberManaging
     object MenuNameLabel: TLabel
       Left = 16
       Top = 9
-      Width = 68
-      Height = 22
+      Width = 80
+      Height = 28
       Caption = #54924#50896#44288#47532
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -20
-      Font.Name = #48176#45804#51032#48124#51313' '#54620#45208#45716' '#50676#54620#49332
-      Font.Style = []
+      Font.Name = #47569#51008' '#44256#46357
+      Font.Style = [fsBold]
       ParentFont = False
     end
     object Shape1: TShape
