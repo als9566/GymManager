@@ -13,7 +13,9 @@ uses
   LockerManagingForm in 'View\Locker\LockerManagingForm.pas' {fmLockerManaging},
   LockerCreateForm in 'View\Locker\LockerCreateForm.pas' {fmLockerCreate},
   GBlur2 in 'Function\GBlur2.pas',
-  ShadowBox in 'Function\ShadowBox.pas';
+  ShadowBox in 'Function\ShadowBox.pas',
+  LockerController in 'Controller\LockerController.pas',
+  LockerModule in 'DataModule\LockerModule.pas' {dmLocker: TDataModule};
 
 {$R *.res}
 
@@ -24,5 +26,6 @@ begin
   Application.CreateForm(TdmMember, dmMember);
   Application.CreateForm(TdmMain, dmMain);
   Application.CreateForm(TfmLockerManaging, fmLockerManaging);
+  Application.CreateForm(TdmLocker, dmLocker);
   Application.Run;
 end.

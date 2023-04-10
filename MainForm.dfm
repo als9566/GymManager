@@ -17,6 +17,9 @@ object GymManagerForm: TGymManagerForm
   OldCreateOrder = True
   OnClose = FormClose
   OnShow = FormShow
+  DesignSize = (
+    1008
+    661)
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -44,7 +47,7 @@ object GymManagerForm: TGymManagerForm
       1004
       29)
     object imgMenu: TImage
-      Left = 4
+      Left = 9
       Top = 4
       Width = 32
       Height = 22
@@ -405,7 +408,7 @@ object GymManagerForm: TGymManagerForm
   end
   object Panel2: TPanel
     AlignWithMargins = True
-    Left = 2
+    Left = 52
     Top = 31
     Width = 0
     Height = 628
@@ -415,6 +418,7 @@ object GymManagerForm: TGymManagerForm
     Margins.Bottom = 0
     Align = alLeft
     TabOrder = 1
+    ExplicitLeft = 2
   end
   object Panel3: TPanel
     AlignWithMargins = True
@@ -445,16 +449,19 @@ object GymManagerForm: TGymManagerForm
   object SV: TSplitView
     Left = 2
     Top = 31
-    Width = 200
+    Width = 50
     Height = 628
     AnimationDelay = 10
     AnimationStep = 50
+    CloseStyle = svcCompact
     Color = clBlack
+    DisplayMode = svmOverlay
+    Opened = False
     OpenedWidth = 200
     Placement = svpLeft
     TabOrder = 4
     object catMenuItems: TCategoryButtons
-      Left = 0
+      Left = -3
       Top = -20
       Width = 194
       Height = 177
@@ -469,11 +476,11 @@ object GymManagerForm: TGymManagerForm
           Collapsed = False
           Items = <
             item
-              Caption = 'test'
+              Caption = '   test'
               ImageIndex = 1
             end
             item
-              Caption = 'test2'
+              Caption = '   test2'
               ImageIndex = 2
             end>
         end>

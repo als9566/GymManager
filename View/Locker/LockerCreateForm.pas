@@ -43,6 +43,7 @@ type
     procedure XMinusBtnClick(Sender: TObject);
     procedure YMinusBtnClick(Sender: TObject);
     procedure MinusBtnCreate(pXY : String; pN : Integer);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -58,9 +59,14 @@ var
 implementation
 
 uses
-  CommonFunction, ShadowBox;
+  CommonFunction, ShadowBox, LockerController;
 
 {$R *.dfm}
+
+procedure TfmLockerCreate.Button1Click(Sender: TObject);
+begin
+  LockerController.TLockerController.LockerInsert(self,LockerX,LockerY);
+end;
 
 procedure TfmLockerCreate.cxButton1Click(Sender: TObject);
 begin
@@ -317,6 +323,9 @@ begin
       sComponent := FindComponent(Format('LockerPanel_%d_%d',[i,j]));
       TCurvyPanel(sComponent).Name := Format('LockerPanel_%d_%d',[i-1,j]);
       TCurvyPanel(sComponent).Left := TCurvyPanel(sComponent).Left - 88;
+
+      sComponent := FindComponent(Format('LockerEdit_%d_%d',[i,j]));
+      TEdit(sComponent).Name := Format('LockerEdit_%d_%d',[i-1,j]);
     end;
     sComponent := FindComponent(Format('MinusBtnX_%d',[i]));
     TLabel(sComponent).Name := Format('MinusBtnX_%d',[i-1]);
@@ -373,6 +382,9 @@ begin
       sComponent := FindComponent(Format('LockerPanel_%d_%d',[J,I]));
       TCurvyPanel(sComponent).Name := Format('LockerPanel_%d_%d',[J,I-1]);
       TCurvyPanel(sComponent).Top := TCurvyPanel(sComponent).Top - 68;
+
+      sComponent := FindComponent(Format('LockerEdit_%d_%d',[J,I]));
+      TEdit(sComponent).Name := Format('LockerEdit_%d_%d',[J,I-1]);
     end;
     sComponent := FindComponent(Format('MinusBtnY_%d',[I]));
     TLabel(sComponent).Name := Format('MinusBtnY_%d',[I-1]);

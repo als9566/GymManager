@@ -74,6 +74,7 @@ object fmLockerCreate: TfmLockerCreate
       Height = 25
       Caption = #51200#51109
       TabOrder = 1
+      OnClick = Button1Click
     end
     object ScrollBox: TcxScrollBox
       Left = 18
