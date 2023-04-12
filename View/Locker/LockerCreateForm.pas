@@ -102,6 +102,8 @@ var
   J : Integer;
   sCurvyPanel : TCurvyPanel;
 begin
+  LockWindowUpdate(Handle);
+
   if (LockerX = 0) and (LockerY = 0) then
   begin
     Inc(LockerX); Inc(LockerY);
@@ -191,6 +193,8 @@ begin
 
   LockerPanel.Width  := 10 + (88 * LockerX) + 80;
   LockerPanel.Height := 15 + (LockerY * 68) + 60;
+
+  LockWindowUpdate(0);
 end;
 
 {** Y绵 遏目积己
@@ -203,6 +207,8 @@ var
   J : Integer;
   sCurvyPanel : TCurvyPanel;
 begin
+  LockWindowUpdate(Handle);
+
   if (LockerX = 0) and (LockerY = 0) then
   begin
     Inc(LockerX); Inc(LockerY);
@@ -292,6 +298,8 @@ begin
 
   LockerPanel.Width  := 10 + (88 * LockerX) + 80;
   LockerPanel.Height := 15 + (LockerY * 68) + 60;
+
+  LockWindowUpdate(0);
 end;
 
 {** X绵 遏目昏力

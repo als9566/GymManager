@@ -15,7 +15,8 @@ uses
   GBlur2 in 'Function\GBlur2.pas',
   ShadowBox in 'Function\ShadowBox.pas',
   LockerController in 'Controller\LockerController.pas',
-  LockerModule in 'DataModule\LockerModule.pas' {dmLocker: TDataModule};
+  LockerModule in 'DataModule\LockerModule.pas' {dmLocker: TDataModule},
+  LoginForm in 'View\Login\LoginForm.pas' {fmLogin};
 
 {$R *.res}
 
@@ -25,7 +26,7 @@ begin
   Application.CreateForm(TGymManagerForm, GymManagerForm);
   Application.CreateForm(TdmMember, dmMember);
   Application.CreateForm(TdmMain, dmMain);
-  Application.CreateForm(TfmLockerManaging, fmLockerManaging);
   Application.CreateForm(TdmLocker, dmLocker);
+  Application.CreateForm(TfmLogin, fmLogin);
   Application.Run;
 end.

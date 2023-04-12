@@ -59,22 +59,25 @@ type
     procedure WMNCHitTest(var message: TWMNCHitTest); message WM_NCHITTEST;
   public
     { Public declarations }
+    procedure MENU_CREATE(li_tag: Integer);
+    procedure LockMDIChild(Lock: Boolean);
   end;
 
 var
   GymManagerForm: TGymManagerForm;
+  bLogin: Boolean = false;
 
 implementation
 
 {$R *.dfm}
 
 uses
-  MemberManagingForm, CommonFunction;
+  LockerManagingForm, MemberManagingForm, CommonFunction;
 
 //깜빡임 제거
 //로직 가운데에 넣기
-//LockWindowUpdate(0);
 //LockWindowUpdate(Handle);
+//LockWindowUpdate(0);
 
 procedure TGymManagerForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -119,9 +122,9 @@ var
 begin
   inherited;
 
-  if BorderStyle = bsNone then
+  if (BorderStyle = bsNone) and (bLogin = true) then
     with Message, deltaRect do
-  begin
+    begin
       Left   := XPos - BoundsRect.Left;
       Right  := BoundsRect.Right - XPos;
       Top    := YPos - BoundsRect.Top;
@@ -142,7 +145,7 @@ begin
         Result := HTBOTTOM
       else if (Right < EDGEDETECT) then
         Result := HTRIGHT
-  end;
+    end;
 
 end;
 
@@ -241,6 +244,33 @@ begin
     (Sender as TImage).Refresh;
   end;
 
+end;
+
+procedure TGymManagerForm.MENU_CREATE(li_tag: Integer);
+begin
+  Case li_tag Of
+     2 :
+     begin  {Locker}
+       fmLockerManaging := TfmLockerManaging.Create(Application);
+       with fmLockerManaging do begin
+        Tag := li_tag;
+       end;
+     end;
+  End;
+end;
+
+procedure TGymManagerForm.LockMDIChild(Lock: Boolean);
+begin
+  if Lock then
+  begin
+    SendMessage(Application.MainForm.ClientHandle, WM_SETREDRAW, 0, 0);
+  end
+  else
+  begin
+    SendMessage(Application.MainForm.ClientHandle, WM_SETREDRAW, 1, 0);
+    RedrawWindow(Application.MainForm.ClientHandle, nil, 0,
+      RDW_ERASE or RDW_FRAME or RDW_INVALIDATE or RDW_ALLCHILDREN);
+  end;
 end;
 
 end.

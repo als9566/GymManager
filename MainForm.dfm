@@ -418,7 +418,6 @@ object GymManagerForm: TGymManagerForm
     Margins.Bottom = 0
     Align = alLeft
     TabOrder = 1
-    ExplicitLeft = 2
   end
   object Panel3: TPanel
     AlignWithMargins = True
