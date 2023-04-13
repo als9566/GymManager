@@ -25,10 +25,12 @@ type
     procedure SingInBtnClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure PasswordEditKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
     { Public declarations }
+    bcheck :Boolean;
   end;
 
 type
@@ -39,6 +41,7 @@ type
     procedure Execute; override;
     destructor Destroy; override;
     procedure FormCreate;
+    procedure LoginCheck;
   end;
 
 var
@@ -48,7 +51,7 @@ var
 implementation
 
 uses
-  MainForm, CommonFunction, ShadowBox;
+  MainForm, CommonFunction, ShadowBox, LoginController;
 
 {$R *.dfm}
 
@@ -59,30 +62,37 @@ begin
   MainForm.GymManagerForm.LockMDIChild(False);
 end;
 
+procedure TLoginThread.LoginCheck;
+begin
+  LoginController.TLoginController.LoginCheck(fmLogin);
+end;
+
 procedure TLoginThread.Execute;
-var
-  bcheck :Boolean;
 begin
 
-  bcheck := true;
+  fmLogin.bcheck := true;
 
-  Sleep(500);
+  Sleep(1000);
 
-  if sUsername = '' then
-  begin
-    fmLogin.msgLabel.Caption := '아이디를 입력해주세요...';
-    bcheck := False;
-  end;
+  Synchronize(LoginCheck);
 
   if sPassword = '' then
   begin
     fmLogin.msgLabel.Caption := '비밀번호를 입력해주세요...';
-    bcheck := False;
+    fmLogin.bcheck := False;
   end;
 
-  if bcheck then
+  if sUsername = '' then
+  begin
+    fmLogin.msgLabel.Caption := '아이디를 입력해주세요...';
+    fmLogin.bcheck := False;
+  end;
+
+  if fmLogin.bcheck then
   begin
     MainForm.bLogin := true;
+    GymManagerForm.SV.CloseStyle := svcCompact;
+    GymManagerForm.imgMenu.Visible := True;
     LoginThread := nil;
     fmLogin.Close;
     Synchronize(FormCreate);
@@ -111,8 +121,18 @@ end;
 procedure TfmLogin.FormShow(Sender: TObject);
 begin
   DrawRounded(Panel1, 30);
+  GymManagerForm.SV.CloseStyle := svcCollapse;
+  GymManagerForm.imgMenu.Visible := False;
   with TShadowBox.Create(Self) do
     Control := Panel1;
+end;
+
+procedure TfmLogin.PasswordEditKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = #13 then   //엔터키
+  begin
+    SingInBtnClick(self);
+  end;
 end;
 
 procedure TfmLogin.SingInBtnClick(Sender: TObject);

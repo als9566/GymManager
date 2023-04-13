@@ -28,12 +28,8 @@ object fmLogin: TfmLogin
     Color = 16316664
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 424
-    ExplicitTop = 220
-    ExplicitWidth = 321
-    ExplicitHeight = 285
     object Panel1: TPanel
-      Left = 288
+      Left = 324
       Top = 80
       Width = 346
       Height = 422
@@ -44,7 +40,7 @@ object fmLogin: TfmLogin
       object Label1: TLabel
         Left = 128
         Top = 78
-        Width = 91
+        Width = 83
         Height = 45
         BiDiMode = bdLeftToRight
         Caption = 'Login'
@@ -535,6 +531,7 @@ object fmLogin: TfmLogin
           PasswordChar = '*'
           TabOrder = 0
           TextHint = 'Password...'
+          OnKeyPress = PasswordEditKeyPress
         end
       end
       object CurvyPanel3: TCurvyPanel

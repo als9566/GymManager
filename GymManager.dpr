@@ -16,7 +16,9 @@ uses
   ShadowBox in 'Function\ShadowBox.pas',
   LockerController in 'Controller\LockerController.pas',
   LockerModule in 'DataModule\LockerModule.pas' {dmLocker: TDataModule},
-  LoginForm in 'View\Login\LoginForm.pas' {fmLogin};
+  LoginForm in 'View\Login\LoginForm.pas' {fmLogin},
+  LoginController in 'Controller\LoginController.pas',
+  LoginModule in 'DataModule\LoginModule.pas' {dmLogin: TDataModule};
 
 {$R *.res}
 
@@ -28,5 +30,6 @@ begin
   Application.CreateForm(TdmMain, dmMain);
   Application.CreateForm(TdmLocker, dmLocker);
   Application.CreateForm(TfmLogin, fmLogin);
+  Application.CreateForm(TdmLogin, dmLogin);
   Application.Run;
 end.
