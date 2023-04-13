@@ -25,6 +25,7 @@ object fmLockerCreate: TfmLockerCreate
     Width = 622
     Height = 475
     Anchors = [akLeft, akTop, akRight, akBottom]
+    Color = 16514043
     Rounding = 26
     TabOrder = 0
     DesignSize = (
@@ -83,9 +84,11 @@ object fmLockerCreate: TfmLockerCreate
       Height = 385
       Anchors = [akLeft, akTop, akRight, akBottom]
       BorderStyle = cxcbsNone
+      Color = 16514043
       HorzScrollBar.Tracking = True
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DevExpressStyle'
+      ParentColor = False
       TabOrder = 2
       Transparent = True
       VertScrollBar.Tracking = True
@@ -95,6 +98,8 @@ object fmLockerCreate: TfmLockerCreate
         Width = 566
         Height = 309
         BevelOuter = bvNone
+        Color = 16514043
+        ParentBackground = False
         TabOrder = 0
         object XPlusBtn: TCurvyPanel
           Left = 10

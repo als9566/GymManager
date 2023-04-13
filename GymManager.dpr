@@ -29,7 +29,7 @@ begin
   Application.CreateForm(TdmMember, dmMember);
   Application.CreateForm(TdmMain, dmMain);
   Application.CreateForm(TdmLocker, dmLocker);
-  Application.CreateForm(TfmLogin, fmLogin);
   Application.CreateForm(TdmLogin, dmLogin);
+  Application.CreateForm(TfmLogin, fmLogin);
   Application.Run;
 end.

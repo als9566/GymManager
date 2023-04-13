@@ -31,7 +31,7 @@ object fmLockerManaging: TfmLockerManaging
     Height = 658
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
-    Color = clWindow
+    Color = 16514043
     ParentBackground = False
     TabOrder = 0
     DesignSize = (
@@ -67,6 +67,8 @@ object fmLockerManaging: TfmLockerManaging
       Height = 41
       Anchors = [akLeft, akTop, akRight]
       BevelOuter = bvNone
+      Color = 16514043
+      ParentBackground = False
       TabOrder = 0
       object LockerCntLabel2: TLabel
         Left = 77
@@ -157,9 +159,11 @@ object fmLockerManaging: TfmLockerManaging
       Height = 551
       Anchors = [akLeft, akTop, akRight, akBottom]
       BorderStyle = cxcbsNone
+      Color = 16514043
       HorzScrollBar.Tracking = True
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DevExpressStyle'
+      ParentColor = False
       TabOrder = 1
       Transparent = True
       VertScrollBar.Tracking = True

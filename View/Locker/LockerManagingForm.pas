@@ -19,7 +19,7 @@ uses
   dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
-  dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
+  dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,Data.DB,
   dxSkinXmas2008Blue, cxScrollBox, CurvyControls, Vcl.Menus, cxButtons, BlurForm;
 
 type
@@ -40,6 +40,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure NewInsertBtnClick(Sender: TObject);
+    procedure ShowData(ALocker: TDataSet);
   private
     { Private declarations }
   public
@@ -50,11 +51,12 @@ type
 var
   fmLockerManaging: TfmLockerManaging;
   fmBlur: TfmBlur;
+  iMaxX, iMaxY : Integer;
 
 implementation
 
 uses
-  CommonFunction, MainForm;
+  CommonFunction, MainForm, LockerController;
 
 {$R *.dfm}
 
@@ -65,37 +67,8 @@ begin
 end;
 
 procedure TfmLockerManaging.FormShow(Sender: TObject);
-var
-  X, Y : Integer;
-  iCount : Integer;
 begin
-  iCount := 0;
-
-  SetLength(arrCurvyPanel, 50);
-
-  for Y := 0 to 4 do
-  begin
-    for X := 0 to 9 do
-    begin
-      arrCurvyPanel[iCount] := TCurvyPanel.Create(nil);
-      with arrCurvyPanel[iCount] do
-      begin
-          //Parent := Self;
-          Parent := LockerPanel;
-          Height := 60;
-          Width := 80;
-          Left := 10 + (88 * X);
-          Top := 10 + (68 * Y);
-          Name := Format('LockerPanel_%d',[iCount]);
-          BorderColor := $00E7E7E7;
-          Color := $00E3E3E3;
-          Rounding := 4;
-          //OnClick := GetCtrlName;
-      end;
-      Inc(iCount);
-    end;
-  end;
-
+  LockerController.TLockerController.LockerArraySelect(Self);
 end;
 
 {** ½Å±Ô¹öÆ° ÀÌº¥Æ® (¶ôÄ¿»ý¼ºÃ¢ ¶ç¿ì±â)
@@ -110,6 +83,94 @@ begin
   fmBlur.Width := GymManagerForm.Width;
   fmBlur.imgBlur.Tag := 2;
   fmBlur.Show;
+end;
+
+{** ¶ôÄ¿µ¿Àû »ý¼º
+  @param [Sender] TDataSet
+* }
+procedure TfmLockerManaging.ShowData(ALocker: TDataSet);
+var
+  sCurvyPanel : TCurvyPanel;
+  I, J : Integer;
+begin
+  ALocker.Active := true;
+
+  LockWindowUpdate(Handle);
+  for I := 1 to iMaxY do
+  begin
+    for J := 1 to iMaxX do
+    begin
+      sCurvyPanel := TCurvyPanel.Create(Self);
+      with sCurvyPanel do begin
+        Parent := LockerPanel;
+        Height := 75;
+        Width := 95;
+        Left := 10 + (103 * (J-1));
+        Top := 15 + (83 * (I-1));
+        Name := Format('LockerPanel_%d_%d',[J,I]);
+        Tag := ALocker.FieldByName('id').AsInteger;
+        BorderColor := $00EEEEEE;
+        Color := $00EEEEEE;
+        Rounding := 4;
+      end;
+      with TLabel.Create(Self) do
+      begin
+          Parent := sCurvyPanel;
+          Alignment := taCenter;
+          AutoSize := False;
+          Caption := ALocker.FieldByName('num').AsString;
+          //Font.Color := $00646464;
+          Font.Color := $00707070;
+          Font.Name := '¸¼Àº °íµñ';
+          Font.Size := 12;
+          Font.Style := [fsBold];
+          ParentFont := False;
+          Height := 22;
+          Width := 22;
+          Left := 5;
+          Top := 5;
+          Name := Format('LockerNum_%d_%d',[J,I]);
+      end;
+      with TLabel.Create(Self) do
+      begin
+          Parent := sCurvyPanel;
+          Alignment := taCenter;
+          AutoSize := False;
+          Caption := 'È«±æµ¿';
+          //Font.Color := $004E4E4E;
+          Font.Color := $00707070;
+          Font.Name := '¸¼Àº °íµñ';
+          Font.Size := 12;
+          Font.Style := [fsBold];
+          ParentFont := False;
+          Height := 21;
+          Width := 95;
+          Left := 0;
+          Top := 27;
+          Name := Format('LockerName_%d_%d',[J,I]);
+      end;
+      with TLabel.Create(Self) do
+      begin
+          Parent := sCurvyPanel;
+          Alignment := taCenter;
+          AutoSize := False;
+          Caption := 'ÀÜ¿© 0ÀÏ';
+          //Font.Color := $00737373;
+          Font.Color := $00959595;
+          Font.Name := '¸¼Àº °íµñ';
+          Font.Size := 8;
+          Font.Style := [fsBold];
+          ParentFont := False;
+          Height := 13;
+          Width := 95;
+          Left := 0;
+          Top := 55;
+          Name := Format('LockerDay_%d_%d',[J,I]);
+      end;
+      ALocker.Next;
+    end;
+  end;
+  LockWindowUpdate(0);
 end;
 
 end.

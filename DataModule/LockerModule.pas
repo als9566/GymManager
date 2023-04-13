@@ -12,14 +12,19 @@ uses
 type
   TLocker = class
   private
+    Fid  : Integer;
     Fnum : Integer;
     Fx   : Integer;
     Fy   : Integer;
   public
+    property id      : Integer read Fid    write Fid;
     property num     : Integer read Fnum   write Fnum;
     property x       : Integer read Fx     write Fx;
     property y       : Integer read Fy     write Fy;
     Function Insert(ALocker: TLocker) :Boolean;
+    Function Select :TDataSet;
+    Function Max_Select_X : Integer;
+    Function Max_Select_Y : Integer;
   end;
 
 type
@@ -66,6 +71,47 @@ begin
     Result := false;
   end;
 
+end;
+
+Function TLocker.Select :TDataSet;
+begin
+  try
+    dmLocker.FDQuery.SQL.Text := 'SELECT id, num, x, y '
+                              + '  FROM locker         '
+                              + ' ORDER BY y, x        ';
+
+    Result := dmLocker.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
+Function TLocker.Max_Select_X : Integer;
+begin
+  try
+    dmLocker.FDQuery.SQL.Text := 'SELECT max(x) "MaxX"'
+                              + '  FROM locker        ';
+
+    dmLocker.FDQuery.Active := true;
+    Result := dmLocker.FDQuery.FieldByName('MaxX').AsInteger;
+
+  except
+    Result := 0;
+  end;
+end;
+
+Function TLocker.Max_Select_Y : Integer;
+begin
+  try
+    dmLocker.FDQuery.SQL.Text := 'SELECT max(y) "MaxY"'
+                              + '  FROM locker        ';
+
+    dmLocker.FDQuery.Active := true;
+    Result := dmLocker.FDQuery.FieldByName('MaxY').AsInteger;
+
+  except
+    Result := 0;
+  end;
 end;
 
 end.

@@ -116,8 +116,8 @@ begin
       Left := 10;
       Top := 15;
       Name := Format('LockerPanel_%d_%d',[1,1]);
-      BorderColor := $00E7E7E7;
-      Color := $00E3E3E3;
+      BorderColor := $00EEEEEE;
+      Color := $00EEEEEE;
       Rounding := 4;
 
       XPlusBtn.Left := Left + Width + 20;
@@ -138,7 +138,7 @@ begin
         Width := 80;
         Left := 0;
         Top := 20;
-        Color := $00E3E3E3;
+        Color := $00EEEEEE;
         Name := Format('LockerEdit_%d_%d',[1,1]);
         Text := '';
     end;
@@ -160,8 +160,8 @@ begin
         Left := 10 + (88 * LockerX);
         Top := 15 + (68 * J);
         Name := Format('LockerPanel_%d_%d',[LockerX+1,J+1]);
-        BorderColor := $00E7E7E7;
-        Color := $00E3E3E3;
+        BorderColor := $00EEEEEE;
+        Color := $00EEEEEE;
         Rounding := 4;
 
         XPlusBtn.Left := Left + Width + 20;
@@ -179,7 +179,7 @@ begin
           Width := 80;
           Left := 0;
           Top := 20;
-          Color := $00E3E3E3;
+          Color := $00EEEEEE;
           Name := Format('LockerEdit_%d_%d',[LockerX+1,J+1]);
           Text := '';
       end;
@@ -221,8 +221,8 @@ begin
       Left := 10;
       Top := 15;
       Name := Format('LockerPanel_%d_%d',[1,1]);
-      BorderColor := $00E7E7E7;
-      Color := $00E3E3E3;
+      BorderColor := $00EEEEEE;
+      Color := $00EEEEEE;
       Rounding := 4;
 
       YPlusBtn.Left := Left;
@@ -243,7 +243,7 @@ begin
         Width := 80;
         Left := 0;
         Top := 20;
-        Color := $00E3E3E3;
+        Color := $00EEEEEE;
         Name := Format('LockerEdit_%d_%d',[1,1]);
         Text := '';
     end;
@@ -265,8 +265,8 @@ begin
         Left := 10 + (88 * J);
         Top := 15 + (68 * LockerY);
         Name := Format('LockerPanel_%d_%d',[J+1,LockerY+1]);
-        BorderColor := $00E7E7E7;
-        Color := $00E3E3E3;
+        BorderColor := $00EEEEEE;
+        Color := $00EEEEEE;
         Rounding := 4;
 
         YPlusBtn.Left := 10;
@@ -284,7 +284,7 @@ begin
           Width := 80;
           Left := 0;
           Top := 20;
-          Color := $00E3E3E3;
+          Color := $00EEEEEE;
           Name := Format('LockerEdit_%d_%d',[J+1,LockerY+1]);
           Text := '';
       end;
