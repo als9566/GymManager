@@ -18,7 +18,8 @@ uses
   LockerModule in 'DataModule\LockerModule.pas' {dmLocker: TDataModule},
   LoginForm in 'View\Login\LoginForm.pas' {fmLogin},
   LoginController in 'Controller\LoginController.pas',
-  LoginModule in 'DataModule\LoginModule.pas' {dmLogin: TDataModule};
+  LoginModule in 'DataModule\LoginModule.pas' {dmLogin: TDataModule},
+  ScheduleViewForm in 'View\Schedule\ScheduleViewForm.pas' {fmScheduleView};
 
 {$R *.res}
 
@@ -30,6 +31,6 @@ begin
   Application.CreateForm(TdmMain, dmMain);
   Application.CreateForm(TdmLocker, dmLocker);
   Application.CreateForm(TdmLogin, dmLogin);
-  Application.CreateForm(TfmLogin, fmLogin);
+  Application.CreateForm(TfmScheduleView, fmScheduleView);
   Application.Run;
 end.

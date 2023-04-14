@@ -122,7 +122,7 @@ var
 begin
   inherited;
 
-  if (BorderStyle = bsNone) and (bLogin = true) then
+  if (BorderStyle = bsNone) {and (bLogin = true)} then
     with Message, deltaRect do
     begin
       Left   := XPos - BoundsRect.Left;
