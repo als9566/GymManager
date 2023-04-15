@@ -19,7 +19,8 @@ uses
   LoginForm in 'View\Login\LoginForm.pas' {fmLogin},
   LoginController in 'Controller\LoginController.pas',
   LoginModule in 'DataModule\LoginModule.pas' {dmLogin: TDataModule},
-  ScheduleViewForm in 'View\Schedule\ScheduleViewForm.pas' {fmScheduleView};
+  ScheduleViewForm in 'View\Schedule\ScheduleViewForm.pas' {fmScheduleView},
+  SettingViewForm in 'View\Setting\SettingViewForm.pas' {fmSettingView};
 
 {$R *.res}
 
@@ -31,6 +32,6 @@ begin
   Application.CreateForm(TdmMain, dmMain);
   Application.CreateForm(TdmLocker, dmLocker);
   Application.CreateForm(TdmLogin, dmLogin);
-  Application.CreateForm(TfmScheduleView, fmScheduleView);
+  Application.CreateForm(TfmSettingView, fmSettingView);
   Application.Run;
 end.

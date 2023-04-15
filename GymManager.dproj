@@ -158,6 +158,10 @@
             <Form>fmScheduleView</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="View\Setting\SettingViewForm.pas">
+            <Form>fmSettingView</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
