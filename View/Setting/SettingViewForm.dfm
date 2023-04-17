@@ -17,6 +17,7 @@ object fmSettingView: TfmSettingView
   OldCreateOrder = False
   Visible = True
   WindowState = wsMaximized
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object backPanel: TPanel
@@ -29,9 +30,6 @@ object fmSettingView: TfmSettingView
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = -149
-    ExplicitTop = -362
-    ExplicitWidth = 784
     DesignSize = (
       1006
       661)
@@ -154,6 +152,7 @@ object fmSettingView: TfmSettingView
         Height = 25
         Caption = #51200#51109
         TabOrder = 3
+        OnClick = PriceSaveBtnClick
       end
       object PTPricePanel: TCurvyPanel
         Left = 85
@@ -291,6 +290,7 @@ object fmSettingView: TfmSettingView
         Height = 25
         Caption = #51200#51109
         TabOrder = 2
+        OnClick = AccountSaveBtnClick
       end
       object UsernamePanel: TCurvyPanel
         Left = 247

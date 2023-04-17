@@ -35,6 +35,9 @@ type
     UsernameEdit: TEdit;
     PasswordPanel: TCurvyPanel;
     PasswordEdit: TEdit;
+    procedure PriceSaveBtnClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure AccountSaveBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,6 +49,25 @@ var
 
 implementation
 
+uses
+  CommonFunction, ShadowBox, SettingController;
+
 {$R *.dfm}
+
+procedure TfmSettingView.AccountSaveBtnClick(Sender: TObject);
+begin
+  SettingController.TSettingController.AccountUpdate(self);
+end;
+
+procedure TfmSettingView.FormShow(Sender: TObject);
+begin
+  SettingController.TSettingController.BasicPriceSelect(self);
+  SettingController.TSettingController.AccountSelect(self);
+end;
+
+procedure TfmSettingView.PriceSaveBtnClick(Sender: TObject);
+begin
+  SettingController.TSettingController.BasicPriceUpdate(self);
+end;
 
 end.

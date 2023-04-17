@@ -66,6 +66,7 @@ type
 var
   GymManagerForm: TGymManagerForm;
   bLogin: Boolean = false;
+  sUserName: String = '¹Ú¹Î¼º';
 
 implementation
 
