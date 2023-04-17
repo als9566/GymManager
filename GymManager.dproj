@@ -162,6 +162,11 @@
             <Form>fmSettingView</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Controller\SettingController.pas"/>
+        <DCCReference Include="DataModule\SettingModule.pas">
+            <Form>dmSetting</Form>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

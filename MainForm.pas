@@ -66,7 +66,7 @@ type
 var
   GymManagerForm: TGymManagerForm;
   bLogin: Boolean = false;
-  sUserName: String = '¹Ú¹Î¼º';
+  sUserName: String;
 
 implementation
 
@@ -123,7 +123,7 @@ var
 begin
   inherited;
 
-  if (BorderStyle = bsNone) {and (bLogin = true)} then
+  if BorderStyle = bsNone then
     with Message, deltaRect do
     begin
       Left   := XPos - BoundsRect.Left;

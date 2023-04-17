@@ -3,7 +3,7 @@ object fmMemberInsert: TfmMemberInsert
   Top = 0
   BorderStyle = bsNone
   Caption = 'fmMemberInsert'
-  ClientHeight = 515
+  ClientHeight = 468
   ClientWidth = 638
   Color = clWhite
   TransparentColorValue = clWhite
@@ -20,7 +20,7 @@ object fmMemberInsert: TfmMemberInsert
   OnShow = FormShow
   DesignSize = (
     638
-    515)
+    468)
   PixelsPerInch = 96
   TextHeight = 13
   object Label5: TLabel
@@ -40,7 +40,7 @@ object fmMemberInsert: TfmMemberInsert
     Left = 0
     Top = 0
     Width = 637
-    Height = 514
+    Height = 467
     Anchors = [akLeft, akTop, akRight, akBottom]
     Rounding = 26
     TabOrder = 0
@@ -61,7 +61,7 @@ object fmMemberInsert: TfmMemberInsert
       Left = 19
       Top = 62
       Width = 599
-      Height = 425
+      Height = 403
       AutoScroll = False
       BorderStyle = cxcbsNone
       HorzScrollBar.Range = 551
@@ -70,8 +70,10 @@ object fmMemberInsert: TfmMemberInsert
       LookAndFeel.SkinName = 'DevExpressStyle'
       TabOrder = 0
       Transparent = True
-      VertScrollBar.Range = 363
+      VertScrollBar.Range = 400
       VertScrollBar.Tracking = True
+      OnMouseWheelDown = EditPanelMouseWheelDown
+      OnMouseWheelUp = EditPanelMouseWheelUp
       object NameLabel: TLabel
         Left = 28
         Top = 10
@@ -348,6 +350,7 @@ object fmMemberInsert: TfmMemberInsert
           EditValue = 36526d
           ParentFont = False
           Properties.Alignment.Horz = taCenter
+          Properties.DateButtons = [btnToday]
           Style.BorderStyle = ebsNone
           Style.Font.Charset = DEFAULT_CHARSET
           Style.Font.Color = clWindowText
@@ -421,15 +424,18 @@ object fmMemberInsert: TfmMemberInsert
           Properties.DropDownListStyle = lsEditFixedList
           Properties.ItemHeight = 20
           Properties.Items.Strings = (
-            '1'
-            '2'
-            '3'
-            '4'
-            '5'
-            '6'
-            '7'
-            '8'
-            '9')
+            '1'#44060#50900
+            '2'#44060#50900
+            '3'#44060#50900
+            '4'#44060#50900
+            '5'#44060#50900
+            '6'#44060#50900
+            '7'#44060#50900
+            '8'#44060#50900
+            '9'#44060#50900
+            '10'#44060#50900
+            '11'#44060#50900
+            '12'#44060#50900)
           Properties.OnDrawItem = MembershipComboBoxPropertiesDrawItem
           Properties.OnInitPopup = MembershipComboBoxPropertiesInitPopup
           Style.BorderColor = clNone
@@ -681,6 +687,26 @@ object fmMemberInsert: TfmMemberInsert
           Text = '1'
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
+        end
+      end
+      object LockerCurvy: TCurvyPanel
+        Left = 46
+        Top = 388
+        Width = 486
+        Height = 233
+        BorderColor = 12303291
+        TabOrder = 15
+        Visible = False
+        object LockerChoicePanel: TcxScrollBox
+          Left = 3
+          Top = 3
+          Width = 480
+          Height = 227
+          BorderStyle = cxcbsNone
+          LookAndFeel.NativeStyle = False
+          LookAndFeel.SkinName = 'DevExpressStyle'
+          TabOrder = 0
+          Transparent = True
         end
       end
     end

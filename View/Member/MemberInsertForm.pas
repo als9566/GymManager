@@ -26,7 +26,7 @@ uses
   VCLTee.TeCanvas, dxCore, cxDateUtils, cxTextEdit, cxMaskEdit, cxDropDownEdit,
   cxCalendar, cxGroupBox, cxRadioGroup, AdvDetailDropDown, DBAdvDetailDropDown,
   AdvTrackBarDropDown, AdvCalculatorDropdown, AdvDropDown, AdvControlDropDown,
-  AdvCustomGridDropDown, AdvGridDropDown, Vcl.Menus, cxButtons;
+  AdvCustomGridDropDown, AdvGridDropDown, Vcl.Menus, cxButtons, Data.DB;
 
 type
 
@@ -85,6 +85,8 @@ type
     PTEdit: TEdit;
     PTHiddenLabel: TLabel;
     PTRadioGroup: TcxRadioGroup;
+    LockerCurvy: TCurvyPanel;
+    LockerChoicePanel: TcxScrollBox;
     procedure cxButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -98,6 +100,13 @@ type
       out ABorderWidth: Integer);
     procedure Button1Click(Sender: TObject);
     procedure RadioGroupPropertiesEditValueChanged(Sender: TObject);
+    procedure ShowLockerData(ALocker: TDataSet);
+    procedure EditPanelMouseWheelDown(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure EditPanelMouseWheelUp(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure LockerChoice(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -106,18 +115,36 @@ type
 
 var
   fmMemberInsert: TfmMemberInsert;
+  iMaxX, iMaxY : Integer;
+  iChoiceLocker : Integer = 0;
 
 implementation
 
 uses
-   CommonFunction, MemberController;
+   CommonFunction, MemberController, LockerController;
 
+// TODO [EDIT 입력포맷 이벤트처리 ex) 전화번호는 숫자만]
+// TODO [회원권 기초가격 등록부분 추가하기]
+// TODO [기초가격 불러와서 계산(히든으로)]
+// TODO [사용중인 락커는 선택불가]
 {$R *.dfm}
 
 procedure TfmMemberInsert.Button1Click(Sender: TObject);
 begin
   //MemberController.MemberInsert();
-  MemberController.TMemberController.MemberInsert(self);
+  if NameEdit.Text = '' then
+    ShowMessage('이름을 입력해주세요...')
+  else if BirthdayDateEdit.Text = '' then
+    ShowMessage('생년월일을 입력해주세요...')
+  else if (Tel1Edit.Text = '') or (Tel2Edit.Text = '') or (Tel3Edit.Text = '') then
+    ShowMessage('전화번호를 입력해주세요...')
+  else if StartDateEdit.Text = '' then
+    ShowMessage('시작일자를 입력해주세요...')
+  else if MembershipComboBox.ItemIndex = -1 then
+    ShowMessage('회원권을 선택해주세요...')
+  else
+    //ShowMessage('정상저장');
+    MemberController.TMemberController.MemberInsert(self);
 end;
 
 procedure TfmMemberInsert.cxButton1Click(Sender: TObject);
@@ -135,6 +162,7 @@ procedure TfmMemberInsert.FormShow(Sender: TObject);
 begin
   DrawRounded(Self,50);
   AnimateWindow(Self.Handle, 200, AW_ACTIVATE or AW_BLEND);
+  LockerController.TLockerController.MemberLockerSelect(Self);
 end;
 
 {** 라디오버튼 입력값에 따라 히든입력창 visible 설정이벤트
@@ -148,6 +176,14 @@ begin
     LockerDayPanel.Visible    := LockerDayRadioGroup.Buttons[0].Checked;
     LockerDayEdit.Visible     := LockerDayRadioGroup.Buttons[0].Checked;
     LockerHiddenLabel.Visible := LockerDayRadioGroup.Buttons[0].Checked;
+    LockerCurvy.Visible       := LockerDayRadioGroup.Buttons[0].Checked;
+    if LockerDayRadioGroup.Buttons[0].Checked then
+    begin
+      EditPanel.VertScrollBar.Range := 650;
+      EditPanel.VertScrollBar.Position := EditPanel.VertScrollBar.Position + 650;
+    end
+    else
+      EditPanel.VertScrollBar.Range := 400;
   end
   else if TcxRadioGroup(Sender).Name = 'WearRadioGroup' then
   begin
@@ -242,9 +278,95 @@ begin
     sTempName := Copy(TcxComboBox(Sender).Name, 0, Pos('ComboBox',TcxComboBox(Sender).Name)-1);
 
   MyComponent := FindComponent(sTempName+'Panel');
-
   TCurvyPanel(MyComponent).BorderColor := clMedGray;
+end;
 
+{** Locker선택 시 이벤트
+  @param [Sender] TObject
+* }
+procedure TfmMemberInsert.LockerChoice(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  I, J : Integer;
+  AComponent : TComponent;
+begin
+  for I := 1 to iMaxY do
+  begin
+    for J := 1 to iMaxX do
+    begin
+      AComponent := FindComponent(Format('LockerPanel_%d_%d',[J,I]));
+      TCurvyPanel(AComponent).BorderColor := $00EEEEEE;
+      TCurvyPanel(AComponent).Color := $00EEEEEE;
+    end;
+  end;
+
+  TCurvyPanel(Sender).BorderColor := $00FFD78C;
+  TCurvyPanel(Sender).Color := $00FFECC8;
+  iChoiceLocker := TCurvyPanel(Sender).Tag;
+end;
+
+procedure TfmMemberInsert.EditPanelMouseWheelDown(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  EditPanel.VertScrollBar.Position := EditPanel.VertScrollBar.Position + 20;
+end;
+procedure TfmMemberInsert.EditPanelMouseWheelUp(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  EditPanel.VertScrollBar.Position := EditPanel.VertScrollBar.Position - 20;
+end;
+
+{** 락커동적 생성
+  @param [Sender] TDataSet
+* }
+procedure TfmMemberInsert.ShowLockerData(ALocker: TDataSet);
+var
+  sCurvyPanel : TCurvyPanel;
+  I, J : Integer;
+begin
+  ALocker.Active := true;
+
+  LockWindowUpdate(Handle);
+  for I := 1 to iMaxY do
+  begin
+    for J := 1 to iMaxX do
+    begin
+      sCurvyPanel := TCurvyPanel.Create(Self);
+      with sCurvyPanel do begin
+        Parent := LockerChoicePanel;
+        Height := 45;
+        Width := 65;
+        Left := 5 + (73 * (J-1));
+        Top := 10 + (53 * (I-1));
+        Name := Format('LockerPanel_%d_%d',[J,I]);
+        Tag := ALocker.FieldByName('id').AsInteger;
+        BorderColor := $00EEEEEE;
+        Color := $00EEEEEE;
+        Rounding := 4;
+        Cursor := crHandPoint;
+        OnMouseDown := LockerChoice;
+      end;
+      with TLabel.Create(Self) do
+      begin
+          Parent := sCurvyPanel;
+          Alignment := taCenter;
+          AutoSize := False;
+          Caption := ALocker.FieldByName('num').AsString;
+          Font.Color := $00707070;
+          Font.Name := '맑은 고딕';
+          Font.Size := 10;
+          Font.Style := [fsBold];
+          ParentFont := False;
+          Height := 22;
+          Width := 22;
+          Left := 5;
+          Top := 5;
+          Name := Format('LockerNum_%d_%d',[J,I]);
+      end;
+      ALocker.Next;
+    end;
+  end;
+  LockWindowUpdate(0);
 end;
 
 procedure TMycxComboBox.Loaded;

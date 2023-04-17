@@ -91,6 +91,7 @@ begin
   if fmLogin.bcheck then
   begin
     MainForm.bLogin := true;
+    MainForm.sUserName := fmLogin.msgLabel.Caption;
     GymManagerForm.SV.CloseStyle := svcCompact;
     GymManagerForm.imgMenu.Visible := True;
     LoginThread := nil;

@@ -28,11 +28,15 @@ object fmLogin: TfmLogin
     Color = 16316664
     ParentBackground = False
     TabOrder = 0
+    DesignSize = (
+      993
+      648)
     object Panel1: TPanel
       Left = 324
       Top = 80
       Width = 346
       Height = 422
+      Anchors = []
       BevelOuter = bvNone
       Color = clWhite
       ParentBackground = False
