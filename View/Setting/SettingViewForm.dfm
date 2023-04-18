@@ -47,10 +47,10 @@ object fmSettingView: TfmSettingView
       ParentFont = False
     end
     object CurvyPanel1: TCurvyPanel
-      Left = 75
+      Left = 44
       Top = 227
-      Width = 866
-      Height = 97
+      Width = 933
+      Height = 102
       Anchors = []
       BorderColor = 13882323
       TabOrder = 0
@@ -68,7 +68,7 @@ object fmSettingView: TfmSettingView
         ParentFont = False
       end
       object PTPriceLabel: TLabel
-        Left = 23
+        Left = 239
         Top = 49
         Width = 50
         Height = 21
@@ -81,7 +81,7 @@ object fmSettingView: TfmSettingView
         ParentFont = False
       end
       object Label2: TLabel
-        Left = 205
+        Left = 382
         Top = 49
         Width = 16
         Height = 21
@@ -94,7 +94,7 @@ object fmSettingView: TfmSettingView
         ParentFont = False
       end
       object WearPriceLabel: TLabel
-        Left = 247
+        Left = 606
         Top = 49
         Width = 86
         Height = 21
@@ -107,7 +107,7 @@ object fmSettingView: TfmSettingView
         ParentFont = False
       end
       object Label4: TLabel
-        Left = 465
+        Left = 784
         Top = 49
         Width = 16
         Height = 21
@@ -120,7 +120,7 @@ object fmSettingView: TfmSettingView
         ParentFont = False
       end
       object Label5: TLabel
-        Left = 713
+        Left = 582
         Top = 49
         Width = 16
         Height = 21
@@ -133,7 +133,7 @@ object fmSettingView: TfmSettingView
         ParentFont = False
       end
       object LockerPriceLabel: TLabel
-        Left = 511
+        Left = 417
         Top = 49
         Width = 70
         Height = 21
@@ -145,27 +145,53 @@ object fmSettingView: TfmSettingView
         Font.Style = [fsBold]
         ParentFont = False
       end
+      object MembershipPriceLabel: TLabel
+        Left = 31
+        Top = 49
+        Width = 86
+        Height = 21
+        Caption = #54924#50896#44428' '#54620#45804
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 4934475
+        Font.Height = -16
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label3: TLabel
+        Left = 205
+        Top = 49
+        Width = 16
+        Height = 21
+        Caption = #50896
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 4934475
+        Font.Height = -16
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
       object PriceSaveBtn: TButton
-        Left = 760
+        Left = 828
         Top = 48
         Width = 75
         Height = 25
         Caption = #51200#51109
-        TabOrder = 3
+        TabOrder = 4
         OnClick = PriceSaveBtnClick
       end
       object PTPricePanel: TCurvyPanel
-        Left = 85
+        Left = 301
         Top = 43
-        Width = 113
+        Width = 75
         Height = 33
         BorderColor = clMedGray
         Rounding = 6
-        TabOrder = 0
+        TabOrder = 1
         object PTPriceEdit: TEdit
           Left = 10
           Top = 6
-          Width = 92
+          Width = 57
           Height = 21
           Alignment = taRightJustify
           BevelInner = bvNone
@@ -182,17 +208,17 @@ object fmSettingView: TfmSettingView
         end
       end
       object WearPricePanel: TCurvyPanel
-        Left = 344
+        Left = 703
         Top = 43
-        Width = 113
+        Width = 75
         Height = 33
         BorderColor = clMedGray
         Rounding = 6
-        TabOrder = 1
+        TabOrder = 3
         object WearPriceEdit: TEdit
           Left = 10
           Top = 6
-          Width = 92
+          Width = 59
           Height = 21
           Alignment = taRightJustify
           BevelInner = bvNone
@@ -209,9 +235,9 @@ object fmSettingView: TfmSettingView
         end
       end
       object LockerPricePanel: TCurvyPanel
-        Left = 594
+        Left = 500
         Top = 43
-        Width = 113
+        Width = 75
         Height = 33
         BorderColor = clMedGray
         Rounding = 6
@@ -219,7 +245,34 @@ object fmSettingView: TfmSettingView
         object LockerPriceEdit: TEdit
           Left = 10
           Top = 6
-          Width = 92
+          Width = 58
+          Height = 21
+          Alignment = taRightJustify
+          BevelInner = bvNone
+          BevelOuter = bvNone
+          BorderStyle = bsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -15
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
+          ParentFont = False
+          TabOrder = 0
+          Text = '0'
+        end
+      end
+      object MembershipPricePanel: TCurvyPanel
+        Left = 123
+        Top = 43
+        Width = 75
+        Height = 33
+        BorderColor = clMedGray
+        Rounding = 6
+        TabOrder = 0
+        object MembershipPriceEdit: TEdit
+          Left = 10
+          Top = 6
+          Width = 55
           Height = 21
           Alignment = taRightJustify
           BevelInner = bvNone
@@ -237,9 +290,9 @@ object fmSettingView: TfmSettingView
       end
     end
     object CurvyPanel2: TCurvyPanel
-      Left = 75
-      Top = 338
-      Width = 866
+      Left = 44
+      Top = 349
+      Width = 933
       Height = 97
       Anchors = []
       BorderColor = 13882323

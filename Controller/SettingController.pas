@@ -42,6 +42,10 @@ begin
     PriceSetting.code  := 'LOCKER';
     PriceSetting.price := StrToInt(AView.LockerPriceEdit.Text);
     sSqlCheck := SettingModule.PriceSetting.Update(PriceSetting);
+    //Membership Price
+    PriceSetting.code  := 'MEMBERSHIP';
+    PriceSetting.price := StrToInt(AView.MembershipPriceEdit.Text);
+    sSqlCheck := SettingModule.PriceSetting.Update(PriceSetting);
 
     if sSqlCheck = true then
       ShowMessage('정상 등록되었습니다.');
@@ -71,7 +75,9 @@ begin
     else if sCode = 'WEAR' then
       AView.WearPriceEdit.Text := IntToStr(iPrice)
     else if sCode = 'LOCKER' then
-      AView.LockerPriceEdit.Text := IntToStr(iPrice);
+      AView.LockerPriceEdit.Text := IntToStr(iPrice)
+    else if sCode = 'MEMBERSHIP' then
+      AView.MembershipPriceEdit.Text := IntToStr(iPrice);
 
     Price.Next;
   end;

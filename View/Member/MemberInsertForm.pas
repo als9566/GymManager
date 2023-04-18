@@ -87,6 +87,22 @@ type
     PTRadioGroup: TcxRadioGroup;
     LockerCurvy: TCurvyPanel;
     LockerChoicePanel: TcxScrollBox;
+    PTPricePanel: TPanel;
+    Label3: TLabel;
+    PTPriceEdit: TEdit;
+    Shape1: TShape;
+    WearPricePanel: TPanel;
+    Label2: TLabel;
+    Shape2: TShape;
+    WearPriceEdit: TEdit;
+    LockerPricePanel: TPanel;
+    Label4: TLabel;
+    Shape3: TShape;
+    LockerPriceEdit: TEdit;
+    MembershipPricePanel: TPanel;
+    Label6: TLabel;
+    Shape4: TShape;
+    MembershipPriceEdit: TEdit;
     procedure cxButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -107,6 +123,11 @@ type
       MousePos: TPoint; var Handled: Boolean);
     procedure LockerChoice(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
+    procedure PTEditChange(Sender: TObject);
+    procedure WearEditChange(Sender: TObject);
+    procedure LockerDayEditChange(Sender: TObject);
+    procedure MembershipComboBoxPropertiesChange(Sender: TObject);
+    procedure EditOnlyNumberKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -117,15 +138,14 @@ var
   fmMemberInsert: TfmMemberInsert;
   iMaxX, iMaxY : Integer;
   iChoiceLocker : Integer = 0;
+  iBasicPT, iBasicWear, iBasicLocker, iBasicMembership : Integer;
 
 implementation
 
 uses
-   CommonFunction, MemberController, LockerController;
+   CommonFunction, MemberController, LockerController, BasicPriceController;
 
-// TODO [EDIT 입력포맷 이벤트처리 ex) 전화번호는 숫자만]
-// TODO [회원권 기초가격 등록부분 추가하기]
-// TODO [기초가격 불러와서 계산(히든으로)]
+// TODO [PriceEdit 원 콤마처리]
 // TODO [사용중인 락커는 선택불가]
 {$R *.dfm}
 
@@ -163,6 +183,12 @@ begin
   DrawRounded(Self,50);
   AnimateWindow(Self.Handle, 200, AW_ACTIVATE or AW_BLEND);
   LockerController.TLockerController.MemberLockerSelect(Self);
+  BasicPriceController.TBasicPriceController.BasicPriceSelect(Self);
+
+  // 1회 or 한달가격 edit에 입력
+  PTPriceEdit.Text         := IntToStr(iBasicPT);
+  WearPriceEdit.Text       := IntToStr(iBasicWear);
+  LockerPriceEdit.Text     := IntToStr(iBasicLocker);
 end;
 
 {** 라디오버튼 입력값에 따라 히든입력창 visible 설정이벤트
@@ -177,6 +203,7 @@ begin
     LockerDayEdit.Visible     := LockerDayRadioGroup.Buttons[0].Checked;
     LockerHiddenLabel.Visible := LockerDayRadioGroup.Buttons[0].Checked;
     LockerCurvy.Visible       := LockerDayRadioGroup.Buttons[0].Checked;
+    LockerPricePanel.Visible  := LockerDayRadioGroup.Buttons[0].Checked;
     if LockerDayRadioGroup.Buttons[0].Checked then
     begin
       EditPanel.VertScrollBar.Range := 650;
@@ -190,12 +217,14 @@ begin
     WearPanel.Visible       := WearRadioGroup.Buttons[0].Checked;
     WearEdit.Visible        := WearRadioGroup.Buttons[0].Checked;
     WearHiddenLabel.Visible := WearRadioGroup.Buttons[0].Checked;
+    WearPricePanel.Visible  := WearRadioGroup.Buttons[0].Checked;
   end
   else if TcxRadioGroup(Sender).Name = 'PTRadioGroup' then
   begin
     PTPanel.Visible       := PTRadioGroup.Buttons[0].Checked;
     PTEdit.Visible        := PTRadioGroup.Buttons[0].Checked;
     PTHiddenLabel.Visible := PTRadioGroup.Buttons[0].Checked;
+    PTPricePanel.Visible  := PTRadioGroup.Buttons[0].Checked;
   end;
 end;
 
@@ -230,6 +259,43 @@ procedure TfmMemberInsert.MembershipComboBoxPropertiesInitPopup(
 begin
   TcxComboBoxPopupWindow(TcxComboBox(Sender).PopupWindow).ViewInfo.OnCustomDrawBorder := DoCustomDrawBorder;
 end;
+
+procedure TfmMemberInsert.WearEditChange(Sender: TObject);
+begin
+  // Wear Total 가격계산
+  if WearEdit.Text = '' then
+    WearPriceEdit.Text := '0'
+  else
+    WearPriceEdit.Text := IntToStr(iBasicWear * StrToInt(WearEdit.Text));
+end;
+
+procedure TfmMemberInsert.PTEditChange(Sender: TObject);
+begin
+  // PT Total 가격계산
+  if PTEdit.Text = '' then
+    PTPriceEdit.Text := '0'
+  else
+    PTPriceEdit.Text := IntToStr(iBasicPT * StrToInt(PTEdit.Text));
+end;
+
+procedure TfmMemberInsert.LockerDayEditChange(Sender: TObject);
+begin
+  // Locker Total 가격계산
+  if LockerDayEdit.Text = '' then
+    LockerPriceEdit.Text := '0'
+  else
+    LockerPriceEdit.Text := IntToStr(iBasicLocker * StrToInt(LockerDayEdit.Text));
+end;
+
+procedure TfmMemberInsert.MembershipComboBoxPropertiesChange(Sender: TObject);
+begin
+  // 회원권 Total 가격계산
+  if MembershipComboBox.ItemIndex = -1 then
+    MembershipPriceEdit.Text := '0'
+  else
+    MembershipPriceEdit.Text := IntToStr(iBasicMembership * (MembershipComboBox.ItemIndex+1));
+end;
+
 procedure TfmMemberInsert.DoCustomDrawBorder(AViewInfo: TcxContainerViewInfo;
   ACanvas: TcxCanvas; const R: TRect; var AHandled: Boolean;
   out ABorderWidth: Integer);
@@ -373,6 +439,14 @@ procedure TMycxComboBox.Loaded;
 begin
   inherited;
   ContentParams.Offsets.Left := 20;
+end;
+
+//숫자만 입력가능
+procedure TfmMemberInsert.EditOnlyNumberKeyPress(Sender: TObject; var Key: Char);
+begin
+  if (key in ['0'..'9']) or (Key = #8) then
+  else
+    Key := #0;
 end;
 
 end.

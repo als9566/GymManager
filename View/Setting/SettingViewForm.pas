@@ -35,6 +35,10 @@ type
     UsernameEdit: TEdit;
     PasswordPanel: TCurvyPanel;
     PasswordEdit: TEdit;
+    MembershipPriceLabel: TLabel;
+    Label3: TLabel;
+    MembershipPricePanel: TCurvyPanel;
+    MembershipPriceEdit: TEdit;
     procedure PriceSaveBtnClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure AccountSaveBtnClick(Sender: TObject);

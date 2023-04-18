@@ -3,7 +3,7 @@ object fmMemberInsert: TfmMemberInsert
   Top = 0
   BorderStyle = bsNone
   Caption = 'fmMemberInsert'
-  ClientHeight = 468
+  ClientHeight = 615
   ClientWidth = 638
   Color = clWhite
   TransparentColorValue = clWhite
@@ -20,7 +20,7 @@ object fmMemberInsert: TfmMemberInsert
   OnShow = FormShow
   DesignSize = (
     638
-    468)
+    615)
   PixelsPerInch = 96
   TextHeight = 13
   object Label5: TLabel
@@ -40,10 +40,11 @@ object fmMemberInsert: TfmMemberInsert
     Left = 0
     Top = 0
     Width = 637
-    Height = 467
+    Height = 614
     Anchors = [akLeft, akTop, akRight, akBottom]
     Rounding = 26
     TabOrder = 0
+    ExplicitHeight = 467
     object Label1: TLabel
       Left = 27
       Top = 23
@@ -59,9 +60,9 @@ object fmMemberInsert: TfmMemberInsert
     end
     object EditPanel: TcxScrollBox
       Left = 19
-      Top = 62
+      Top = 57
       Width = 599
-      Height = 403
+      Height = 539
       AutoScroll = False
       BorderStyle = cxcbsNone
       HorzScrollBar.Range = 551
@@ -154,7 +155,7 @@ object fmMemberInsert: TfmMemberInsert
       end
       object LockerDayLabel: TLabel
         Left = 43
-        Top = 356
+        Top = 375
         Width = 26
         Height = 17
         Caption = #46973#52964
@@ -206,7 +207,7 @@ object fmMemberInsert: TfmMemberInsert
       end
       object LockerHiddenLabel: TLabel
         Left = 208
-        Top = 356
+        Top = 375
         Width = 26
         Height = 17
         Caption = #44060#50900
@@ -261,7 +262,7 @@ object fmMemberInsert: TfmMemberInsert
       end
       object LockerDayRadioGroup: TcxRadioGroup
         Left = 75
-        Top = 353
+        Top = 372
         Alignment = alCenterCenter
         Properties.Columns = 2
         Properties.Items = <
@@ -436,6 +437,7 @@ object fmMemberInsert: TfmMemberInsert
             '10'#44060#50900
             '11'#44060#50900
             '12'#44060#50900)
+          Properties.OnChange = MembershipComboBoxPropertiesChange
           Properties.OnDrawItem = MembershipComboBoxPropertiesDrawItem
           Properties.OnInitPopup = MembershipComboBoxPropertiesInitPopup
           Style.BorderColor = clNone
@@ -476,7 +478,7 @@ object fmMemberInsert: TfmMemberInsert
       end
       object LockerDayPanel: TCurvyPanel
         Left = 148
-        Top = 347
+        Top = 366
         Width = 54
         Height = 33
         BorderColor = clMedGray
@@ -497,11 +499,14 @@ object fmMemberInsert: TfmMemberInsert
           Font.Height = -15
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
+          MaxLength = 5
           ParentFont = False
           TabOrder = 0
           Text = '1'
+          OnChange = LockerDayEditChange
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
+          OnKeyPress = EditOnlyNumberKeyPress
         end
       end
       object WearPanel: TCurvyPanel
@@ -527,11 +532,14 @@ object fmMemberInsert: TfmMemberInsert
           Font.Height = -15
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
+          MaxLength = 5
           ParentFont = False
           TabOrder = 0
           Text = '1'
+          OnChange = WearEditChange
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
+          OnKeyPress = EditOnlyNumberKeyPress
         end
       end
       object WearRadioGroup: TcxRadioGroup
@@ -578,10 +586,12 @@ object fmMemberInsert: TfmMemberInsert
           Font.Height = -15
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
+          MaxLength = 4
           ParentFont = False
           TabOrder = 0
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
+          OnKeyPress = EditOnlyNumberKeyPress
         end
       end
       object Tel2Panel: TCurvyPanel
@@ -605,10 +615,12 @@ object fmMemberInsert: TfmMemberInsert
           Font.Height = -15
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
+          MaxLength = 4
           ParentFont = False
           TabOrder = 0
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
+          OnKeyPress = EditOnlyNumberKeyPress
         end
       end
       object Tel3Panel: TCurvyPanel
@@ -632,10 +644,12 @@ object fmMemberInsert: TfmMemberInsert
           Font.Height = -15
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
+          MaxLength = 4
           ParentFont = False
           TabOrder = 0
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
+          OnKeyPress = EditOnlyNumberKeyPress
         end
       end
       object PTRadioGroup: TcxRadioGroup
@@ -682,16 +696,19 @@ object fmMemberInsert: TfmMemberInsert
           Font.Height = -15
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
+          MaxLength = 5
           ParentFont = False
           TabOrder = 0
           Text = '1'
+          OnChange = PTEditChange
           OnEnter = EditBorderFocusIn
           OnExit = EditBorderFocusOut
+          OnKeyPress = EditOnlyNumberKeyPress
         end
       end
       object LockerCurvy: TCurvyPanel
         Left = 46
-        Top = 388
+        Top = 427
         Width = 486
         Height = 233
         BorderColor = 12303291
@@ -707,6 +724,164 @@ object fmMemberInsert: TfmMemberInsert
           LookAndFeel.SkinName = 'DevExpressStyle'
           TabOrder = 0
           Transparent = True
+        end
+      end
+      object PTPricePanel: TPanel
+        Left = 46
+        Top = 342
+        Width = 142
+        Height = 22
+        BevelOuter = bvNone
+        TabOrder = 16
+        Visible = False
+        object Label3: TLabel
+          Left = 27
+          Top = 3
+          Width = 13
+          Height = 17
+          Caption = #65510
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
+          ParentFont = False
+        end
+        object Shape1: TShape
+          Left = 44
+          Top = 19
+          Width = 83
+          Height = 1
+        end
+        object PTPriceEdit: TEdit
+          Left = 46
+          Top = 4
+          Width = 75
+          Height = 15
+          Alignment = taRightJustify
+          BorderStyle = bsNone
+          MaxLength = 12
+          TabOrder = 0
+          Text = '0'
+          OnKeyPress = EditOnlyNumberKeyPress
+        end
+      end
+      object WearPricePanel: TPanel
+        Left = 311
+        Top = 342
+        Width = 142
+        Height = 22
+        BevelOuter = bvNone
+        TabOrder = 17
+        Visible = False
+        object Label2: TLabel
+          Left = 27
+          Top = 3
+          Width = 13
+          Height = 17
+          Caption = #65510
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
+          ParentFont = False
+        end
+        object Shape2: TShape
+          Left = 44
+          Top = 19
+          Width = 83
+          Height = 1
+        end
+        object WearPriceEdit: TEdit
+          Left = 46
+          Top = 4
+          Width = 75
+          Height = 15
+          Alignment = taRightJustify
+          BorderStyle = bsNone
+          MaxLength = 12
+          TabOrder = 0
+          Text = '0'
+          OnKeyPress = EditOnlyNumberKeyPress
+        end
+      end
+      object LockerPricePanel: TPanel
+        Left = 46
+        Top = 402
+        Width = 142
+        Height = 22
+        BevelOuter = bvNone
+        TabOrder = 18
+        Visible = False
+        object Label4: TLabel
+          Left = 27
+          Top = 3
+          Width = 13
+          Height = 17
+          Caption = #65510
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
+          ParentFont = False
+        end
+        object Shape3: TShape
+          Left = 44
+          Top = 19
+          Width = 83
+          Height = 1
+        end
+        object LockerPriceEdit: TEdit
+          Left = 46
+          Top = 4
+          Width = 75
+          Height = 15
+          Alignment = taRightJustify
+          BorderStyle = bsNone
+          MaxLength = 12
+          TabOrder = 0
+          Text = '0'
+          OnKeyPress = EditOnlyNumberKeyPress
+        end
+      end
+      object MembershipPricePanel: TPanel
+        Left = 390
+        Top = 232
+        Width = 142
+        Height = 22
+        BevelOuter = bvNone
+        TabOrder = 19
+        object Label6: TLabel
+          Left = 27
+          Top = 3
+          Width = 13
+          Height = 17
+          Caption = #65510
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
+          ParentFont = False
+        end
+        object Shape4: TShape
+          Left = 44
+          Top = 19
+          Width = 83
+          Height = 1
+        end
+        object MembershipPriceEdit: TEdit
+          Left = 46
+          Top = 4
+          Width = 75
+          Height = 15
+          Alignment = taRightJustify
+          BorderStyle = bsNone
+          TabOrder = 0
+          Text = '0'
+          OnKeyPress = EditOnlyNumberKeyPress
         end
       end
     end

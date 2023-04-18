@@ -22,7 +22,9 @@ uses
   ScheduleViewForm in 'View\Schedule\ScheduleViewForm.pas' {fmScheduleView},
   SettingViewForm in 'View\Setting\SettingViewForm.pas' {fmSettingView},
   SettingController in 'Controller\SettingController.pas',
-  SettingModule in 'DataModule\SettingModule.pas' {dmSetting: TDataModule};
+  SettingModule in 'DataModule\SettingModule.pas' {dmSetting: TDataModule},
+  BasicPriceController in 'Controller\BasicPriceController.pas',
+  BasicPriceModule in 'DataModule\BasicPriceModule.pas' {dmBasicPrice: TDataModule};
 
 {$R *.res}
 
@@ -36,5 +38,6 @@ begin
   Application.CreateForm(TdmLogin, dmLogin);
   Application.CreateForm(TdmSetting, dmSetting);
   Application.CreateForm(TfmMemberManaging, fmMemberManaging);
+  Application.CreateForm(TdmBasicPrice, dmBasicPrice);
   Application.Run;
 end.
