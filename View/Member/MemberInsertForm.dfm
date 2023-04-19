@@ -3,7 +3,7 @@ object fmMemberInsert: TfmMemberInsert
   Top = 0
   BorderStyle = bsNone
   Caption = 'fmMemberInsert'
-  ClientHeight = 615
+  ClientHeight = 477
   ClientWidth = 638
   Color = clWhite
   TransparentColorValue = clWhite
@@ -20,7 +20,7 @@ object fmMemberInsert: TfmMemberInsert
   OnShow = FormShow
   DesignSize = (
     638
-    615)
+    477)
   PixelsPerInch = 96
   TextHeight = 13
   object Label5: TLabel
@@ -40,11 +40,10 @@ object fmMemberInsert: TfmMemberInsert
     Left = 0
     Top = 0
     Width = 637
-    Height = 614
+    Height = 476
     Anchors = [akLeft, akTop, akRight, akBottom]
     Rounding = 26
     TabOrder = 0
-    ExplicitHeight = 467
     object Label1: TLabel
       Left = 27
       Top = 23
@@ -62,7 +61,7 @@ object fmMemberInsert: TfmMemberInsert
       Left = 19
       Top = 57
       Width = 599
-      Height = 539
+      Height = 408
       AutoScroll = False
       BorderStyle = cxcbsNone
       HorzScrollBar.Range = 551
@@ -755,7 +754,7 @@ object fmMemberInsert: TfmMemberInsert
         end
         object PTPriceEdit: TEdit
           Left = 46
-          Top = 4
+          Top = 3
           Width = 75
           Height = 15
           Alignment = taRightJustify
@@ -764,6 +763,7 @@ object fmMemberInsert: TfmMemberInsert
           TabOrder = 0
           Text = '0'
           OnKeyPress = EditOnlyNumberKeyPress
+          OnKeyUp = PriceCommaKeyUp
         end
       end
       object WearPricePanel: TPanel
@@ -804,6 +804,7 @@ object fmMemberInsert: TfmMemberInsert
           TabOrder = 0
           Text = '0'
           OnKeyPress = EditOnlyNumberKeyPress
+          OnKeyUp = PriceCommaKeyUp
         end
       end
       object LockerPricePanel: TPanel
@@ -844,6 +845,7 @@ object fmMemberInsert: TfmMemberInsert
           TabOrder = 0
           Text = '0'
           OnKeyPress = EditOnlyNumberKeyPress
+          OnKeyUp = PriceCommaKeyUp
         end
       end
       object MembershipPricePanel: TPanel
@@ -879,9 +881,11 @@ object fmMemberInsert: TfmMemberInsert
           Height = 15
           Alignment = taRightJustify
           BorderStyle = bsNone
+          MaxLength = 12
           TabOrder = 0
           Text = '0'
           OnKeyPress = EditOnlyNumberKeyPress
+          OnKeyUp = PriceCommaKeyUp
         end
       end
     end

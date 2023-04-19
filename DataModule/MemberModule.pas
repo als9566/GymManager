@@ -18,7 +18,7 @@ type
     Ftel        : string;
     Faddress    : string;
     Fstart_date : string;
-    Fmembership : Integer;
+    Fmembership : string;
     Flocker     : Integer;
     Fwear       : Integer;
     Fpt         : Integer;
@@ -29,11 +29,12 @@ type
     property tel        : string  read Ftel        write Ftel;
     property address    : string  read Faddress    write Faddress;
     property start_date : string  read Fstart_date write Fstart_date;
-    property membership : Integer read Fmembership write Fmembership;
+    property membership : string read Fmembership write Fmembership;
     property locker     : Integer read Flocker     write Flocker;
     property wear       : Integer read Fwear       write Fwear;
     property pt         : Integer read Fpt         write Fpt;
     Function Insert(AMember: TMember) :Boolean;
+    Function MaxIdSelect : Integer;
   end;
 
 type
@@ -58,7 +59,6 @@ uses
 
 {$R *.dfm}
 
-//Function NumToHchar(nNum : String) : String;
 Function TMember.Insert(AMember: TMember): Boolean;
 begin
 
@@ -75,7 +75,7 @@ begin
     dmMember.FDQuery.ParamByName('tel').AsString := AMember.tel;
     dmMember.FDQuery.ParamByName('address').AsString := AMember.address;
     dmMember.FDQuery.ParamByName('start_date').AsString := AMember.start_date;
-    dmMember.FDQuery.ParamByName('membership').AsInteger := AMember.membership;
+    dmMember.FDQuery.ParamByName('membership').AsString := AMember.membership;
     dmMember.FDQuery.ParamByName('locker').AsInteger := AMember.locker;
     dmMember.FDQuery.ParamByName('wear').AsInteger := AMember.wear;
     dmMember.FDQuery.ParamByName('pt').AsInteger := AMember.pt;
@@ -90,6 +90,20 @@ begin
     Result := false;
   end;
 
+end;
+
+Function TMember.MaxIdSelect : Integer;
+begin
+  try
+    dmMember.FDQuery.SQL.Text := 'SELECT max(id) "MaxId"'
+                              + '  FROM member        ';
+
+    dmMember.FDQuery.Active := true;
+    Result := dmMember.FDQuery.FieldByName('MaxId').AsInteger;
+
+  except
+    Result := 0;
+  end;
 end;
 
 end.

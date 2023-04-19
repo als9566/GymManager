@@ -15,15 +15,18 @@ type
 implementation
 
 uses
-  CommonFunction, MemberModule;
+  CommonFunction, MemberModule, PaymentDetailsModule;
 
 {** MemberInsert
 * }
 constructor TMemberController.MemberInsert(const AView: TfmMemberInsert);
 var
   Member: TMember;
+  PaymentDetails : TPaymentDetails;
 begin
   Member := TMember.Create;
+  PaymentDetails := TPaymentDetails.Create;
+
   try
     Member.name := AView.NameEdit.Text;
     Member.gender := AView.GenderRadioGroup.EditValue;
@@ -31,7 +34,7 @@ begin
     Member.tel := AView.Tel1Edit.Text + '-' + AView.Tel2Edit.Text + '-' + AView.Tel3Edit.Text;
     Member.address := AView.AddressEdit.Text;
     Member.start_date := AView.StartDateEdit.Text;
-    Member.membership := StrToInt(AView.MembershipComboBox.Text);
+    Member.membership := AView.MembershipComboBox.Text;
 
     if AView.LockerDayRadioGroup.Buttons[0].Checked then
       Member.locker := StrToInt(AView.LockerDayEdit.Text);
@@ -44,8 +47,49 @@ begin
 
     if MemberModule.Member.Insert(Member) = true then
     begin
-      ShowMessage('정상 등록되었습니다.');
-      AView.close;
+      PaymentDetails.memberId         := MemberModule.Member.MaxIdSelect;
+      PaymentDetails.paymentDetailsNo := 1;
+      PaymentDetails.membership       := IntToStr(AView.MembershipComboBox.ItemIndex+1)+'개월';
+      PaymentDetails.membershipPrice  := StrToInt(CommaDelete(AView.MembershipPriceEdit.Text));
+
+      if AView.PTRadioGroup.Buttons[0].Checked then
+      begin
+        PaymentDetails.pt      := AView.PTEdit.Text+'회';
+        PaymentDetails.ptPrice := StrToInt(CommaDelete(AView.PTPriceEdit.Text));
+      end
+      else
+      begin
+        PaymentDetails.pt      := '';
+        PaymentDetails.ptPrice := 0;
+      end;
+
+      if AView.WearRadioGroup.Buttons[0].Checked then
+      begin
+        PaymentDetails.wear      := AView.WearEdit.Text+'개월';
+        PaymentDetails.wearPrice := StrToInt(CommaDelete(AView.WearPriceEdit.Text));
+      end
+      else
+      begin
+        PaymentDetails.wear      := '';
+        PaymentDetails.wearPrice := 0;
+      end;
+
+      if AView.LockerDayRadioGroup.Buttons[0].Checked then
+      begin
+        PaymentDetails.locker      := AView.LockerDayEdit.Text+'개월';
+        PaymentDetails.lockerPrice := StrToInt(CommaDelete(AView.LockerPriceEdit.Text));
+      end
+      else
+      begin
+        PaymentDetails.locker      := '';
+        PaymentDetails.lockerPrice := 0;
+      end;
+
+      if PaymentDetailsModule.PaymentDetails.Insert(PaymentDetails) = true then
+      begin
+        ShowMessage('정상 등록되었습니다.');
+        AView.close;
+      end;
     end
     else
     begin
@@ -54,6 +98,7 @@ begin
 
   finally
     Member.Free;
+    PaymentDetails.Free;
   end;
 end;
 

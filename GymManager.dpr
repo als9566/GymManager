@@ -24,7 +24,8 @@ uses
   SettingController in 'Controller\SettingController.pas',
   SettingModule in 'DataModule\SettingModule.pas' {dmSetting: TDataModule},
   BasicPriceController in 'Controller\BasicPriceController.pas',
-  BasicPriceModule in 'DataModule\BasicPriceModule.pas' {dmBasicPrice: TDataModule};
+  BasicPriceModule in 'DataModule\BasicPriceModule.pas' {dmBasicPrice: TDataModule},
+  PaymentDetailsModule in 'DataModule\PaymentDetailsModule.pas' {dmPaymentDetails: TDataModule};
 
 {$R *.res}
 
@@ -39,5 +40,6 @@ begin
   Application.CreateForm(TdmSetting, dmSetting);
   Application.CreateForm(TfmMemberManaging, fmMemberManaging);
   Application.CreateForm(TdmBasicPrice, dmBasicPrice);
+  Application.CreateForm(TdmPaymentDetails, dmPaymentDetails);
   Application.Run;
 end.

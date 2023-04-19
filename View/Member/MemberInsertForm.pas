@@ -128,6 +128,8 @@ type
     procedure LockerDayEditChange(Sender: TObject);
     procedure MembershipComboBoxPropertiesChange(Sender: TObject);
     procedure EditOnlyNumberKeyPress(Sender: TObject; var Key: Char);
+    procedure PriceCommaKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -145,13 +147,11 @@ implementation
 uses
    CommonFunction, MemberController, LockerController, BasicPriceController;
 
-// TODO [PriceEdit 원 콤마처리]
 // TODO [사용중인 락커는 선택불가]
 {$R *.dfm}
 
 procedure TfmMemberInsert.Button1Click(Sender: TObject);
 begin
-  //MemberController.MemberInsert();
   if NameEdit.Text = '' then
     ShowMessage('이름을 입력해주세요...')
   else if BirthdayDateEdit.Text = '' then
@@ -163,8 +163,10 @@ begin
   else if MembershipComboBox.ItemIndex = -1 then
     ShowMessage('회원권을 선택해주세요...')
   else
-    //ShowMessage('정상저장');
+  begin
     MemberController.TMemberController.MemberInsert(self);
+  end;
+
 end;
 
 procedure TfmMemberInsert.cxButton1Click(Sender: TObject);
@@ -186,9 +188,9 @@ begin
   BasicPriceController.TBasicPriceController.BasicPriceSelect(Self);
 
   // 1회 or 한달가격 edit에 입력
-  PTPriceEdit.Text         := IntToStr(iBasicPT);
-  WearPriceEdit.Text       := IntToStr(iBasicWear);
-  LockerPriceEdit.Text     := IntToStr(iBasicLocker);
+  PTPriceEdit.Text         := NumberComma(IntToStr(iBasicPT));
+  WearPriceEdit.Text       := NumberComma(IntToStr(iBasicWear));
+  LockerPriceEdit.Text     := NumberComma(IntToStr(iBasicLocker));
 end;
 
 {** 라디오버튼 입력값에 따라 히든입력창 visible 설정이벤트
@@ -206,8 +208,8 @@ begin
     LockerPricePanel.Visible  := LockerDayRadioGroup.Buttons[0].Checked;
     if LockerDayRadioGroup.Buttons[0].Checked then
     begin
-      EditPanel.VertScrollBar.Range := 650;
-      EditPanel.VertScrollBar.Position := EditPanel.VertScrollBar.Position + 650;
+      EditPanel.VertScrollBar.Range := 700;
+      EditPanel.VertScrollBar.Position := EditPanel.VertScrollBar.Position + 700;
     end
     else
       EditPanel.VertScrollBar.Range := 400;
@@ -293,7 +295,7 @@ begin
   if MembershipComboBox.ItemIndex = -1 then
     MembershipPriceEdit.Text := '0'
   else
-    MembershipPriceEdit.Text := IntToStr(iBasicMembership * (MembershipComboBox.ItemIndex+1));
+    MembershipPriceEdit.Text := NumberComma(IntToStr(iBasicMembership * (MembershipComboBox.ItemIndex+1)));
 end;
 
 procedure TfmMemberInsert.DoCustomDrawBorder(AViewInfo: TcxContainerViewInfo;
@@ -441,12 +443,23 @@ begin
   ContentParams.Offsets.Left := 20;
 end;
 
-//숫자만 입력가능
+// 숫자만 입력가능
 procedure TfmMemberInsert.EditOnlyNumberKeyPress(Sender: TObject; var Key: Char);
 begin
   if (key in ['0'..'9']) or (Key = #8) then
   else
     Key := #0;
+end;
+
+// 가격 콤마처리
+procedure TfmMemberInsert.PriceCommaKeyUp(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+begin
+  if TEdit(Sender).Text = '' then
+    TEdit(Sender).Text := '0';
+  TEdit(Sender).Text := StringReplace(TEdit(Sender).Text, ',' ,'',[rfReplaceAll]);
+  TEdit(Sender).Text := FormatFloat('#,##0', StrToInt(TEdit(Sender).Text));
+  TEdit(Sender).SelStart := Length(TEdit(Sender).Text) + 1;
 end;
 
 end.

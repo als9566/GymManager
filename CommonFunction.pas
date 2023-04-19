@@ -9,6 +9,10 @@ uses
 
 // Control 모서리 둥글게 만들기
 procedure DrawRounded(Control: TWinControl; N: Integer);
+// 숫자에 콤마찍기
+function NumberComma(number : string): String;
+// 콤마제거
+function CommaDelete(number : string): String;
 
 implementation
 
@@ -32,6 +36,23 @@ begin
     SetWindowRgn(Handle, rgn, True) ;
     Invalidate;
   end;
+end;
+
+
+{** 받은 숫자텍스트에 콤마를 찍어 반환.
+  @param [number] 콤마를 찍을 숫자텍스트
+* }
+function NumberComma(number : string) : String;
+begin
+  Result := FormatFloat('#,##0', StrToInt(number));
+end;
+
+{** 받은 숫자텍스트에 콤마를 제거한 후 반환.
+  @param [number] 콤마를 제거할 숫자텍스트
+* }
+function CommaDelete(number : string) : String;
+begin
+  Result := StringReplace(number, ',' ,'',[rfReplaceAll]);
 end;
 
 end.
