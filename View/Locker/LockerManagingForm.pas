@@ -60,6 +60,10 @@ uses
 
 {$R *.dfm}
 
+//TODO 락커현황 잔여일
+//TODO 새로고침 버튼로직 만들기
+//TODO 락커수정 로직만들기(락커가 하나도 없다면 추가view, 등록되어있다면 수정view)
+
 procedure TfmLockerManaging.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
@@ -136,8 +140,6 @@ begin
           Parent := sCurvyPanel;
           Alignment := taCenter;
           AutoSize := False;
-          Caption := '홍길동';
-          //Font.Color := $004E4E4E;
           Font.Color := $00707070;
           Font.Name := '맑은 고딕';
           Font.Size := 12;
@@ -148,6 +150,10 @@ begin
           Left := 0;
           Top := 27;
           Name := Format('LockerName_%d_%d',[J,I]);
+          if ALocker.FieldByName('name').AsString = '' then
+            Caption := ''
+          else
+            Caption := ALocker.FieldByName('name').AsString;
       end;
       with TLabel.Create(Self) do
       begin

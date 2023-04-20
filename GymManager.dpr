@@ -38,8 +38,8 @@ begin
   Application.CreateForm(TdmLocker, dmLocker);
   Application.CreateForm(TdmLogin, dmLogin);
   Application.CreateForm(TdmSetting, dmSetting);
-  Application.CreateForm(TfmMemberManaging, fmMemberManaging);
   Application.CreateForm(TdmBasicPrice, dmBasicPrice);
   Application.CreateForm(TdmPaymentDetails, dmPaymentDetails);
+  Application.CreateForm(TfmLockerManaging, fmLockerManaging);
   Application.Run;
 end.

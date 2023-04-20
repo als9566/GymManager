@@ -76,9 +76,12 @@ end;
 Function TLocker.Select :TDataSet;
 begin
   try
-    dmLocker.FDQuery.SQL.Text := 'SELECT id, num, x, y '
-                              + '  FROM locker         '
-                              + ' ORDER BY y, x        ';
+    dmLocker.FDQuery.SQL.Text := 'SELECT locker.id, locker.num, locker.x, locker.y '
+                              + '       , member.name                              '
+                              + '  FROM locker                                     '
+                              + ' LEFT OUTER JOIN member                           '
+                              + '   ON locker.id = member.locker                   '
+                              + ' ORDER BY locker.y, locker.x                      ';
 
     Result := dmLocker.FDQuery;
   except
