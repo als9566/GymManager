@@ -76,12 +76,15 @@ end;
 Function TLocker.Select :TDataSet;
 begin
   try
-    dmLocker.FDQuery.SQL.Text := 'SELECT locker.id, locker.num, locker.x, locker.y '
-                              + '       , member.name                              '
-                              + '  FROM locker                                     '
-                              + ' LEFT OUTER JOIN member                           '
-                              + '   ON locker.id = member.locker                   '
-                              + ' ORDER BY locker.y, locker.x                      ';
+    dmLocker.FDQuery.SQL.Text := 'SELECT locker.id, locker.num, locker.x, locker.y                                               '
+                               + '     , member.name                                                                             '
+                               + '     , julianday(locker_end) - julianday(strftime(''%Y-%m-%d'', ''now'')) "locker_end"         '
+                               + '  FROM locker                                                                                  '
+                               + '  LEFT OUTER JOIN (SELECT * FROM member                                                        '
+                               + '                    WHERE julianday(locker_end) >= julianday(strftime(''%Y-%m-%d'', ''now''))  '
+                               + '                   ) member                                                                    '
+                               + '    ON locker.id = member.locker                                                               '
+                               + ' ORDER BY locker.y, locker.x                                                                   ';
 
     Result := dmLocker.FDQuery;
   except

@@ -60,7 +60,6 @@ uses
 
 {$R *.dfm}
 
-//TODO 락커현황 잔여일
 //TODO 새로고침 버튼로직 만들기
 //TODO 락커수정 로직만들기(락커가 하나도 없다면 추가view, 등록되어있다면 수정view)
 
@@ -123,7 +122,6 @@ begin
           Alignment := taCenter;
           AutoSize := False;
           Caption := ALocker.FieldByName('num').AsString;
-          //Font.Color := $00646464;
           Font.Color := $00707070;
           Font.Name := '맑은 고딕';
           Font.Size := 12;
@@ -160,8 +158,6 @@ begin
           Parent := sCurvyPanel;
           Alignment := taCenter;
           AutoSize := False;
-          Caption := '잔여 0일';
-          //Font.Color := $00737373;
           Font.Color := $00959595;
           Font.Name := '맑은 고딕';
           Font.Size := 8;
@@ -172,6 +168,10 @@ begin
           Left := 0;
           Top := 55;
           Name := Format('LockerDay_%d_%d',[J,I]);
+          if ALocker.FieldByName('locker_end').AsString = '' then
+            Caption := ''
+          else
+            Caption := '잔여 '+IntToStr(ALocker.FieldByName('locker_end').AsInteger)+'일';
       end;
       ALocker.Next;
     end;
