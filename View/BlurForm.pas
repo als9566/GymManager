@@ -21,7 +21,7 @@ uses
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, dxGDIPlusClasses, cxImage,
-  MemberInsertForm, LockerCreateForm;
+  MemberInsertForm, LockerCreateForm, LockerModifyForm;
 
 type
   TfmBlur = class(TForm)
@@ -38,6 +38,7 @@ var
   fmBlur: TfmBlur;
   fmMemberInsert: TfmMemberInsert;
   fmLockerCreate: TfmLockerCreate;
+  fmLockerModify: TfmLockerModify;
 
 implementation
 
@@ -52,6 +53,7 @@ begin
   @imgBlur.Tag
    : 1 == MemberInsertForm [회원등록]
    : 2 == LockerCreateForm [락커생성]
+   : 3 == LockerModifyForm [락커수정]
   * }
   if imgBlur.Tag = 1 then
   begin
@@ -66,6 +68,13 @@ begin
     fmLockerCreate.Top := (GymManagerForm.Height - fmLockerCreate.Height) div 2 + GymManagerForm.Top;
     fmLockerCreate.Left := (GymManagerForm.Width - fmLockerCreate.Width) div 2 + GymManagerForm.Left;
     fmLockerCreate.ShowModal;
+  end
+  else if imgBlur.Tag = 3 then
+  begin
+    fmLockerModify := TfmLockerModify.Create(Self);
+    fmLockerModify.Top := (GymManagerForm.Height - fmLockerModify.Height) div 2 + GymManagerForm.Top;
+    fmLockerModify.Left := (GymManagerForm.Width - fmLockerModify.Width) div 2 + GymManagerForm.Left;
+    fmLockerModify.ShowModal;
   end;
 
   close;

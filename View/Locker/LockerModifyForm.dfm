@@ -1,8 +1,8 @@
-object fmLockerCreate: TfmLockerCreate
+object fmLockerModify: TfmLockerModify
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'fmLockerCreate'
+  Caption = 'fmLockerModify'
   ClientHeight = 476
   ClientWidth = 623
   Color = clBtnFace
@@ -20,8 +20,8 @@ object fmLockerCreate: TfmLockerCreate
   PixelsPerInch = 96
   TextHeight = 13
   object backPanel: TCurvyPanel
-    Left = 0
-    Top = 0
+    Left = 1
+    Top = 1
     Width = 622
     Height = 475
     Anchors = [akLeft, akTop, akRight, akBottom]
@@ -36,7 +36,7 @@ object fmLockerCreate: TfmLockerCreate
       Top = 23
       Width = 80
       Height = 28
-      Caption = #46973#52964#49373#49457
+      Caption = #46973#52964#49688#51221
       Font.Charset = DEFAULT_CHARSET
       Font.Color = 6446686
       Font.Height = -20
@@ -45,8 +45,8 @@ object fmLockerCreate: TfmLockerCreate
       ParentFont = False
     end
     object cxButton1: TcxButton
-      Left = 561
-      Top = 22
+      Left = 559
+      Top = 23
       Width = 43
       Height = 25
       LookAndFeel.NativeStyle = False
@@ -75,7 +75,6 @@ object fmLockerCreate: TfmLockerCreate
       Height = 25
       Caption = #51200#51109
       TabOrder = 1
-      OnClick = Button1Click
     end
     object ScrollBox: TcxScrollBox
       Left = 18

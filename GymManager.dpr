@@ -25,7 +25,8 @@ uses
   SettingModule in 'DataModule\SettingModule.pas' {dmSetting: TDataModule},
   BasicPriceController in 'Controller\BasicPriceController.pas',
   BasicPriceModule in 'DataModule\BasicPriceModule.pas' {dmBasicPrice: TDataModule},
-  PaymentDetailsModule in 'DataModule\PaymentDetailsModule.pas' {dmPaymentDetails: TDataModule};
+  PaymentDetailsModule in 'DataModule\PaymentDetailsModule.pas' {dmPaymentDetails: TDataModule},
+  LockerModifyForm in 'View\Locker\LockerModifyForm.pas' {fmLockerModify};
 
 {$R *.res}
 
@@ -41,5 +42,6 @@ begin
   Application.CreateForm(TdmBasicPrice, dmBasicPrice);
   Application.CreateForm(TdmPaymentDetails, dmPaymentDetails);
   Application.CreateForm(TfmLockerManaging, fmLockerManaging);
+  Application.CreateForm(TfmLockerModify, fmLockerModify);
   Application.Run;
 end.

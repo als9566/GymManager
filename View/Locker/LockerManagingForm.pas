@@ -37,10 +37,12 @@ type
     Shape3: TShape;
     LockerPanel: TcxScrollBox;
     NewInsertBtn: TcxButton;
+    ModifyBtn: TcxButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure NewInsertBtnClick(Sender: TObject);
     procedure ShowData(ALocker: TDataSet);
+    procedure ModifyBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -72,6 +74,20 @@ end;
 procedure TfmLockerManaging.FormShow(Sender: TObject);
 begin
   LockerController.TLockerController.LockerArraySelect(Self);
+end;
+
+{** 수정버튼 이벤트 (락커수정창 띄우기)
+  @param [Sender] NewInsertBtn
+* }
+procedure TfmLockerManaging.ModifyBtnClick(Sender: TObject);
+begin
+  fmBlur := TfmBlur.Create(Self);
+  fmBlur.Top := GymManagerForm.Top;
+  fmBlur.Left := GymManagerForm.Left;
+  fmBlur.Height := GymManagerForm.Height;
+  fmBlur.Width := GymManagerForm.Width;
+  fmBlur.imgBlur.Tag := 3;
+  fmBlur.Show;
 end;
 
 {** 신규버튼 이벤트 (락커생성창 띄우기)

@@ -3,7 +3,7 @@ unit LockerController;
 interface
 
 uses Forms, Windows, Messages, SysUtils, Variants, Classes, Controls, Dialogs,
-     Data.DB, LockerCreateForm, LockerManagingForm, MemberInsertForm;
+     Data.DB, LockerCreateForm, LockerManagingForm, MemberInsertForm, LockerModifyForm;
 
 type
   TLockerController = class
@@ -13,6 +13,7 @@ type
     constructor LockerInsert(const AView: TfmLockerCreate; maxX,maxY : Integer);
     constructor LockerArraySelect(const AView: TfmLockerManaging);
     constructor MemberLockerSelect(const AView: TfmMemberInsert);
+    constructor LockerModifySelect(const AView: TfmLockerModify);
   end;
 
 implementation
@@ -74,6 +75,16 @@ begin
   MemberInsertForm.iMaxY := LockerModule.Locker.Max_Select_Y;
   Locker := LockerModule.Locker.Select();
   AView.ShowLockerData(Locker);
+end;
+
+constructor TLockerController.LockerModifySelect(const AView: TfmLockerModify);
+var
+  Locker : TDataSet;
+begin
+  LockerModifyForm.LockerX := LockerModule.Locker.Max_Select_X;
+  LockerModifyForm.LockerY := LockerModule.Locker.Max_Select_Y;
+  Locker := LockerModule.Locker.Select();
+  AView.ShowData(Locker);
 end;
 
 end.
