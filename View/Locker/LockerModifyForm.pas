@@ -44,6 +44,7 @@ type
     procedure XPlusBtnClick(Sender: TObject);
     procedure YPlusBtnClick(Sender: TObject);
     procedure MinusBtnCreate(pXY : String; pN : Integer);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -62,9 +63,10 @@ uses
 
 {$R *.dfm}
 
-//TODO 수정 후 저장로직만들기
-// TAG값이 0이 아니면 update
-// 0이라면 insert
+procedure TfmLockerModify.Button1Click(Sender: TObject);
+begin
+  LockerController.TLockerController.LockerModify(self,LockerX,LockerY);
+end;
 
 procedure TfmLockerModify.cxButton1Click(Sender: TObject);
 begin
@@ -128,23 +130,34 @@ begin
       end;
       with TLabel.Create(Self) do
       begin
-          Parent := sCurvyPanel;
-          Alignment := taCenter;
-          AutoSize := False;
-          Caption := ALocker.FieldByName('num').AsString;
-          Font.Color := $00707070;
-          Font.Name := '맑은 고딕';
-          Font.Size := 9;
-          Font.Style := [fsBold];
-          ParentFont := False;
-          Height := 22;
-          Width := 22;
-          Left := 5;
-          Top := 5;
-          Name := Format('LockerNum_%d_%d',[J,I]);
+        Parent := sCurvyPanel;
+        Alignment := taCenter;
+        BorderStyle := bsNone;
+        Width := 22;
+        Height := 15;
+        Left := 5;
+        Top := 5;
+        Color := $00EEEEEE;
+        Font.Color := $00707070;
+        Font.Name := '맑은 고딕';
+        Font.Size := 9;
+        Font.Style := [fsBold];
+        ParentFont := False;
+        Name := Format('LockerUse_%d_%d',[J,I]);
+        if ALocker.FieldByName('name').AsString <> '' then
+            Caption := '사용중'
+          else
+            Caption := '';
+        //Caption := ALocker.FieldByName('num').AsString;
       end;
       with TEdit.Create(Self) do
       begin
+//          Color := $00EEEEEE;
+//          Font.Color := $00707070;
+//          Font.Name := '맑은 고딕';
+//          Font.Size := 12;
+//          Font.Style := [fsBold];
+//          ParentFont := False;
           Parent := sCurvyPanel;
           Alignment := taCenter;
           BorderStyle := bsNone;
@@ -152,16 +165,8 @@ begin
           Left := 0;
           Top := 20;
           Color := $00EEEEEE;
-          Font.Color := $00707070;
-          Font.Name := '맑은 고딕';
-          Font.Size := 12;
-          Font.Style := [fsBold];
-          ParentFont := False;
           Name := Format('LockerEdit_%d_%d',[J,I]);
-          if ALocker.FieldByName('name').AsString <> '' then
-            Text := '사용중'
-          else
-            Text := '';
+          Text := ALocker.FieldByName('num').AsString;
       end;
       if I = 1 then
       begin
@@ -432,7 +437,7 @@ begin
 
   for I := 1 to LockerY do
   begin
-    sComponent := FindComponent(Format('LockerEdit_%d_%d',[StrToInt(arrStr[1]),I]));
+    sComponent := FindComponent(Format('LockerUse_%d_%d',[StrToInt(arrStr[1]),I]));
     if TEdit(sComponent).Text = '사용중' then
     begin
       ShowMessage('사용중인 락커가 있습니다.');
@@ -501,7 +506,7 @@ begin
 
   for I := 1 to LockerX do
   begin
-    sComponent := FindComponent(Format('LockerEdit_%d_%d',[I,StrToInt(arrStr[1])]));
+    sComponent := FindComponent(Format('LockerUse_%d_%d',[I,StrToInt(arrStr[1])]));
     if TEdit(sComponent).Text = '사용중' then
     begin
       ShowMessage('사용중인 락커가 있습니다.');

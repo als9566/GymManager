@@ -2,7 +2,7 @@ unit LockerController;
 
 interface
 
-uses Forms, Windows, Messages, SysUtils, Variants, Classes, Controls, Dialogs,
+uses Forms, Windows, Messages, SysUtils, Variants, Classes, Controls, Dialogs,Vcl.StdCtrls,
      Data.DB, LockerCreateForm, LockerManagingForm, MemberInsertForm, LockerModifyForm;
 
 type
@@ -11,6 +11,7 @@ type
 
   public
     constructor LockerInsert(const AView: TfmLockerCreate; maxX,maxY : Integer);
+    constructor LockerModify(const AView: TfmLockerModify; maxX,maxY : Integer);
     constructor LockerArraySelect(const AView: TfmLockerManaging);
     constructor MemberLockerSelect(const AView: TfmMemberInsert);
     constructor LockerModifySelect(const AView: TfmLockerModify);
@@ -19,7 +20,7 @@ type
 implementation
 
 uses
-  CommonFunction, LockerModule;
+  CommonFunction, LockerModule, MainModule;
 
 {** LockerInsert
 * }
@@ -54,6 +55,75 @@ begin
   finally
     Locker.Free;
     AView.close;
+  end;
+end;
+
+{** LockerModify
+* }
+constructor TLockerController.LockerModify(const AView: TfmLockerModify; maxX,maxY : Integer);
+var
+  Locker: TLocker;
+  I, J : Integer;
+  sComponent : TComponent;
+begin
+
+  Locker := TLocker.Create;
+  try
+    for I := 1 to maxY do
+    begin
+      for J := 1 to maxX do
+      begin
+        sComponent := AView.FindComponent(Format('LockerEdit_%d_%d',[J,I]));
+
+        if TEdit(sComponent).Text = '' then
+        begin
+          MainModule.dmMain.GymConnection.Rollback;
+          ShowMessage('락커번호를 입력해주세요.');
+          Abort;
+        end;
+
+
+        Locker.num := StrToInt(TEdit(sComponent).Text);
+        Locker.x := J;
+        Locker.Y := I;
+
+        sComponent := AView.FindComponent(Format('LockerPanel_%d_%d',[J,I]));
+
+        if sComponent.Tag <> 0 then
+        begin
+          Locker.id := sComponent.Tag;
+          if LockerModule.Locker.Update(Locker) = false then
+          begin
+            ShowMessage('등록중 에러가 발생하였습니다.');
+            Abort;
+          end;
+        end
+        else
+        begin
+          if LockerModule.Locker.Insert(Locker) = false then
+          begin
+            ShowMessage('등록중 에러가 발생하였습니다.');
+            Abort;
+          end;
+        end;
+      end;
+    end;
+
+    //Delete
+    Locker.x := maxX;
+    Locker.y := maxY;
+
+    if LockerModule.Locker.Delete(Locker) = false then
+    begin
+      ShowMessage('등록중 에러가 발생하였습니다.');
+      Abort;
+    end;
+
+    ShowMessage('정상 등록되었습니다.');
+    AView.close;
+
+  finally
+    Locker.Free;
   end;
 end;
 

@@ -22,6 +22,8 @@ type
     property x       : Integer read Fx     write Fx;
     property y       : Integer read Fy     write Fy;
     Function Insert(ALocker: TLocker) :Boolean;
+    Function Update(ALocker: TLocker) :Boolean;
+    Function Delete(ALocker: TLocker) :Boolean;
     Function Select :TDataSet;
     Function Max_Select_X : Integer;
     Function Max_Select_Y : Integer;
@@ -71,6 +73,51 @@ begin
     Result := false;
   end;
 
+end;
+
+Function TLocker.Update(ALocker: TLocker): Boolean;
+begin
+  try
+    dmLocker.FDQuery.SQL.Text := ' UPDATE locker      '
+                               + '    SET num  = :num '
+                               + '      , x    = :x   '
+                               + '      , y    = :y   '
+                               + '  WHERE id   = :id  ';
+
+    dmLocker.FDQuery.ParamByName('id').AsInteger  := ALocker.id;
+    dmLocker.FDQuery.ParamByName('num').AsInteger := ALocker.num;
+    dmLocker.FDQuery.ParamByName('x').AsInteger   := ALocker.x;
+    dmLocker.FDQuery.ParamByName('y').AsInteger   := ALocker.y;
+
+    dmLocker.FDQuery.ExecSQL;
+
+    MainModule.dmMain.GymConnection.Commit;
+
+    Result := true;
+  except
+    MainModule.dmMain.GymConnection.Rollback;
+    Result := false;
+  end;
+end;
+
+Function TLocker.Delete(ALocker: TLocker): Boolean;
+begin
+  try
+    dmLocker.FDQuery.SQL.Text := ' DELETE FROM locker      '
+                               + '  WHERE x > :x OR y > :y  ';
+
+    dmLocker.FDQuery.ParamByName('x').AsInteger   := ALocker.x;
+    dmLocker.FDQuery.ParamByName('y').AsInteger   := ALocker.y;
+
+    dmLocker.FDQuery.ExecSQL;
+
+    MainModule.dmMain.GymConnection.Commit;
+
+    Result := true;
+  except
+    MainModule.dmMain.GymConnection.Rollback;
+    Result := false;
+  end;
 end;
 
 Function TLocker.Select :TDataSet;
