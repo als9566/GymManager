@@ -30,10 +30,6 @@ object fmScheduleView: TfmScheduleView
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
-    ExplicitLeft = 2
-    ExplicitTop = 2
-    ExplicitWidth = 781
-    ExplicitHeight = 658
     DesignSize = (
       784
       661)
@@ -223,10 +219,6 @@ object fmScheduleView: TfmScheduleView
         VertScrollBar.Tracking = True
         OnMouseWheelDown = ScheduleScrollBoxMouseWheelDown
         OnMouseWheelUp = ScheduleScrollBoxMouseWheelUp
-        ExplicitLeft = 12
-        ExplicitTop = 12
-        ExplicitWidth = 521
-        ExplicitHeight = 393
         object ScheduleGrid: TStringGrid
           Left = -80
           Top = 0

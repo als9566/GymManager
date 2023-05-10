@@ -182,6 +182,12 @@
             <Form>fmLockerModify</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="DataModule\ScheduleModule.pas">
+            <Form>dmSchedule</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="Controller\ScheduleController.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

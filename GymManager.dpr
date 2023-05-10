@@ -26,7 +26,9 @@ uses
   BasicPriceController in 'Controller\BasicPriceController.pas',
   BasicPriceModule in 'DataModule\BasicPriceModule.pas' {dmBasicPrice: TDataModule},
   PaymentDetailsModule in 'DataModule\PaymentDetailsModule.pas' {dmPaymentDetails: TDataModule},
-  LockerModifyForm in 'View\Locker\LockerModifyForm.pas' {fmLockerModify};
+  LockerModifyForm in 'View\Locker\LockerModifyForm.pas' {fmLockerModify},
+  ScheduleModule in 'DataModule\ScheduleModule.pas' {dmSchedule: TDataModule},
+  ScheduleController in 'Controller\ScheduleController.pas';
 
 {$R *.res}
 
@@ -41,7 +43,7 @@ begin
   Application.CreateForm(TdmSetting, dmSetting);
   Application.CreateForm(TdmBasicPrice, dmBasicPrice);
   Application.CreateForm(TdmPaymentDetails, dmPaymentDetails);
-  Application.CreateForm(TfmLockerManaging, fmLockerManaging);
-  Application.CreateForm(TfmLockerModify, fmLockerModify);
+  Application.CreateForm(TdmSchedule, dmSchedule);
+  Application.CreateForm(TfmScheduleView, fmScheduleView);
   Application.Run;
 end.

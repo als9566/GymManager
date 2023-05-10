@@ -21,7 +21,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, cxScrollBox, CurvyControls;
+  dxSkinXmas2008Blue, cxScrollBox, CurvyControls, Data.DB;
 
 type
   TfmScheduleView = class(TForm)
@@ -31,6 +31,7 @@ type
     Image1: TImage;
     ScheduleScrollBox: TcxScrollBox;
     CurvyPanel1: TCurvyPanel;
+    procedure ShowDay(ADay: TDataSet);
     procedure ScheduleGridDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
     procedure FormShow(Sender: TObject);
@@ -53,29 +54,23 @@ var
 
 implementation
 
+uses
+  CommonFunction, MainForm, ScheduleController;
+
 {$R *.dfm}
 
 procedure TfmScheduleView.FormShow(Sender: TObject);
 var
   I: Integer;
 begin
+  ScheduleController.TScheduleController.DayLoad(self, '2023-05-10');
+
   with ScheduleGrid do
   begin
-    //TODO 悼利积己栏肺 函版抗沥
-    Cells[1,0] := '14老 (陛)\r\n2023-04-14';
-    Cells[2,0] := '15老 (配)\r\n2023-04-15';
-    Cells[3,0] := '16老 (老)\r\n2023-04-16';
-    Cells[4,0] := '17老 (岿)\r\n2023-04-17';
-    Cells[5,0] := '18老 (拳)\r\n2023-04-18';
-    Cells[6,0] := '19老 (荐)\r\n2023-04-19';
-    Cells[7,0] := '20老 (格)\r\n2023-04-20';
-    //
-
     for I := 1 to 18 do
     begin
       Cells[0,I] := IntToStr(I+5)+ ':00';
     end;
-
     Cells[1,1] := '全辨悼\r\n1雀瞒';
   end;
 end;
@@ -160,6 +155,22 @@ begin
         Canvas.TextOut(Rect.Left+30, Rect.Top+23, Copy(sText, iPos + 4, Length(sText)-iPos));
       end;
     end;
+  end;
+end;
+
+{** 老林老 朝楼 积己
+  @param [Sender] TDataSet
+* }
+procedure TfmScheduleView.ShowDay(ADay: TDataSet);
+var
+  sCurvyPanel : TCurvyPanel;
+  I, J : Integer;
+begin
+  ADay.Active := true;
+
+  for I := 0 to 6 do
+  begin
+    ScheduleGrid.Cells[I+1,0] := ADay.FieldByName(IntToStr(I)).AsString;
   end;
 end;
 
