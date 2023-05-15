@@ -11,6 +11,7 @@ type
 
   public
     constructor DayLoad(const AView: TfmScheduleView; ADate : String);
+    constructor ScheduleLoad(const AView: TfmScheduleView; ADate : String);
   end;
 
 implementation
@@ -24,6 +25,14 @@ var
 begin
   Day := ScheduleModule.dmSchedule.PlusDay7_Select(ADate);
   AView.ShowDay(Day);
+end;
+
+constructor TScheduleController.ScheduleLoad(const AView: TfmScheduleView; ADate : String);
+var
+  Schedule : TDataSet;
+begin
+  Schedule := ScheduleModule.dmSchedule.Schedule_Detail_Select(ADate);
+  AView.ShowSchedule(Schedule);
 end;
 
 end.

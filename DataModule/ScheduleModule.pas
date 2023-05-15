@@ -16,6 +16,7 @@ type
   public
     { Public declarations }
     Function PlusDay7_Select(ADate : String) :TDataSet;
+    Function Schedule_Detail_Select(ADate : String) :TDataSet;
   end;
 
 var
@@ -62,6 +63,43 @@ begin
   try
     dmSchedule.FDQuery.SQL.Text := 'SELECT ' +#13#10
                                  +  sSelect;
+
+    Result := dmSchedule.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
+Function TdmSchedule.Schedule_Detail_Select(ADate : String) :TDataSet;
+var
+  I : Integer;
+  sSelect : String;
+  txtFile : TextFile;
+  sFileName : string;
+begin
+
+  sSelect := '';
+
+  for I := 0 to 6 do
+  begin
+    if sSelect <> '' then
+      sSelect := sSelect + ',';
+
+    sSelect := sSelect
+             + ' (SELECT name||''\r\n''||sequence||''È¸Â÷'' FROM pt_schedule                ' + #13#10
+             + '   INNER JOIN member on pt_schedule.member_id = member.id                   ' + #13#10
+             + '   WHERE DAY = DATE(datetime('''+ ADate +''', ''+'+ IntToStr(I) +' days'')) ' + #13#10
+             + '     AND pt_schedule.time = a.time) ''' + IntToStr(I+1) + '''               ' + #13#10;
+
+  end;
+
+  try
+    dmSchedule.FDQuery.SQL.Clear;
+    dmSchedule.FDQuery.SQL.Text := 'SELECT                            ' +#13#10
+                                 +  sSelect                             +#13#10
+                                 + '  FROM                            ' +#13#10
+                                 + ' (SELECT time FROM pt_time_set) a ' +#13#10
+                                 + ' ORDER BY time ';
 
     Result := dmSchedule.FDQuery;
   except

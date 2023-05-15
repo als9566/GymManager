@@ -32,6 +32,7 @@ type
     ScheduleScrollBox: TcxScrollBox;
     CurvyPanel1: TCurvyPanel;
     procedure ShowDay(ADay: TDataSet);
+    procedure ShowSchedule(ASchedule: TDataSet);
     procedure ScheduleGridDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
     procedure FormShow(Sender: TObject);
@@ -51,6 +52,7 @@ type
 
 var
   fmScheduleView: TfmScheduleView;
+  Colors: array[0..3] of TColor = ($00FFFCE6, $00E7E6FF, $00FFE3F1, $00D2FCFF);
 
 implementation
 
@@ -58,12 +60,13 @@ uses
   CommonFunction, MainForm, ScheduleController;
 
 {$R *.dfm}
-
+// TODO 색상배열에 색상7개 넣고 고정색상으로 만들기
+// 랜덤으로 하니까 스크롤 및 클릭할때마다 색상이 바뀜.... ;;
 procedure TfmScheduleView.FormShow(Sender: TObject);
 var
   I: Integer;
 begin
-  ScheduleController.TScheduleController.DayLoad(self, '2023-05-10');
+  ScheduleController.TScheduleController.DayLoad(self, formatDateTime('yyyy-mm-dd',now));
 
   with ScheduleGrid do
   begin
@@ -71,7 +74,7 @@ begin
     begin
       Cells[0,I] := IntToStr(I+5)+ ':00';
     end;
-    Cells[1,1] := '홍길동\r\n1회차';
+    ScheduleController.TScheduleController.ScheduleLoad(self, formatDateTime('yyyy-mm-dd',now));
   end;
 end;
 
@@ -84,31 +87,31 @@ var
 begin
   with ScheduleGrid do
   begin
-    if (ACol = 1) and (ARow = 1) then
-    begin
-      Canvas.Brush.Color := $00FFFCE6;
-      Canvas.FillRect(Rect);
-    end
-    else if (ACol = 2) and (ARow = 1) then
-    begin
-      Canvas.Brush.Color := $00E7E6FF;
-      Canvas.FillRect(Rect);
-    end
-    else if (ACol = 2) and (ARow = 2) then
-    begin
-      Canvas.Brush.Color := $00FFE3F1;
-      Canvas.FillRect(Rect);
-    end
-    else if (ACol = 3) and (ARow = 2) then
-    begin
-      Canvas.Brush.Color := $00D2FCFF;
-      Canvas.FillRect(Rect);
-    end
-    else
-    begin
+//    if (ACol = 1) and (ARow = 1) then
+//    begin
+//      Canvas.Brush.Color := $00FFFCE6;
+//      Canvas.FillRect(Rect);
+//    end
+//    else if (ACol = 2) and (ARow = 1) then
+//    begin
+//      Canvas.Brush.Color := $00E7E6FF;
+//      Canvas.FillRect(Rect);
+//    end
+//    else if (ACol = 2) and (ARow = 2) then
+//    begin
+//      Canvas.Brush.Color := $00FFE3F1;
+//      Canvas.FillRect(Rect);
+//    end
+//    else if (ACol = 3) and (ARow = 2) then
+//    begin
+//      Canvas.Brush.Color := $00D2FCFF;
+//      Canvas.FillRect(Rect);
+//    end
+//    else
+//    begin
       Canvas.Brush.Color := clWhite;
       Canvas.FillRect(Rect);
-    end;
+//    end;
 
     // 셀 내용(텍스트) 출력
     sText := Cells[ACol,ARow];
@@ -138,6 +141,11 @@ begin
       // PT 시간대 회원정보 출력
       else
       begin
+        //Edit1.Color := Colors[3];
+        //Canvas.Brush.Color := $00D2FCFF;
+        Canvas.Brush.Color := Colors[random(3)];
+        Canvas.FillRect(Rect);
+
         R.Top := Rect.Top + 5;
         R.Left := Rect.Left + 5;
         R.Right := R.Left + 20;
@@ -163,14 +171,32 @@ end;
 * }
 procedure TfmScheduleView.ShowDay(ADay: TDataSet);
 var
-  sCurvyPanel : TCurvyPanel;
-  I, J : Integer;
+  I : Integer;
 begin
   ADay.Active := true;
 
   for I := 0 to 6 do
   begin
     ScheduleGrid.Cells[I+1,0] := ADay.FieldByName(IntToStr(I)).AsString;
+  end;
+end;
+
+{** 스케쥴 텍스트 생성
+  @param [Sender] TDataSet
+* }
+procedure TfmScheduleView.ShowSchedule(ASchedule: TDataSet);
+var
+  I, J : Integer;
+begin
+  ASchedule.Active := true;
+  I := 0;
+
+  While Not ASchedule.Eof do
+  begin
+    for J := 0 to 6 do
+      ScheduleGrid.Cells[J+1,I+1] := ASchedule.FieldByName(IntToStr(J+1)).AsString;
+    ASchedule.Next;
+    Inc(I);
   end;
 end;
 
