@@ -44,6 +44,7 @@ type
       Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure ScheduleScrollBoxMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
+    procedure ScheduleGridDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,7 +53,7 @@ type
 
 var
   fmScheduleView: TfmScheduleView;
-  Colors: array[0..3] of TColor = ($00FFFCE6, $00E7E6FF, $00FFE3F1, $00D2FCFF);
+  Colors: array[0..6] of TColor = ($00FFFCE6, $00E7E6FF, $00FFE3F1, $00D2FCFF, $00EAFFE6, $00B0E3FF, $00B4B4DA);
 
 implementation
 
@@ -60,8 +61,10 @@ uses
   CommonFunction, MainForm, ScheduleController;
 
 {$R *.dfm}
-// TODO 색상배열에 색상7개 넣고 고정색상으로 만들기
-// 랜덤으로 하니까 스크롤 및 클릭할때마다 색상이 바뀜.... ;;
+// TODO 더블클릭 시 텍스트가 있으면 회원에 대한 화면띄우기
+//             //            없으면 등록창 띄우기
+//      오른쪽 클릭 시 텍스트가 있으면 시간변경 및 삭제 팝업띄우기
+//             //               없으면 로직없음
 procedure TfmScheduleView.FormShow(Sender: TObject);
 var
   I: Integer;
@@ -78,40 +81,34 @@ begin
   end;
 end;
 
+procedure TfmScheduleView.ScheduleGridDblClick(Sender: TObject);
+var
+  P: TPoint;
+  iColumn, iRow: Longint;
+begin
+  GetCursorPos(P);
+  with ScheduleGrid do
+  begin
+    P := ScreenToClient(P);
+    MouseToCell(P.X, P.Y, iColumn, iRow);
+  end;
+  //ShowMessage(IntToStr(ScheduleGrid.Col)+','+IntToStr(ScheduleGrid.Row));
+  ShowMessage(IntToStr(iColumn)+','+IntToStr(iRow));
+end;
+
 procedure TfmScheduleView.ScheduleGridDrawCell(Sender: TObject; ACol,
   ARow: Integer; Rect: TRect; State: TGridDrawState);
 var
   sText : String;
   iPos : Integer;
   R: TRect;
+  Button: TButton;
 begin
   with ScheduleGrid do
   begin
-//    if (ACol = 1) and (ARow = 1) then
-//    begin
-//      Canvas.Brush.Color := $00FFFCE6;
-//      Canvas.FillRect(Rect);
-//    end
-//    else if (ACol = 2) and (ARow = 1) then
-//    begin
-//      Canvas.Brush.Color := $00E7E6FF;
-//      Canvas.FillRect(Rect);
-//    end
-//    else if (ACol = 2) and (ARow = 2) then
-//    begin
-//      Canvas.Brush.Color := $00FFE3F1;
-//      Canvas.FillRect(Rect);
-//    end
-//    else if (ACol = 3) and (ARow = 2) then
-//    begin
-//      Canvas.Brush.Color := $00D2FCFF;
-//      Canvas.FillRect(Rect);
-//    end
-//    else
-//    begin
-      Canvas.Brush.Color := clWhite;
-      Canvas.FillRect(Rect);
-//    end;
+
+    Canvas.Brush.Color := clWhite;
+    Canvas.FillRect(Rect);
 
     // 셀 내용(텍스트) 출력
     sText := Cells[ACol,ARow];
@@ -141,9 +138,7 @@ begin
       // PT 시간대 회원정보 출력
       else
       begin
-        //Edit1.Color := Colors[3];
-        //Canvas.Brush.Color := $00D2FCFF;
-        Canvas.Brush.Color := Colors[random(3)];
+        Canvas.Brush.Color := Colors[ACol mod 7];
         Canvas.FillRect(Rect);
 
         R.Top := Rect.Top + 5;

@@ -236,6 +236,7 @@ object fmScheduleView: TfmScheduleView
           Options = [goVertLine, goHorzLine, goRangeSelect]
           ScrollBars = ssNone
           TabOrder = 0
+          OnDblClick = ScheduleGridDblClick
           OnDrawCell = ScheduleGridDrawCell
           OnMouseWheelDown = ScheduleGridMouseWheelDown
           OnMouseWheelUp = ScheduleGridMouseWheelUp
