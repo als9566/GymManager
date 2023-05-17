@@ -21,11 +21,14 @@ uses
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, dxGDIPlusClasses, cxImage,
-  MemberInsertForm, LockerCreateForm, LockerModifyForm;
+  MemberInsertForm, LockerCreateForm, LockerModifyForm, MemberDetailForm,
+  ScheduleCreateForm,
+  Vcl.StdCtrls;
 
 type
   TfmBlur = class(TForm)
     imgBlur: TcxImage;
+    parameter1: TEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -39,6 +42,8 @@ var
   fmMemberInsert: TfmMemberInsert;
   fmLockerCreate: TfmLockerCreate;
   fmLockerModify: TfmLockerModify;
+  fmMemberDetail: TfmMemberDetail;
+  fmScheduleCreate: TfmScheduleCreate;
 
 implementation
 
@@ -54,6 +59,8 @@ begin
    : 1 == MemberInsertForm [회원등록]
    : 2 == LockerCreateForm [락커생성]
    : 3 == LockerModifyForm [락커수정]
+   : 4 == MemberDetailForm [회원디테일]
+   : 5 == ScheduleCreateForm [PT일정등록]
   * }
   if imgBlur.Tag = 1 then
   begin
@@ -75,6 +82,20 @@ begin
     fmLockerModify.Top := (GymManagerForm.Height - fmLockerModify.Height) div 2 + GymManagerForm.Top;
     fmLockerModify.Left := (GymManagerForm.Width - fmLockerModify.Width) div 2 + GymManagerForm.Left;
     fmLockerModify.ShowModal;
+  end
+  else if imgBlur.Tag = 4 then
+  begin
+    fmMemberDetail := TfmMemberDetail.Create(Self);
+    fmMemberDetail.Top := (GymManagerForm.Height - fmMemberDetail.Height) div 2 + GymManagerForm.Top;
+    fmMemberDetail.Left := (GymManagerForm.Width - fmMemberDetail.Width) div 2 + GymManagerForm.Left;
+    fmMemberDetail.ShowModal;
+  end
+  else if imgBlur.Tag = 5 then
+  begin
+    fmScheduleCreate := TfmScheduleCreate.Create(Self);
+    fmScheduleCreate.Top := (GymManagerForm.Height - fmScheduleCreate.Height) div 2 + GymManagerForm.Top;
+    fmScheduleCreate.Left := (GymManagerForm.Width - fmScheduleCreate.Width) div 2 + GymManagerForm.Left;
+    fmScheduleCreate.ShowModal;
   end;
 
   close;

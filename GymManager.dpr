@@ -28,7 +28,9 @@ uses
   PaymentDetailsModule in 'DataModule\PaymentDetailsModule.pas' {dmPaymentDetails: TDataModule},
   LockerModifyForm in 'View\Locker\LockerModifyForm.pas' {fmLockerModify},
   ScheduleModule in 'DataModule\ScheduleModule.pas' {dmSchedule: TDataModule},
-  ScheduleController in 'Controller\ScheduleController.pas';
+  ScheduleController in 'Controller\ScheduleController.pas',
+  MemberDetailForm in 'View\Member\MemberDetailForm.pas' {fmMemberDetail},
+  ScheduleCreateForm in 'View\Schedule\ScheduleCreateForm.pas' {fmScheduleCreate};
 
 {$R *.res}
 

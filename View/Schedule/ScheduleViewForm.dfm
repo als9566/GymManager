@@ -4,7 +4,7 @@ object fmScheduleView: TfmScheduleView
   Top = 0
   BorderStyle = bsNone
   Caption = 'fmScheduleView'
-  ClientHeight = 661
+  ClientHeight = 678
   ClientWidth = 784
   Color = clBtnFace
   DoubleBuffered = True
@@ -24,15 +24,17 @@ object fmScheduleView: TfmScheduleView
     Left = 0
     Top = 0
     Width = 784
-    Height = 661
+    Height = 678
     Align = alClient
     BevelOuter = bvNone
     Color = clWhite
     ParentBackground = False
     TabOrder = 0
+    OnClick = backPanelClick
+    ExplicitHeight = 661
     DesignSize = (
       784
-      661)
+      678)
     object MenuNameLabel: TLabel
       Left = 16
       Top = 9
@@ -198,16 +200,17 @@ object fmScheduleView: TfmScheduleView
       Left = 16
       Top = 56
       Width = 753
-      Height = 593
+      Height = 610
       Anchors = [akLeft, akTop, akRight, akBottom]
       BorderColor = 13882323
       TabOrder = 0
+      ExplicitHeight = 593
       object ScheduleScrollBox: TcxScrollBox
         AlignWithMargins = True
         Left = 3
         Top = 3
         Width = 747
-        Height = 587
+        Height = 604
         Align = alClient
         BorderStyle = cxcbsNone
         HorzScrollBar.Tracking = True
@@ -219,6 +222,7 @@ object fmScheduleView: TfmScheduleView
         VertScrollBar.Tracking = True
         OnMouseWheelDown = ScheduleScrollBoxMouseWheelDown
         OnMouseWheelUp = ScheduleScrollBoxMouseWheelUp
+        ExplicitHeight = 587
         object ScheduleGrid: TStringGrid
           Left = -80
           Top = 0
@@ -238,6 +242,7 @@ object fmScheduleView: TfmScheduleView
           TabOrder = 0
           OnDblClick = ScheduleGridDblClick
           OnDrawCell = ScheduleGridDrawCell
+          OnMouseUp = ScheduleGridMouseUp
           OnMouseWheelDown = ScheduleGridMouseWheelDown
           OnMouseWheelUp = ScheduleGridMouseWheelUp
           RowHeights = (
@@ -260,6 +265,83 @@ object fmScheduleView: TfmScheduleView
             40
             40
             40)
+        end
+        object PopupOutPanel: TPanel
+          Left = 616
+          Top = 506
+          Width = 114
+          Height = 81
+          BevelOuter = bvNone
+          Color = clWhite
+          ParentBackground = False
+          TabOrder = 1
+          Visible = False
+          object PopupInPanel: TCurvyPanel
+            AlignWithMargins = True
+            Left = 0
+            Top = 0
+            Width = 108
+            Height = 75
+            Margins.Left = 0
+            Margins.Top = 0
+            Margins.Right = 6
+            Margins.Bottom = 6
+            Align = alClient
+            BorderColor = 13553358
+            Rounding = 10
+            TabOrder = 0
+            object ChangeLabelBtn: TLabel
+              AlignWithMargins = True
+              Left = 1
+              Top = 0
+              Width = 106
+              Height = 37
+              Margins.Left = 1
+              Margins.Top = 0
+              Margins.Right = 1
+              Margins.Bottom = 0
+              Align = alTop
+              AutoSize = False
+              Caption = '    '#51068#51221#48320#44221
+              Color = clWhite
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = #47569#51008' '#44256#46357
+              Font.Style = []
+              ParentColor = False
+              ParentFont = False
+              Transparent = True
+              Layout = tlCenter
+              OnMouseEnter = LabelBtnMouseEnter
+              OnMouseLeave = LabelBtnMouseLeave
+            end
+            object DeleteLabelBtn: TLabel
+              AlignWithMargins = True
+              Left = 1
+              Top = 37
+              Width = 106
+              Height = 39
+              Margins.Left = 1
+              Margins.Top = 0
+              Margins.Right = 1
+              Margins.Bottom = 0
+              Align = alTop
+              AutoSize = False
+              Caption = '    '#49325#51228
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -13
+              Font.Name = #47569#51008' '#44256#46357
+              Font.Style = []
+              ParentFont = False
+              Transparent = True
+              Layout = tlCenter
+              OnMouseEnter = LabelBtnMouseEnter
+              OnMouseLeave = LabelBtnMouseLeave
+              ExplicitTop = 36
+            end
+          end
         end
       end
     end

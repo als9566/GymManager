@@ -21,7 +21,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, cxScrollBox, CurvyControls, Data.DB;
+  dxSkinXmas2008Blue, cxScrollBox, CurvyControls, Data.DB, BlurForm;
 
 type
   TfmScheduleView = class(TForm)
@@ -31,6 +31,10 @@ type
     Image1: TImage;
     ScheduleScrollBox: TcxScrollBox;
     CurvyPanel1: TCurvyPanel;
+    PopupOutPanel: TPanel;
+    PopupInPanel: TCurvyPanel;
+    ChangeLabelBtn: TLabel;
+    DeleteLabelBtn: TLabel;
     procedure ShowDay(ADay: TDataSet);
     procedure ShowSchedule(ASchedule: TDataSet);
     procedure ScheduleGridDrawCell(Sender: TObject; ACol, ARow: Integer;
@@ -45,6 +49,11 @@ type
     procedure ScheduleScrollBoxMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure ScheduleGridDblClick(Sender: TObject);
+    procedure ScheduleGridMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure backPanelClick(Sender: TObject);
+    procedure LabelBtnMouseEnter(Sender: TObject);
+    procedure LabelBtnMouseLeave(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,22 +62,41 @@ type
 
 var
   fmScheduleView: TfmScheduleView;
+  fmBlur: TfmBlur;
   Colors: array[0..6] of TColor = ($00FFFCE6, $00E7E6FF, $00FFE3F1, $00D2FCFF, $00EAFFE6, $00B0E3FF, $00B4B4DA);
 
 implementation
 
 uses
-  CommonFunction, MainForm, ScheduleController;
+  CommonFunction, ShadowBox, MainForm, ScheduleController;
 
 {$R *.dfm}
-// TODO 더블클릭 시 텍스트가 있으면 회원에 대한 화면띄우기
-//             //            없으면 등록창 띄우기
-//      오른쪽 클릭 시 텍스트가 있으면 시간변경 및 삭제 팝업띄우기
-//             //               없으면 로직없음
+// TODO 오른쪽 클릭 팝업 버튼이벤트 로직만들기
+procedure TfmScheduleView.backPanelClick(Sender: TObject);
+begin
+  PopupOutPanel.Visible := False;
+end;
+
+procedure TfmScheduleView.LabelBtnMouseEnter(Sender: TObject);
+begin
+  TLabel(Sender).Transparent := False;
+  TLabel(Sender).Color := $00E2E2E2;
+end;
+
+procedure TfmScheduleView.LabelBtnMouseLeave(Sender: TObject);
+begin
+  TLabel(Sender).Transparent := True;
+  TLabel(Sender).Color := clWhite;
+end;
+
 procedure TfmScheduleView.FormShow(Sender: TObject);
 var
   I: Integer;
 begin
+
+  with TShadowBox.Create(Self) do
+    Control := PopupInPanel;
+
   ScheduleController.TScheduleController.DayLoad(self, formatDateTime('yyyy-mm-dd',now));
 
   with ScheduleGrid do
@@ -79,6 +107,8 @@ begin
     end;
     ScheduleController.TScheduleController.ScheduleLoad(self, formatDateTime('yyyy-mm-dd',now));
   end;
+
+  DrawRounded(PopupOutPanel,20);
 end;
 
 procedure TfmScheduleView.ScheduleGridDblClick(Sender: TObject);
@@ -91,9 +121,32 @@ begin
   begin
     P := ScreenToClient(P);
     MouseToCell(P.X, P.Y, iColumn, iRow);
+
+    if (iColumn = 0) or (iRow = 0) then
+      abort;
+
+    if Cells[iColumn,iRow] = '' Then
+    begin // 등록창
+      fmBlur := TfmBlur.Create(Self);
+      fmBlur.Top := GymManagerForm.Top;
+      fmBlur.Left := GymManagerForm.Left;
+      fmBlur.Height := GymManagerForm.Height;
+      fmBlur.Width := GymManagerForm.Width;
+      fmBlur.imgBlur.Tag := 5;
+      fmBlur.Show;
+    end
+    else
+    begin // 회원디테일
+      fmBlur := TfmBlur.Create(Self);
+      fmBlur.Top := GymManagerForm.Top;
+      fmBlur.Left := GymManagerForm.Left;
+      fmBlur.Height := GymManagerForm.Height;
+      fmBlur.Width := GymManagerForm.Width;
+      fmBlur.imgBlur.Tag := 4;
+      //fmBlur.parameter1.Text := 'id';
+      fmBlur.Show;
+    end;
   end;
-  //ShowMessage(IntToStr(ScheduleGrid.Col)+','+IntToStr(ScheduleGrid.Row));
-  ShowMessage(IntToStr(iColumn)+','+IntToStr(iRow));
 end;
 
 procedure TfmScheduleView.ScheduleGridDrawCell(Sender: TObject; ACol,
@@ -192,6 +245,49 @@ begin
       ScheduleGrid.Cells[J+1,I+1] := ASchedule.FieldByName(IntToStr(J+1)).AsString;
     ASchedule.Next;
     Inc(I);
+  end;
+end;
+
+{** 오른쪽 마우스 클릭 시 팝업
+  @ MouseUpEvent
+* }
+procedure TfmScheduleView.ScheduleGridMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+var
+  P: TPoint;
+  iColumn, iRow: Longint;
+begin
+  if Button = mbRight then
+  begin
+    GetCursorPos(P);
+    with ScheduleGrid do
+    begin
+      P := ScreenToClient(P);
+      MouseToCell(P.X, P.Y, iColumn, iRow);
+
+      if (iColumn = 0) or (iRow = 0) then
+      begin
+        PopupOutPanel.Visible := False;
+        abort;
+      end;
+
+      if Cells[iColumn,iRow] = '' Then
+      begin
+        PopupOutPanel.Visible := False;
+        abort;
+      end;
+
+      PopupOutPanel.Visible := False;
+
+      PopupOutPanel.Left := P.X-70;
+      PopupOutPanel.Top := P.Y-ScheduleScrollBox.VertScrollBar.Position;
+
+      PopupOutPanel.Visible := True;
+    end;
+  end
+  else
+  begin
+    PopupOutPanel.Visible := False;
   end;
 end;
 
