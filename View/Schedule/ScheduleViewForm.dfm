@@ -31,7 +31,6 @@ object fmScheduleView: TfmScheduleView
     ParentBackground = False
     TabOrder = 0
     OnClick = backPanelClick
-    ExplicitHeight = 661
     DesignSize = (
       784
       678)
@@ -204,7 +203,6 @@ object fmScheduleView: TfmScheduleView
       Anchors = [akLeft, akTop, akRight, akBottom]
       BorderColor = 13882323
       TabOrder = 0
-      ExplicitHeight = 593
       object ScheduleScrollBox: TcxScrollBox
         AlignWithMargins = True
         Left = 3
@@ -222,7 +220,6 @@ object fmScheduleView: TfmScheduleView
         VertScrollBar.Tracking = True
         OnMouseWheelDown = ScheduleScrollBoxMouseWheelDown
         OnMouseWheelUp = ScheduleScrollBoxMouseWheelUp
-        ExplicitHeight = 587
         object ScheduleGrid: TStringGrid
           Left = -80
           Top = 0
@@ -344,6 +341,15 @@ object fmScheduleView: TfmScheduleView
           end
         end
       end
+    end
+    object First_Date: TEdit
+      Left = 128
+      Top = 16
+      Width = 121
+      Height = 21
+      TabOrder = 1
+      Text = 'First_Date'
+      Visible = False
     end
   end
 end

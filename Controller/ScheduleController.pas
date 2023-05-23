@@ -3,7 +3,7 @@ unit ScheduleController;
 interface
 
 uses Forms, Windows, Messages, SysUtils, Variants, Classes, Controls, Dialogs,Vcl.StdCtrls,
-     Data.DB, ScheduleViewForm;
+     Data.DB, ScheduleViewForm, ScheduleCreateForm;
 
 type
   TScheduleController = class
@@ -12,6 +12,7 @@ type
   public
     constructor DayLoad(const AView: TfmScheduleView; ADate : String);
     constructor ScheduleLoad(const AView: TfmScheduleView; ADate : String);
+    constructor Date_Calculation(const AView: TfmScheduleCreate; ADate : String; iAddDay : Integer);
   end;
 
 implementation
@@ -33,6 +34,11 @@ var
 begin
   Schedule := ScheduleModule.dmSchedule.Schedule_Detail_Select(ADate);
   AView.ShowSchedule(Schedule);
+end;
+
+constructor TScheduleController.Date_Calculation(const AView: TfmScheduleCreate; ADate : String; iAddDay : Integer);
+begin
+  AView.DayEdit.Text := ScheduleModule.dmSchedule.Date_Calculation_Select(ADate, iAddDay-1);
 end;
 
 end.

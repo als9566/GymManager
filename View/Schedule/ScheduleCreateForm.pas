@@ -28,6 +28,13 @@ type
     Label1: TLabel;
     cxButton1: TcxButton;
     Button1: TButton;
+    DayEdit: TEdit;
+    TimeEdit: TEdit;
+    parameter1: TEdit;
+    parameter2: TEdit;
+    parameter3: TEdit;
+    DayLabel: TLabel;
+    TimeLabel: TLabel;
     procedure cxButton1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -43,7 +50,7 @@ var
 implementation
 
 uses
-  CommonFunction;
+  CommonFunction, ScheduleController;
 
 {$R *.dfm}
 // TODO 1) 디자인작업 2) 저장로직
@@ -63,6 +70,11 @@ procedure TfmScheduleCreate.FormShow(Sender: TObject);
 begin
   DrawRounded(Self,50);
   AnimateWindow(Self.Handle, 200, AW_ACTIVATE or AW_BLEND);
+
+  TimeEdit.Text := IntToStr((StrToInt(parameter2.Text) + 5));
+  ScheduleController.TScheduleController.Date_Calculation(Self, parameter3.Text, StrToInt(parameter1.Text));
+  TimeLabel.Caption := IntToStr((StrToInt(parameter2.Text) + 5)) + ':00';
+  DayLabel.Caption := DayEdit.Text;
 end;
 
 end.

@@ -35,6 +35,7 @@ type
     PopupInPanel: TCurvyPanel;
     ChangeLabelBtn: TLabel;
     DeleteLabelBtn: TLabel;
+    First_Date: TEdit;
     procedure ShowDay(ADay: TDataSet);
     procedure ShowSchedule(ASchedule: TDataSet);
     procedure ScheduleGridDrawCell(Sender: TObject; ACol, ARow: Integer;
@@ -133,6 +134,9 @@ begin
       fmBlur.Height := GymManagerForm.Height;
       fmBlur.Width := GymManagerForm.Width;
       fmBlur.imgBlur.Tag := 5;
+      fmBlur.parameter1.Text := IntToStr(iColumn);
+      fmBlur.parameter2.Text := IntToStr(iRow);
+      fmBlur.parameter3.Text := First_Date.Text;
       fmBlur.Show;
     end
     else
@@ -143,7 +147,6 @@ begin
       fmBlur.Height := GymManagerForm.Height;
       fmBlur.Width := GymManagerForm.Width;
       fmBlur.imgBlur.Tag := 4;
-      //fmBlur.parameter1.Text := 'id';
       fmBlur.Show;
     end;
   end;
@@ -219,7 +222,8 @@ end;
 * }
 procedure TfmScheduleView.ShowDay(ADay: TDataSet);
 var
-  I : Integer;
+  I, iPos : Integer;
+  sText : String;
 begin
   ADay.Active := true;
 
@@ -227,6 +231,10 @@ begin
   begin
     ScheduleGrid.Cells[I+1,0] := ADay.FieldByName(IntToStr(I)).AsString;
   end;
+
+  sText := ADay.FieldByName('0').AsString;
+  iPos := Pos('\r\n', sText);
+  First_Date.Text := Copy(sText, iPos + 4, Length(sText)-iPos);
 end;
 
 {** 스케쥴 텍스트 생성

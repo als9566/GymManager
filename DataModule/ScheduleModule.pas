@@ -17,6 +17,8 @@ type
     { Public declarations }
     Function PlusDay7_Select(ADate : String) :TDataSet;
     Function Schedule_Detail_Select(ADate : String) :TDataSet;
+    Function Schedule_ID_Select(ADate : String; iAddDay, iTime : Integer) : Integer;
+    Function Date_Calculation_Select(ADate : String; iAddDay : Integer) : String;
   end;
 
 var
@@ -104,6 +106,35 @@ begin
     Result := dmSchedule.FDQuery;
   except
     Result := nil;
+  end;
+end;
+
+Function TdmSchedule.Schedule_ID_Select(ADate : String; iAddDay, iTime : Integer) : Integer;
+begin
+  try
+    dmSchedule.FDQuery.SQL.Clear;
+    dmSchedule.FDQuery.SQL.Text := 'SELECT id                         ' +#13#10
+                                 + '  FROM                            ' +#13#10
+                                 + ' WHERE day = DATE(datetime('''+ ADate +''', ''+'+ IntToStr(iAddDay) +' days'')) ' +#13#10
+                                 + '   AND time = ' +IntToStr(iTime);
+
+    Result := dmSchedule.FDQuery.FieldByName('id').AsInteger;
+  except
+    Result := 0;
+  end;
+end;
+
+Function TdmSchedule.Date_Calculation_Select(ADate : String; iAddDay : Integer) : String;
+begin
+  try
+    dmSchedule.FDQuery.SQL.Clear;
+    dmSchedule.FDQuery.SQL.Text := 'SELECT DATE(datetime('''+ ADate +''', ''+'+ IntToStr(iAddDay) +' days'')) "DATE"';
+
+    dmSchedule.FDQuery.Active := true;
+
+    Result := dmSchedule.FDQuery.FieldByName('DATE').AsString;
+  except
+    Result := '';
   end;
 end;
 

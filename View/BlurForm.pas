@@ -29,6 +29,8 @@ type
   TfmBlur = class(TForm)
     imgBlur: TcxImage;
     parameter1: TEdit;
+    parameter2: TEdit;
+    parameter3: TEdit;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -95,6 +97,9 @@ begin
     fmScheduleCreate := TfmScheduleCreate.Create(Self);
     fmScheduleCreate.Top := (GymManagerForm.Height - fmScheduleCreate.Height) div 2 + GymManagerForm.Top;
     fmScheduleCreate.Left := (GymManagerForm.Width - fmScheduleCreate.Width) div 2 + GymManagerForm.Left;
+    fmScheduleCreate.parameter1.Text := parameter1.Text;
+    fmScheduleCreate.parameter2.Text := parameter2.Text;
+    fmScheduleCreate.parameter3.Text := parameter3.Text;
     fmScheduleCreate.ShowModal;
   end;
 

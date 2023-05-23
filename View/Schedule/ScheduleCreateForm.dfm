@@ -41,6 +41,30 @@ object fmScheduleCreate: TfmScheduleCreate
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object DayLabel: TLabel
+      Left = 27
+      Top = 55
+      Width = 5
+      Height = 17
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 6446686
+      Font.Height = -13
+      Font.Name = #47569#51008' '#44256#46357
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object TimeLabel: TLabel
+      Left = 124
+      Top = 55
+      Width = 5
+      Height = 17
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = 6446686
+      Font.Height = -13
+      Font.Name = #47569#51008' '#44256#46357
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
     object cxButton1: TcxButton
       Left = 561
       Top = 22
@@ -72,6 +96,53 @@ object fmScheduleCreate: TfmScheduleCreate
       Height = 25
       Caption = #51200#51109
       TabOrder = 1
+    end
+    object DayEdit: TEdit
+      Left = 356
+      Top = 451
+      Width = 121
+      Height = 21
+      ReadOnly = True
+      TabOrder = 2
+      Text = 'DayEdit'
+      Visible = False
+    end
+    object TimeEdit: TEdit
+      Left = 483
+      Top = 451
+      Width = 121
+      Height = 21
+      ReadOnly = True
+      TabOrder = 3
+      Text = 'TimeEdit'
+      Visible = False
+    end
+    object parameter1: TEdit
+      Left = 325
+      Top = 424
+      Width = 73
+      Height = 21
+      TabOrder = 4
+      Text = 'parameter1'
+      Visible = False
+    end
+    object parameter2: TEdit
+      Left = 404
+      Top = 424
+      Width = 73
+      Height = 21
+      TabOrder = 5
+      Text = 'parameter2'
+      Visible = False
+    end
+    object parameter3: TEdit
+      Left = 483
+      Top = 424
+      Width = 73
+      Height = 21
+      TabOrder = 6
+      Text = 'parameter3'
+      Visible = False
     end
   end
 end
