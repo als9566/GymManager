@@ -44,6 +44,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    Function Member_List_Select(AName : String) :TDataSet;
   end;
 
 var
@@ -103,6 +104,20 @@ begin
 
   except
     Result := 0;
+  end;
+end;
+
+Function TdmMember.Member_List_Select(AName : String) :TDataSet;
+begin
+  try
+    dmMember.FDQuery.SQL.Clear;
+    dmMember.FDQuery.SQL.Text := 'SELECT ID, NAME, GENDER, TEL, PT   ' +#13#10
+                               + '  FROM MEMBER                      ' +#13#10
+                               + ' WHERE NAME LIKE ''%'+ AName +'%'' ';
+
+    Result := dmMember.FDQuery;
+  except
+    Result := nil;
   end;
 end;
 

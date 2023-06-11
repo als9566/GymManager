@@ -21,7 +21,7 @@ uses
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, Vcl.StdCtrls, cxButtons, CurvyControls, cxControls,
-  Vcl.Grids, cxScrollBox, dxGDIPlusClasses, Vcl.ExtCtrls;
+  Vcl.Grids, cxScrollBox, dxGDIPlusClasses, Vcl.ExtCtrls, Data.DB;
 
 type
   TfmScheduleCreate = class(TForm)
@@ -52,6 +52,12 @@ type
       MousePos: TPoint; var Handled: Boolean);
     procedure MemberListGridMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
+    procedure SearchBtnClick(Sender: TObject);
+    procedure MemberListShow(AMember: TDataSet);
+    procedure SearchEditKeyPress(Sender: TObject; var Key: Char);
+    procedure MemberListGridMouseLeave(Sender: TObject);
+    procedure MemberListGridMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
   private
     { Private declarations }
   public
@@ -92,31 +98,7 @@ begin
   TimeLabel.Caption := IntToStr((StrToInt(parameter2.Text) + 5)) + ':00';
   DayLabel.Caption := DayEdit.Text;
 
-  MemberListGrid.RowCount := 50 + 2;
-
-  MemberListGrid.Height := MemberListGrid.RowCount * 40;
-
-  for I := 1 to 50 do
-  begin
-    with MemberListGrid do
-    begin
-      Cells[1,I] := 'CODE';
-      Cells[2,I] := '이름';
-      Cells[3,I] := '성별';
-      Cells[4,I] := '연락처';
-      Cells[5,I] := '잔여 PT';
-      if I = 50 then
-      begin
-        Cells[1,I] := 'CODE';
-        Cells[2,I] := '끝';
-        Cells[3,I] := '성별';
-        Cells[4,I] := '연락처';
-        Cells[5,I] := '끝';
-      end;
-    end;
-  end;
-
-  MemberListScrollBox.VertScrollBar.Range := MemberListGrid.Height;
+  ScheduleController.TScheduleController.Member_Find(self, '');
 
 end;
 
@@ -125,14 +107,95 @@ procedure TfmScheduleCreate.MemberListGridDrawCell(Sender: TObject; ACol,
 begin
   with MemberListGrid do
   begin
-    Canvas.Brush.Color := clWhite;
-    Canvas.FillRect(Rect);
+
+    // 셀 별 어브젝트가 설정되었는지 확인
+    if Assigned(Objects[ACol, ARow]) then
+    begin
+      // 색을 셀에 채우기
+      //Canvas.Brush.Color := $00BADCC1;
+      Canvas.Brush.Color := TColor(Objects[ACol, ARow]);
+      //Rect.Left := Rect.Left-5;
+      Canvas.FillRect(Rect);
+    end
+    else
+    begin
+      // 색을 셀에 채우기
+      Canvas.Brush.Color := clWhite;
+      Canvas.FillRect(Rect);
+    end;
 
     Canvas.Font.Color := $004D4D4D;
     Canvas.Font.Name := '맑은 고딕';
     Canvas.Font.Style := [fsBold];
     Canvas.Font.Size := 9;
-    Canvas.TextOut(Rect.Left+5, Rect.Top+5, Cells[ACol,ARow]);
+    Canvas.TextOut(Rect.Left+10, Rect.Top+5, Cells[ACol,ARow]);
+  end;
+end;
+
+procedure TfmScheduleCreate.MemberListGridMouseLeave(Sender: TObject);
+var
+  I, J : Integer;
+begin
+  with MemberListGrid do
+  begin
+      for I := 0 to ColCount-1 do
+      begin
+        for J := 0 to RowCount-1 do
+        begin
+          Objects[I, J] := nil;
+        end;
+      end;
+      Abort;
+  end;
+end;
+
+procedure TfmScheduleCreate.MemberListGridMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+var
+  pntCurPos :TPoint;
+  iCol      :integer;
+  iRow      :integer;
+  I, J      : Integer;
+begin
+  with MemberListGrid do
+  begin
+    pntCurPos := ScreenToClient(Mouse.CursorPos);
+    MouseToCell(pntCurPos.x, pntCurPos.y, iCol, iRow);
+
+    if (iCol = -1) and (iRow = -1) then
+    begin
+      for I := 0 to ColCount-1 do
+      begin
+        for J := 0 to RowCount-1 do
+        begin
+          Objects[I, J] := nil;
+        end;
+      end;
+      Abort;
+    end;
+
+
+    if iRow > 0 then
+    begin
+      for I := 0 to MemberListGrid.ColCount-1 do
+      begin
+        Objects[I, iRow-1] := nil;
+      end;
+    end;
+
+    if iRow <> RowCount-1 then
+    begin
+      for I := 0 to MemberListGrid.ColCount-1 do
+      begin
+        Objects[I, iRow+1] := nil;
+      end;
+    end;
+
+    for I := 0 to MemberListGrid.ColCount-1 do
+    begin
+      Objects[I, iRow] := TObject($00D8D8D8);
+    end;
+
   end;
 end;
 
@@ -146,6 +209,50 @@ procedure TfmScheduleCreate.MemberListGridMouseWheelUp(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
 begin
   MemberListScrollBox.VertScrollBar.Position := MemberListScrollBox.VertScrollBar.Position - 20;
+end;
+
+procedure TfmScheduleCreate.SearchBtnClick(Sender: TObject);
+begin
+  ScheduleController.TScheduleController.Member_Find(self, SearchEdit.Text);
+end;
+
+procedure TfmScheduleCreate.SearchEditKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = #13 then
+    ScheduleController.TScheduleController.Member_Find(self, SearchEdit.Text);
+end;
+
+procedure TfmScheduleCreate.MemberListShow(AMember: TDataSet);
+var
+  I : Integer;
+begin
+
+  for I := 0 to MemberListGrid.ColCount - 1 do
+    MemberListGrid.Cols[I].Clear;
+
+  AMember.Active := true;
+
+  MemberListGrid.RowCount := AMember.RecordCount + 1;
+
+  MemberListGrid.Height := MemberListGrid.RowCount * 40 + 10;
+
+  I := 1;
+  While Not AMember.Eof do
+  begin
+    with MemberListGrid do
+    begin
+      Cells[1,I] := AMember.FieldByName('ID').AsString;
+      Cells[2,I] := AMember.FieldByName('NAME').AsString;
+      Cells[3,I] := AMember.FieldByName('GENDER').AsString;
+      Cells[4,I] := AMember.FieldByName('TEL').AsString;
+      Cells[5,I] := '잔여PT : '+AMember.FieldByName('PT').AsString+'회';
+      AMember.Next;
+      Inc(I);
+    end;
+  end;
+
+  MemberListScrollBox.VertScrollBar.Range := MemberListGrid.Height;
+
 end;
 
 end.

@@ -13,12 +13,13 @@ type
     constructor DayLoad(const AView: TfmScheduleView; ADate : String);
     constructor ScheduleLoad(const AView: TfmScheduleView; ADate : String);
     constructor Date_Calculation(const AView: TfmScheduleCreate; ADate : String; iAddDay : Integer);
+    constructor Member_Find(const AView: TfmScheduleCreate; AName : String);
   end;
 
 implementation
 
 uses
-  CommonFunction, ScheduleModule, MainModule;
+  CommonFunction, ScheduleModule, MainModule, MemberModule;
 
 constructor TScheduleController.DayLoad(const AView: TfmScheduleView; ADate : String);
 var
@@ -39,6 +40,14 @@ end;
 constructor TScheduleController.Date_Calculation(const AView: TfmScheduleCreate; ADate : String; iAddDay : Integer);
 begin
   AView.DayEdit.Text := ScheduleModule.dmSchedule.Date_Calculation_Select(ADate, iAddDay-1);
+end;
+
+constructor TScheduleController.Member_Find(const AView: TfmScheduleCreate; AName : String);
+var
+  Members : TDataSet;
+begin
+  Members := MemberModule.dmMember.Member_List_Select(AName);
+  AView.MemberListShow(Members);
 end;
 
 end.
