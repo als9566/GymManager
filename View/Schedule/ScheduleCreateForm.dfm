@@ -208,6 +208,7 @@ object fmScheduleCreate: TfmScheduleCreate
             Options = [goVertLine, goHorzLine, goRangeSelect]
             ScrollBars = ssNone
             TabOrder = 0
+            OnDblClick = MemberListGridDblClick
             OnDrawCell = MemberListGridDrawCell
             OnMouseLeave = MemberListGridMouseLeave
             OnMouseMove = MemberListGridMouseMove

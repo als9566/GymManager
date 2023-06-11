@@ -73,6 +73,7 @@ uses
 
 {$R *.dfm}
 // TODO 오른쪽 클릭 팝업 버튼이벤트 로직만들기
+// TODO 날짜이동 및 검색 로직 만들기
 procedure TfmScheduleView.backPanelClick(Sender: TObject);
 begin
   PopupOutPanel.Visible := False;
@@ -138,6 +139,10 @@ begin
       fmBlur.parameter2.Text := IntToStr(iRow);
       fmBlur.parameter3.Text := First_Date.Text;
       fmBlur.Show;
+
+      // TODO[새로고침 로직]
+      //ScheduleController.TScheduleController.DayLoad(self, formatDateTime('yyyy-mm-dd',now));
+      //ScheduleController.TScheduleController.ScheduleLoad(self, formatDateTime('yyyy-mm-dd',now));
     end
     else
     begin // 회원디테일

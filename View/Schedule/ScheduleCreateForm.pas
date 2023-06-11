@@ -58,6 +58,7 @@ type
     procedure MemberListGridMouseLeave(Sender: TObject);
     procedure MemberListGridMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
+    procedure MemberListGridDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,7 +74,7 @@ uses
   CommonFunction, ScheduleController;
 
 {$R *.dfm}
-// TODO 1) 디자인작업 2) 저장로직
+// TODO 1) 저장로직
 procedure TfmScheduleCreate.cxButton1Click(Sender: TObject);
 begin
   ModalResult := mrOK;
@@ -102,6 +103,31 @@ begin
 
 end;
 
+procedure TfmScheduleCreate.MemberListGridDblClick(Sender: TObject);
+var
+  P: TPoint;
+  iColumn, iRow: Longint;
+
+begin
+  GetCursorPos(P);
+  with MemberListGrid do
+  begin
+    P := ScreenToClient(P);
+    MouseToCell(P.X, P.Y, iColumn, iRow);
+
+    if (iColumn = 0) or (iRow = 0) then
+      abort;
+
+    if Application.MessageBox( PChar(DayLabel.Caption + ' ' + Cells[2,iRow] + ' 회원을 PT 등록 하시겠습니까?'), '등록확인', MB_YESNO+MB_IconQuestion) = IDNO  then
+    begin
+      Abort;
+    end;
+
+    ScheduleController.TScheduleController.Schedule_Create(self, iRow);
+
+  end;
+end;
+
 procedure TfmScheduleCreate.MemberListGridDrawCell(Sender: TObject; ACol,
   ARow: Integer; Rect: TRect; State: TGridDrawState);
 begin
@@ -112,9 +138,7 @@ begin
     if Assigned(Objects[ACol, ARow]) then
     begin
       // 색을 셀에 채우기
-      //Canvas.Brush.Color := $00BADCC1;
       Canvas.Brush.Color := TColor(Objects[ACol, ARow]);
-      //Rect.Left := Rect.Left-5;
       Canvas.FillRect(Rect);
     end
     else

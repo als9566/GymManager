@@ -9,6 +9,21 @@ uses
   FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
+  TSchedule = class
+  private
+    Fday         : string;
+    Ftime        : Integer;
+    Fmember_id   : Integer;
+    Fsequence    : Integer;
+  public
+    property day         : string   read Fday        write Fday;
+    property time        : Integer  read Ftime       write Ftime;
+    property member_id   : Integer  read Fmember_id  write Fmember_id;
+    property sequence    : Integer  read Fsequence   write Fsequence;
+    Function Insert(ASchedule: TSchedule) :Boolean;
+  end;
+
+type
   TdmSchedule = class(TDataModule)
     FDQuery: TFDQuery;
   private
@@ -22,7 +37,8 @@ type
   end;
 
 var
-  dmSchedule: TdmSchedule;
+  dmSchedule : TdmSchedule;
+  Schedule   :  TSchedule;
 
 implementation
 
@@ -32,6 +48,44 @@ uses
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
+
+Function TSchedule.Insert(ASchedule: TSchedule): Boolean;
+begin
+
+  try
+
+    dmSchedule.FDQuery.SQL.Clear;
+    dmSchedule.FDQuery.SQL.Text := 'SELECT IFNULL(MAX(sequence)+1,1) seq FROM pt_schedule ' +#13#10
+                                 + ' WHERE MEMBER_ID = '+IntToStr(ASchedule.member_id);
+
+    dmSchedule.FDQuery.Active := true;
+
+    ASchedule.sequence := dmSchedule.FDQuery.FieldByName('seq').AsInteger;
+  except
+    ASchedule.sequence := 0;
+  end;
+
+  try
+    dmSchedule.FDQuery.SQL.Text := 'INSERT INTO pt_schedule '
+                               + '       (day, time, member_id, sequence ) '
+                               + ' VALUES(:day, :time, :member_id, :sequence ) ';
+
+    dmSchedule.FDQuery.ParamByName('day').AsString := ASchedule.day;
+    dmSchedule.FDQuery.ParamByName('time').AsInteger := ASchedule.time;
+    dmSchedule.FDQuery.ParamByName('member_id').AsInteger := ASchedule.member_id;
+    dmSchedule.FDQuery.ParamByName('sequence').AsInteger := ASchedule.sequence;
+
+    dmSchedule.FDQuery.ExecSQL;
+
+    MainModule.dmMain.GymConnection.Commit;
+
+    Result := true;
+  except
+    MainModule.dmMain.GymConnection.Rollback;
+    Result := false;
+  end;
+
+end;
 
 Function TdmSchedule.PlusDay7_Select(ADate : String) :TDataSet;
 var
