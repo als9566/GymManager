@@ -35,7 +35,6 @@ type
     CurvyPanel1: TCurvyPanel;
     PopupOutPanel: TPanel;
     PopupInPanel: TCurvyPanel;
-    ChangeLabelBtn: TLabel;
     DeleteLabelBtn: TLabel;
     refreshBtn: TImage;
     FirstDatePanel: TCurvyPanel;
@@ -64,6 +63,7 @@ type
     procedure refreshBtnClick(Sender: TObject);
     procedure rightBtnClick(Sender: TObject);
     procedure leftBtnClick(Sender: TObject);
+    procedure DeleteLabelBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -74,6 +74,7 @@ var
   fmScheduleView: TfmScheduleView;
   fmBlur: TfmBlur;
   Colors: array[0..6] of TColor = ($00FFFCE6, $00E7E6FF, $00FFE3F1, $00D2FCFF, $00EAFFE6, $00B0E3FF, $00B4B4DA);
+  iTempCol, iTempRow : Integer;
 
 implementation
 
@@ -81,7 +82,6 @@ uses
   CommonFunction, ShadowBox, MainForm, ScheduleController;
 
 {$R *.dfm}
-// TODO 오른쪽 클릭 팝업 버튼이벤트 로직만들기
 // TODO 회원이미지 출력
 procedure TfmScheduleView.backPanelClick(Sender: TObject);
 begin
@@ -125,6 +125,17 @@ end;
 procedure TfmScheduleView.rightBtnClick(Sender: TObject);
 begin
   ScheduleController.TScheduleController.PlusDayLoad(self, First_Date.Text);
+  refreshBtnClick(self);
+end;
+
+procedure TfmScheduleView.DeleteLabelBtnClick(Sender: TObject);
+begin
+  PopupOutPanel.Visible := False;
+  if Application.MessageBox( PChar(' PT 등록을 삭제 하시겠습니까?'), '삭제확인', MB_YESNO+MB_IconQuestion) = IDNO  then
+  begin
+      Abort;
+  end;
+  ScheduleController.TScheduleController.Schedule_Delete(self, iTempCol-1, iTempRow+5);
   refreshBtnClick(self);
 end;
 
@@ -329,6 +340,9 @@ begin
 
       PopupOutPanel.Left := P.X-70;
       PopupOutPanel.Top := P.Y-ScheduleScrollBox.VertScrollBar.Position;
+
+      iTempCol := iColumn;
+      iTempRow := iRow;
 
       PopupOutPanel.Visible := True;
     end;

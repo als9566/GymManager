@@ -74,7 +74,6 @@ uses
   CommonFunction, ScheduleController;
 
 {$R *.dfm}
-// TODO 1) 저장로직
 procedure TfmScheduleCreate.cxButton1Click(Sender: TObject);
 begin
   ModalResult := mrOK;

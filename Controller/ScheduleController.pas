@@ -17,6 +17,7 @@ type
     constructor Date_Calculation(const AView: TfmScheduleCreate; ADate : String; iAddDay : Integer);
     constructor Member_Find(const AView: TfmScheduleCreate; AName : String);
     constructor Schedule_Create(const AView: TfmScheduleCreate; ARow : Integer);
+    constructor Schedule_Delete(const AView: TfmScheduleView; iAddDay, iTime : Integer);
   end;
 
 implementation
@@ -84,6 +85,28 @@ begin
       ShowMessage('등록중 에러가 발생하였습니다.');
     end;
 
+  finally
+    Schedule.Free;
+  end;
+end;
+
+constructor TScheduleController.Schedule_Delete(const AView: TfmScheduleView; iAddDay, iTime : Integer);
+var
+  Schedule: TSchedule;
+begin
+  Schedule := TSchedule.Create;
+
+  Schedule.id := ScheduleModule.dmSchedule.Schedule_ID_Select(AView.First_Date.Text, iAddDay, iTime);
+
+  try
+    if ScheduleModule.Schedule.Delete(Schedule) = true then
+    begin
+      ShowMessage('정상 삭제되었습니다.');
+    end
+    else
+    begin
+      ShowMessage('삭제중 에러가 발생하였습니다.');
+    end;
   finally
     Schedule.Free;
   end;

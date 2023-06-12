@@ -11,16 +11,19 @@ uses
 type
   TSchedule = class
   private
+    Fid          : Integer;
     Fday         : string;
     Ftime        : Integer;
     Fmember_id   : Integer;
     Fsequence    : Integer;
   public
+    property id          : Integer  read Fid         write Fid;
     property day         : string   read Fday        write Fday;
     property time        : Integer  read Ftime       write Ftime;
     property member_id   : Integer  read Fmember_id  write Fmember_id;
     property sequence    : Integer  read Fsequence   write Fsequence;
     Function Insert(ASchedule: TSchedule) :Boolean;
+    Function Delete(ASchedule: TSchedule) :Boolean;
   end;
 
 type
@@ -76,6 +79,27 @@ begin
     dmSchedule.FDQuery.ParamByName('time').AsInteger := ASchedule.time;
     dmSchedule.FDQuery.ParamByName('member_id').AsInteger := ASchedule.member_id;
     dmSchedule.FDQuery.ParamByName('sequence').AsInteger := ASchedule.sequence;
+
+    dmSchedule.FDQuery.ExecSQL;
+
+    MainModule.dmMain.GymConnection.Commit;
+
+    Result := true;
+  except
+    MainModule.dmMain.GymConnection.Rollback;
+    Result := false;
+  end;
+
+end;
+
+Function TSchedule.Delete(ASchedule: TSchedule): Boolean;
+begin
+
+  try
+    dmSchedule.FDQuery.SQL.Text := 'DELETE FROM pt_schedule '
+                                 + ' WHERE ID = :ID         ';
+
+    dmSchedule.FDQuery.ParamByName('ID').AsInteger := ASchedule.id;
 
     dmSchedule.FDQuery.ExecSQL;
 
@@ -198,9 +222,11 @@ begin
   try
     dmSchedule.FDQuery.SQL.Clear;
     dmSchedule.FDQuery.SQL.Text := 'SELECT id                         ' +#13#10
-                                 + '  FROM                            ' +#13#10
+                                 + '  FROM pt_schedule                ' +#13#10
                                  + ' WHERE day = DATE(datetime('''+ ADate +''', ''+'+ IntToStr(iAddDay) +' days'')) ' +#13#10
                                  + '   AND time = ' +IntToStr(iTime);
+
+    dmSchedule.FDQuery.Active := true;
 
     Result := dmSchedule.FDQuery.FieldByName('id').AsInteger;
   except

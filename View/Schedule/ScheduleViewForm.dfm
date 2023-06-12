@@ -1080,9 +1080,9 @@ object fmScheduleView: TfmScheduleView
         end
         object PopupOutPanel: TPanel
           Left = 616
-          Top = 506
+          Top = 534
           Width = 114
-          Height = 81
+          Height = 46
           BevelOuter = bvNone
           Color = clWhite
           ParentBackground = False
@@ -1093,7 +1093,7 @@ object fmScheduleView: TfmScheduleView
             Left = 0
             Top = 0
             Width = 108
-            Height = 75
+            Height = 40
             Margins.Left = 0
             Margins.Top = 0
             Margins.Right = 6
@@ -1102,36 +1102,11 @@ object fmScheduleView: TfmScheduleView
             BorderColor = 13553358
             Rounding = 10
             TabOrder = 0
-            object ChangeLabelBtn: TLabel
-              AlignWithMargins = True
-              Left = 1
-              Top = 0
-              Width = 106
-              Height = 37
-              Margins.Left = 1
-              Margins.Top = 0
-              Margins.Right = 1
-              Margins.Bottom = 0
-              Align = alTop
-              AutoSize = False
-              Caption = '    '#51068#51221#48320#44221
-              Color = clWhite
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clWindowText
-              Font.Height = -13
-              Font.Name = #47569#51008' '#44256#46357
-              Font.Style = []
-              ParentColor = False
-              ParentFont = False
-              Transparent = True
-              Layout = tlCenter
-              OnMouseEnter = LabelBtnMouseEnter
-              OnMouseLeave = LabelBtnMouseLeave
-            end
+            ExplicitHeight = 75
             object DeleteLabelBtn: TLabel
               AlignWithMargins = True
               Left = 1
-              Top = 37
+              Top = 0
               Width = 106
               Height = 39
               Margins.Left = 1
@@ -1149,6 +1124,7 @@ object fmScheduleView: TfmScheduleView
               ParentFont = False
               Transparent = True
               Layout = tlCenter
+              OnClick = DeleteLabelBtnClick
               OnMouseEnter = LabelBtnMouseEnter
               OnMouseLeave = LabelBtnMouseLeave
               ExplicitTop = 36
