@@ -11,6 +11,8 @@ type
 
   public
     constructor DayLoad(const AView: TfmScheduleView; ADate : String);
+    constructor PlusDayLoad(const AView: TfmScheduleView; ADate : String);
+    constructor MinusDayLoad(const AView: TfmScheduleView; ADate : String);
     constructor ScheduleLoad(const AView: TfmScheduleView; ADate : String);
     constructor Date_Calculation(const AView: TfmScheduleCreate; ADate : String; iAddDay : Integer);
     constructor Member_Find(const AView: TfmScheduleCreate; AName : String);
@@ -28,6 +30,16 @@ var
 begin
   Day := ScheduleModule.dmSchedule.PlusDay7_Select(ADate);
   AView.ShowDay(Day);
+end;
+
+constructor TScheduleController.MinusDayLoad(const AView: TfmScheduleView; ADate : String);
+begin
+  AView.First_Date.Text := ScheduleModule.dmSchedule.MinusDay_Select(ADate);
+end;
+
+constructor TScheduleController.PlusDayLoad(const AView: TfmScheduleView; ADate : String);
+begin
+  AView.First_Date.Text := ScheduleModule.dmSchedule.PlusDay_Select(ADate);
 end;
 
 constructor TScheduleController.ScheduleLoad(const AView: TfmScheduleView; ADate : String);

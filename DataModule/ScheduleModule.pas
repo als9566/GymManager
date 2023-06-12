@@ -31,6 +31,8 @@ type
   public
     { Public declarations }
     Function PlusDay7_Select(ADate : String) :TDataSet;
+    Function PlusDay_Select(ADate : String) : String;
+    Function MinusDay_Select(ADate : String) : String;
     Function Schedule_Detail_Select(ADate : String) :TDataSet;
     Function Schedule_ID_Select(ADate : String; iAddDay, iTime : Integer) : Integer;
     Function Date_Calculation_Select(ADate : String; iAddDay : Integer) : String;
@@ -85,6 +87,34 @@ begin
     Result := false;
   end;
 
+end;
+
+Function TdmSchedule.MinusDay_Select(ADate : String) : String;
+begin
+  try
+    dmSchedule.FDQuery.SQL.Clear;
+    dmSchedule.FDQuery.SQL.Text := 'SELECT DATE(datetime('''+ ADate +''', ''-1 days'')) "DATE"';
+
+    dmSchedule.FDQuery.Active := true;
+
+    Result := dmSchedule.FDQuery.FieldByName('DATE').AsString;
+  except
+    Result := '';
+  end;
+end;
+
+Function TdmSchedule.PlusDay_Select(ADate : String) : String;
+begin
+  try
+    dmSchedule.FDQuery.SQL.Clear;
+    dmSchedule.FDQuery.SQL.Text := 'SELECT DATE(datetime('''+ ADate +''', ''+1 days'')) "DATE"';
+
+    dmSchedule.FDQuery.Active := true;
+
+    Result := dmSchedule.FDQuery.FieldByName('DATE').AsString;
+  except
+    Result := '';
+  end;
 end;
 
 Function TdmSchedule.PlusDay7_Select(ADate : String) :TDataSet;

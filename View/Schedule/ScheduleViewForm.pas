@@ -21,7 +21,9 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, cxScrollBox, CurvyControls, Data.DB, BlurForm;
+  dxSkinXmas2008Blue, cxScrollBox, CurvyControls, Data.DB, BlurForm,
+  Vcl.ComCtrls, cxContainer, cxEdit, dxCore, cxDateUtils, cxTextEdit,
+  cxMaskEdit, cxDropDownEdit, cxCalendar;
 
 type
   TfmScheduleView = class(TForm)
@@ -35,7 +37,11 @@ type
     PopupInPanel: TCurvyPanel;
     ChangeLabelBtn: TLabel;
     DeleteLabelBtn: TLabel;
-    First_Date: TEdit;
+    refreshBtn: TImage;
+    FirstDatePanel: TCurvyPanel;
+    First_Date: TcxDateEdit;
+    leftBtn: TImage;
+    rightBtn: TImage;
     procedure ShowDay(ADay: TDataSet);
     procedure ShowSchedule(ASchedule: TDataSet);
     procedure ScheduleGridDrawCell(Sender: TObject; ACol, ARow: Integer;
@@ -55,6 +61,9 @@ type
     procedure backPanelClick(Sender: TObject);
     procedure LabelBtnMouseEnter(Sender: TObject);
     procedure LabelBtnMouseLeave(Sender: TObject);
+    procedure refreshBtnClick(Sender: TObject);
+    procedure rightBtnClick(Sender: TObject);
+    procedure leftBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -73,7 +82,7 @@ uses
 
 {$R *.dfm}
 // TODO 오른쪽 클릭 팝업 버튼이벤트 로직만들기
-// TODO 날짜이동 및 검색 로직 만들기
+// TODO 회원이미지 출력
 procedure TfmScheduleView.backPanelClick(Sender: TObject);
 begin
   PopupOutPanel.Visible := False;
@@ -89,6 +98,34 @@ procedure TfmScheduleView.LabelBtnMouseLeave(Sender: TObject);
 begin
   TLabel(Sender).Transparent := True;
   TLabel(Sender).Color := clWhite;
+end;
+
+procedure TfmScheduleView.refreshBtnClick(Sender: TObject);
+var
+  I : Integer;
+begin
+  ScheduleController.TScheduleController.DayLoad(self, First_Date.Text);
+
+  with ScheduleGrid do
+  begin
+    for I := 1 to 18 do
+    begin
+      Cells[0,I] := IntToStr(I+5)+ ':00';
+    end;
+    ScheduleController.TScheduleController.ScheduleLoad(self, First_Date.Text);
+  end;
+end;
+
+procedure TfmScheduleView.leftBtnClick(Sender: TObject);
+begin
+  ScheduleController.TScheduleController.MinusDayLoad(self, First_Date.Text);
+  refreshBtnClick(self);
+end;
+
+procedure TfmScheduleView.rightBtnClick(Sender: TObject);
+begin
+  ScheduleController.TScheduleController.PlusDayLoad(self, First_Date.Text);
+  refreshBtnClick(self);
 end;
 
 procedure TfmScheduleView.FormShow(Sender: TObject);
@@ -140,9 +177,7 @@ begin
       fmBlur.parameter3.Text := First_Date.Text;
       fmBlur.Show;
 
-      // TODO[새로고침 로직]
-      //ScheduleController.TScheduleController.DayLoad(self, formatDateTime('yyyy-mm-dd',now));
-      //ScheduleController.TScheduleController.ScheduleLoad(self, formatDateTime('yyyy-mm-dd',now));
+      refreshBtnClick(self);
     end
     else
     begin // 회원디테일
