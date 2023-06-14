@@ -21,7 +21,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, cxButtons, BlurForm;
+  dxSkinXmas2008Blue, cxButtons, BlurForm, cxControls, cxScrollBox;
 
 type
   TfmMemberManaging = class(TForm)
@@ -41,14 +41,23 @@ type
     SearchBtn: TImage;
     SearchEdit: TEdit;
     GridPanel: TPanel;
-    MemberGrid: TStringGrid;
     NewInsertBtn: TcxButton;
+    MemberListPanel: TCurvyPanel;
+    MemberListScrollBox: TcxScrollBox;
+    MemberGrid: TStringGrid;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure MemberGridDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
     procedure NewInsertBtnClick(Sender: TObject);
+    procedure MemberGridMouseLeave(Sender: TObject);
+    procedure MemberGridMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure MemberGridMouseWheelDown(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure MemberGridMouseWheelUp(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
   private
     { Private declarations }
   public
@@ -83,70 +92,190 @@ procedure TfmMemberManaging.FormShow(Sender: TObject);
 var
   I: Integer;
 begin
-  //DrawRounded(backPanel, 50);
-
-  // StringGrid
   with MemberGrid do
   begin
-    ColCount := 10;
-
-    FixedCols := 1;
-    FixedRows := 1;
-
-    DefaultRowHeight := 20;
-    DefaultColWidth := 80;
-
-    Cells[00,0] := '1';
-    Cells[01,0] := '2';
-    Cells[02,0] := '3';
-    Cells[03,0] := '4';
-    Cells[04,0] := '5';
-    Cells[05,0] := '6';
-
-    for I := 0 to 5 do
-    begin
-      MemberGrid.Cells[0,i+1] := IntToStr(2 + I);
-      MemberGrid.Cells[1,i+1] := IntToStr(3 + I);
-      MemberGrid.Cells[2,i+1] := IntToStr(4 + I);
-      MemberGrid.Cells[3,i+1] := IntToStr(5 + I);
-      MemberGrid.Cells[4,i+1] := IntToStr(6 + I);
-      MemberGrid.Cells[5,i+1] := IntToStr(7 + I);
-    end;
-
+    Cells[1,0]  := '이름';
+    Cells[2,0]  := '성별';
+    Cells[3,0]  := '생년월일';
+    Cells[3,0]  := '전화번호';
+    Cells[4,0]  := '회원 만료일';
+    Cells[5,0]  := '회원 잔여 일수';
+    Cells[6,0]  := '상태';
+    Cells[7,0]  := 'PT 잔여 횟수';
+    Cells[8,0]  := '락커넘버';
+    Cells[9,0]  := '운동복 만료일';
+    Cells[10,0] := '운동복 잔여 일수';
+    Cells[11,0] := '총결제금액';
   end;
+
+  MemberListScrollBox.HorzScrollBar.Range := MemberGrid.Width - 130;
+
+  MemberGrid.RowCount := 101;
+
+  with MemberGrid do
+  begin
+    for I := 1 to 100 do
+    begin
+      Cells[1,I] := '홍길동';
+      Cells[2,I] := '남';
+      Cells[3,I] := '1999-11-11';
+      Cells[3,I] := '010-1111-1234';
+      Cells[4,I] := '2023-12-31';
+      Cells[5,I] := '131일';
+      Cells[6,I] := '진행';
+      //Cells[6,I] := '만료';
+      //Cells[7,I] := 'X';
+      Cells[7,I] := '10회';
+      Cells[8,I] := '8';
+      Cells[9,I] := '2023-12-31';
+      Cells[10,I] := '131일';
+      Cells[11,I] := '1,100,300원';
+    end;
+  end;
+
+  MemberGrid.Height := MemberGrid.RowCount * 40 + 130;
+  MemberListScrollBox.VertScrollBar.Range := MemberGrid.Height;
+
 end;
 
 //StringGrid DefaultDrawing := False 방법
 procedure TfmMemberManaging.MemberGridDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
 begin
+  with MemberGrid do
+  begin
+    // 셀 별 어브젝트가 설정되었는지 확인
+    if Assigned(Objects[ACol, ARow]) then
+    begin
+      // 색을 셀에 채우기
+      Canvas.Brush.Color := TColor(Objects[ACol, ARow]);
+      Canvas.FillRect(Rect);
+    end
+    else
+    begin
+      // 색을 셀에 채우기
+      Canvas.Brush.Color := clWhite;
+      Canvas.FillRect(Rect);
+    end;
 
-     // 셀 그리기
-     // 고정 셀은 버튼 모양으로
-     if(State = [gdFixed]) then
-     begin
-         MemberGrid.Canvas.Brush.Color := clWhite;
-         MemberGrid.Canvas.Font.Color := clBlack;
-         MemberGrid.Canvas.FillRect(Rect);
-     end
-     // 선택된 셀은 하이라이트 색
-     else if (State = [gdSelected]) then
-     begin
-         MemberGrid.Canvas.Brush.Color := clWhite;
-         MemberGrid.Canvas.Font.Color := clBlack;
-         MemberGrid.Canvas.FillRect(Rect);
-     end
-     // 나머지 셀은 기본 색으로
-     else
-     begin
-         MemberGrid.Canvas.Brush.Color := clWhite;
-         MemberGrid.Canvas.Font.Color := clBlack;
-         MemberGrid.Canvas.FillRect(Rect);
-     end;
+    if ARow = 0 then
+    begin
+      Canvas.Font.Color := $004D4D4D;
+      Canvas.Font.Name := '맑은 고딕';
+      Canvas.Font.Style := [fsBold];
+      Canvas.Font.Size := 9;
+    end
+    else
+    begin
+      Canvas.Font.Color := $004D4D4D;
+      Canvas.Font.Name := '맑은 고딕';
+      Canvas.Font.Size := 8;
+    end;
+    Canvas.TextOut(Rect.Left+10, Rect.Top+5, Cells[ACol,ARow]);
+  end;
+end;
 
-     // 셀 내용(텍스트) 출력
-     MemberGrid.Canvas.TextRect(Rect, Rect.Left, Rect.Top, MemberGrid.Cells[ACol,ARow]);
+procedure TfmMemberManaging.MemberGridMouseLeave(Sender: TObject);
+var
+  I,J : Integer;
+begin
+  with MemberGrid do
+  begin
+      for I := 0 to ColCount-1 do
+      begin
+        for J := 0 to RowCount-1 do
+        begin
+          Objects[I, J] := nil;
+        end;
+      end;
+      Abort;
+  end;
+end;
 
+procedure TfmMemberManaging.MemberGridMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+var
+  pntCurPos :TPoint;
+  iCol      :integer;
+  iRow      :integer;
+  I, J      : Integer;
+begin
+  with MemberGrid do
+  begin
+    pntCurPos := ScreenToClient(Mouse.CursorPos);
+    MouseToCell(pntCurPos.x, pntCurPos.y, iCol, iRow);
+
+    if (iCol = -1) and (iRow = -1) then
+    begin
+      for I := 0 to ColCount-1 do
+      begin
+        for J := 0 to RowCount-1 do
+        begin
+          Objects[I, J] := nil;
+        end;
+      end;
+      Abort;
+    end;
+
+    if iRow > 0 then
+    begin
+      for I := 0 to MemberGrid.ColCount-1 do
+      begin
+        Objects[I, iRow-1] := nil;
+      end;
+    end;
+
+    if iRow <> RowCount-1 then
+    begin
+      for I := 0 to MemberGrid.ColCount-1 do
+      begin
+        Objects[I, iRow+1] := nil;
+      end;
+    end;
+
+    if iRow <> 0 then
+    begin
+      for I := 0 to MemberGrid.ColCount-1 do
+        Objects[I, iRow] := TObject($00D8D8D8);
+    end;
+
+  end;
+end;
+
+procedure TfmMemberManaging.MemberGridMouseWheelDown(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+var
+  I, J : Integer;
+begin
+  MemberListScrollBox.VertScrollBar.Position := MemberListScrollBox.VertScrollBar.Position + 20;
+  with MemberGrid do
+  begin
+    for I := 0 to ColCount-1 do
+    begin
+      for J := 0 to RowCount-1 do
+      begin
+        Objects[I, J] := nil;
+      end;
+    end;
+  end;
+end;
+
+procedure TfmMemberManaging.MemberGridMouseWheelUp(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+var
+  I, J : Integer;
+begin
+  MemberListScrollBox.VertScrollBar.Position := MemberListScrollBox.VertScrollBar.Position - 20;
+  with MemberGrid do
+  begin
+    for I := 0 to ColCount-1 do
+    begin
+      for J := 0 to RowCount-1 do
+      begin
+        Objects[I, J] := nil;
+      end;
+    end;
+  end;
 end;
 
 {** 신규버튼 이벤트 (신규회원 등록창 띄우기)

@@ -224,14 +224,38 @@ end;
 
 procedure TfmScheduleCreate.MemberListGridMouseWheelDown(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+var
+  I, J : Integer;
 begin
   MemberListScrollBox.VertScrollBar.Position := MemberListScrollBox.VertScrollBar.Position + 20;
+  with MemberListGrid do
+  begin
+    for I := 0 to ColCount-1 do
+    begin
+      for J := 0 to RowCount-1 do
+      begin
+        Objects[I, J] := nil;
+      end;
+    end;
+  end;
 end;
 
 procedure TfmScheduleCreate.MemberListGridMouseWheelUp(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+var
+  I, J : Integer;
 begin
   MemberListScrollBox.VertScrollBar.Position := MemberListScrollBox.VertScrollBar.Position - 20;
+  with MemberListGrid do
+  begin
+    for I := 0 to ColCount-1 do
+    begin
+      for J := 0 to RowCount-1 do
+      begin
+        Objects[I, J] := nil;
+      end;
+    end;
+  end;
 end;
 
 procedure TfmScheduleCreate.SearchBtnClick(Sender: TObject);

@@ -9,7 +9,7 @@ object fmMemberManaging: TfmMemberManaging
   BorderStyle = bsNone
   Caption = 'fmMemberManaging'
   ClientHeight = 661
-  ClientWidth = 784
+  ClientWidth = 787
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -26,22 +26,23 @@ object fmMemberManaging: TfmMemberManaging
   OnResize = FormResize
   OnShow = FormShow
   DesignSize = (
-    784
+    787
     661)
   PixelsPerInch = 96
   TextHeight = 13
   object backPanel: TPanel
     Left = 3
     Top = 3
-    Width = 781
+    Width = 784
     Height = 658
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 781
     DesignSize = (
-      781
+      784
       658)
     object MenuNameLabel: TLabel
       Left = 16
@@ -59,21 +60,21 @@ object fmMemberManaging: TfmMemberManaging
     object Shape1: TShape
       Left = 7
       Top = 40
-      Width = 761
+      Width = 764
       Height = 2
       Anchors = [akLeft, akTop, akRight]
       Brush.Color = clSilver
       Pen.Color = clSilver
-      ExplicitWidth = 764
     end
     object MemberCntPanel: TPanel
       Left = 7
       Top = 51
-      Width = 746
+      Width = 749
       Height = 41
       Anchors = [akLeft, akTop, akRight]
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 746
       object MemberCntLabel1: TLabel
         Left = 9
         Top = 11
@@ -170,7 +171,7 @@ object fmMemberManaging: TfmMemberManaging
       end
     end
     object SearchPanel: TCurvyPanel
-      Left = 520
+      Left = 523
       Top = 9
       Width = 233
       Height = 25
@@ -179,6 +180,7 @@ object fmMemberManaging: TfmMemberManaging
       Color = 16053492
       Rounding = 10
       TabOrder = 1
+      ExplicitLeft = 520
       object SearchBtn: TImage
         Left = 203
         Top = 4
@@ -464,27 +466,89 @@ object fmMemberManaging: TfmMemberManaging
     end
     object GridPanel: TPanel
       Left = 7
-      Top = 98
-      Width = 761
-      Height = 551
+      Top = 93
+      Width = 767
+      Height = 557
       Anchors = [akLeft, akTop, akRight, akBottom]
       BevelOuter = bvNone
       Color = clWindow
       ParentBackground = False
       TabOrder = 2
-      object MemberGrid: TStringGrid
+      object MemberListPanel: TCurvyPanel
         Left = 0
         Top = 0
-        Width = 761
-        Height = 551
+        Width = 767
+        Height = 557
         Align = alClient
-        DefaultDrawing = False
+        BorderColor = 15329769
         TabOrder = 0
-        OnDrawCell = MemberGridDrawCell
+        ExplicitWidth = 764
+        ExplicitHeight = 551
+        object MemberListScrollBox: TcxScrollBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 761
+          Height = 551
+          Align = alClient
+          AutoScroll = False
+          BorderStyle = cxcbsNone
+          HorzScrollBar.Range = 2000
+          HorzScrollBar.Tracking = True
+          LookAndFeel.Kind = lfUltraFlat
+          LookAndFeel.NativeStyle = False
+          LookAndFeel.SkinName = 'DevExpressStyle'
+          TabOrder = 0
+          Transparent = True
+          VertScrollBar.Range = 150
+          VertScrollBar.Tracking = True
+          ExplicitWidth = 755
+          ExplicitHeight = 545
+          object MemberGrid: TStringGrid
+            Left = -121
+            Top = 2
+            Width = 1200
+            Height = 257
+            BevelOuter = bvNone
+            BorderStyle = bsNone
+            Color = 16514043
+            ColCount = 12
+            DefaultColWidth = 120
+            DefaultRowHeight = 40
+            DefaultDrawing = False
+            FixedColor = clBlack
+            RowCount = 3
+            Options = [goVertLine, goHorzLine, goRangeSelect]
+            ScrollBars = ssNone
+            TabOrder = 0
+            OnDrawCell = MemberGridDrawCell
+            OnMouseLeave = MemberGridMouseLeave
+            OnMouseMove = MemberGridMouseMove
+            OnMouseWheelDown = MemberGridMouseWheelDown
+            OnMouseWheelUp = MemberGridMouseWheelUp
+            ColWidths = (
+              120
+              93
+              55
+              109
+              124
+              114
+              59
+              99
+              77
+              114
+              120
+              100)
+            RowHeights = (
+              40
+              40
+              40)
+          end
+        end
       end
     end
     object NewInsertBtn: TcxButton
-      Left = 432
+      Left = 435
       Top = 9
       Width = 75
       Height = 25
@@ -500,6 +564,7 @@ object fmMemberManaging: TfmMemberManaging
       Font.Style = []
       ParentFont = False
       OnClick = NewInsertBtnClick
+      ExplicitLeft = 432
     end
   end
 end
