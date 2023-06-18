@@ -12,6 +12,7 @@ type
   public
     constructor MemberInsert(const AView: TfmMemberInsert; AChoiceLocker: Integer);
     constructor MemberSelect(const AView: TfmMemberManaging);
+    constructor MemberCount(const AView: TfmMemberManaging);
   end;
 
 implementation
@@ -112,6 +113,22 @@ var
 begin
   Members := MemberModule.dmMember.Managing_List_Select(AView.SearchEdit.Text);
   AView.MemberListShow(Members);
+end;
+
+{** MemberCount
+* }
+constructor TMemberController.MemberCount(const AView: TfmMemberManaging);
+var
+  MemberCnt : TDataSet;
+begin
+  MemberCnt := MemberModule.dmMember.Member_Count_Select;
+
+  MemberCnt.Active := true;
+
+  AView.MemberTotalCnt.Caption := FormatFloat('##,###,##0', MemberCnt.FieldByName('전체').AsInteger);
+  AView.MemberIngCnt.Caption := FormatFloat('##,###,##0', MemberCnt.FieldByName('진행').AsInteger);
+  AView.MemberEndCnt.Caption := FormatFloat('##,###,##0', MemberCnt.FieldByName('전체').AsInteger
+                                                        - MemberCnt.FieldByName('진행').AsInteger);
 end;
 
 end.

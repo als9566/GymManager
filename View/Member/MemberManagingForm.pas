@@ -59,6 +59,8 @@ type
     procedure MemberGridMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
     procedure MemberListShow(AMember: TDataSet);
+    procedure SearchBtnClick(Sender: TObject);
+    procedure SearchEditKeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
   public
@@ -74,6 +76,7 @@ implementation
 uses
   CommonFunction, MainForm, MemberController;
 
+//TODO 회원 클릭시 디테일
 {$R *.dfm}
 
 procedure TfmMemberManaging.FormClose(Sender: TObject;
@@ -92,6 +95,7 @@ end;
 procedure TfmMemberManaging.FormShow(Sender: TObject);
 begin
   MemberController.TMemberController.MemberSelect(self);
+  MemberController.TMemberController.MemberCount(self);
 end;
 
 //StringGrid DefaultDrawing := False 방법
@@ -125,7 +129,9 @@ begin
     begin
       Canvas.Font.Color := $004D4D4D;
       if Cells[ACol,ARow] = '만료' then
-        Canvas.Font.Color := clRed;
+        Canvas.Font.Color := clRed
+      else if Cells[ACol,ARow] = '정상' then
+        Canvas.Font.Color := clBlue;
       Canvas.Font.Name := '맑은 고딕';
       Canvas.Font.Size := 8;
     end;
@@ -250,6 +256,19 @@ begin
   fmBlur.imgBlur.Tag := 1;
   fmBlur.Show;
 
+  MemberController.TMemberController.MemberSelect(self);
+
+end;
+
+procedure TfmMemberManaging.SearchBtnClick(Sender: TObject);
+begin
+  MemberController.TMemberController.MemberSelect(self);
+end;
+
+procedure TfmMemberManaging.SearchEditKeyPress(Sender: TObject; var Key: Char);
+begin
+  if key = #13 then
+    MemberController.TMemberController.MemberSelect(self);
 end;
 
 procedure TfmMemberManaging.MemberListShow(AMember: TDataSet);
@@ -264,7 +283,6 @@ begin
 
     Cells[1,0]  := '이름';
     Cells[2,0]  := '성별';
-    Cells[3,0]  := '생년월일';
     Cells[3,0]  := '전화번호';
     Cells[4,0]  := '회원 만료일';
     Cells[5,0]  := '회원 잔여 일수';
@@ -286,7 +304,6 @@ begin
     begin
       Cells[1,I] := AMember.FieldByName('name').AsString;
       Cells[2,I] := AMember.FieldByName('gender').AsString;
-      Cells[3,I] := AMember.FieldByName('birthday').AsString;
       Cells[3,I] := AMember.FieldByName('tel').AsString;
       Cells[4,I] := AMember.FieldByName('회원만료일').AsString;
       Cells[5,I] := AMember.FieldByName('회원 잔여 일수').AsString;
@@ -304,8 +321,13 @@ begin
 
       Cells[9,I] := AMember.FieldByName('운동복 만료일').AsString;
       Cells[10,I] := AMember.FieldByName('운동복 잔여 일수').AsString;
-      // TODO [총결제내역 가져오기]
-      Cells[11,I] := '1,100,300원';
+
+      if (AMember.FieldByName('총결제금액').AsString = '') or
+         (AMember.FieldByName('총결제금액').AsString = '0') then
+        Cells[11,I] := ''
+      else
+        Cells[11,I] := FormatFloat('##,###,##0', AMember.FieldByName('총결제금액').AsInteger);
+
       AMember.Next;
       Inc(I);
     end;

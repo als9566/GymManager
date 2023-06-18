@@ -447,6 +447,7 @@ object fmMemberManaging: TfmMemberManaging
           FFFD65FC8F03574178CEF99FF25F82CFD483F0A0D441D3DF3ABA7BC903DDF07D
           FF1701B39BE318174A030000000049454E44AE426082}
         Stretch = True
+        OnClick = SearchBtnClick
       end
       object SearchEdit: TEdit
         Left = 14
@@ -459,6 +460,7 @@ object fmMemberManaging: TfmMemberManaging
         Color = 16053492
         TabOrder = 0
         TextHint = #54924#50896#44160#49353
+        OnKeyPress = SearchEditKeyPress
       end
     end
     object GridPanel: TPanel

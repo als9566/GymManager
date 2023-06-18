@@ -46,6 +46,7 @@ type
     { Public declarations }
     Function Member_List_Select(AName : String) :TDataSet;
     Function Managing_List_Select(AName : String) :TDataSet;
+    Function Member_Count_Select :TDataSet;
   end;
 
 var
@@ -122,6 +123,27 @@ begin
   end;
 end;
 
+Function TdmMember.Member_Count_Select :TDataSet;
+begin
+  try
+    dmMember.FDQuery.SQL.Clear;
+    dmMember.FDQuery.SQL.Text := 'SELECT                                                                                              '
+	                             + '      COUNT(*) "전체"                                                                               '
+                               + '      ,sum(                                                                                         '
+                               + '        case                                                                                        '
+                               + '           when julianday(date(START_DATE, ''+''||replace(membership, ''개월'', '''')||'' months''))  '
+                               + '                  - julianday(strftime(''%Y-%m-%d'', ''now'')) > 0 THEN  1                          '
+                               + '           else 0                                                                                   '
+                               + '        end                                                                                         '
+                               + '       ) "진행"                                                                                     '
+                               + '  FROM MEMBER';
+
+    Result := dmMember.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
 Function TdmMember.Managing_List_Select(AName : String) :TDataSet;
 begin
   try
@@ -151,6 +173,11 @@ begin
                                + '            julianday(date(START_DATE, ''+''||replace(wear, ''개월'', '''')||'' months'')) - julianday(strftime(''%Y-%m-%d'', ''now''))                      ' +#13#10
                                + '         else 0                                                                                                                                              ' +#13#10
                                + '       end as "운동복 잔여 일수"                                                                                                                             ' +#13#10
+                               + '      ,(select sum(membership_price)                                                                                                                         ' +#13#10
+                               + '             + sum(pt_price)                                                                                                                                 ' +#13#10
+                               + '             + sum(locker_price)                                                                                                                             ' +#13#10
+                               + '          from payment_details                                                                                                                               ' +#13#10
+                               + '         where id = member_id) "총결제금액"                                                                                                                  ' +#13#10
                                + '  FROM MEMBER                                                                                                                                                ' +#13#10
                                + ' WHERE NAME LIKE ''%'+ AName +'%'' ';
 

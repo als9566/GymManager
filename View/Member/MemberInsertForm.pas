@@ -147,7 +147,6 @@ implementation
 uses
    CommonFunction, MemberController, LockerController, BasicPriceController;
 
-// TODO [사용중인 락커는 선택불가]
 {$R *.dfm}
 
 procedure TfmMemberInsert.Button1Click(Sender: TObject);
@@ -186,6 +185,10 @@ begin
   AnimateWindow(Self.Handle, 200, AW_ACTIVATE or AW_BLEND);
   LockerController.TLockerController.MemberLockerSelect(Self);
   BasicPriceController.TBasicPriceController.BasicPriceSelect(Self);
+
+  // 오늘날짜로 세팅
+  BirthdayDateEdit.Text := FormatDateTime('yyyy-mm-dd', Now);
+  StartDateEdit.Text := FormatDateTime('yyyy-mm-dd', Now);
 
   // 1회 or 한달가격 edit에 입력
   PTPriceEdit.Text         := NumberComma(IntToStr(iBasicPT));
@@ -358,6 +361,12 @@ var
   I, J : Integer;
   AComponent : TComponent;
 begin
+  if TCurvyPanel(Sender).Tag <> 0 then
+  begin
+    ShowMessage('사용중인 락커입니다.');
+    Abort;
+  end;
+
   for I := 1 to iMaxY do
   begin
     for J := 1 to iMaxX do
@@ -407,8 +416,18 @@ begin
         Left := 5 + (73 * (J-1));
         Top := 10 + (53 * (I-1));
         Name := Format('LockerPanel_%d_%d',[J,I]);
-        Tag := ALocker.FieldByName('id').AsInteger;
-        BorderColor := $00EEEEEE;
+
+        if ALocker.FieldByName('locker_end').AsString = '' then
+        begin
+          Tag := 0;
+          BorderColor := $00EEEEEE;
+        end
+        else
+        begin
+          Tag := ALocker.FieldByName('id').AsInteger;
+          BorderColor := clRed;
+        end;
+
         Color := $00EEEEEE;
         Rounding := 4;
         Cursor := crHandPoint;
@@ -419,7 +438,12 @@ begin
           Parent := sCurvyPanel;
           Alignment := taCenter;
           AutoSize := False;
-          Caption := ALocker.FieldByName('num').AsString;
+
+          if ALocker.FieldByName('locker_end').AsString = '' then
+            Caption := ALocker.FieldByName('num').AsString
+          else
+            Caption := 'X';
+
           Font.Color := $00707070;
           Font.Name := '맑은 고딕';
           Font.Size := 10;
