@@ -40,7 +40,6 @@ object fmMemberManaging: TfmMemberManaging
     Color = clWindow
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 781
     DesignSize = (
       784
       658)
@@ -74,7 +73,6 @@ object fmMemberManaging: TfmMemberManaging
       Anchors = [akLeft, akTop, akRight]
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 746
       object MemberCntLabel1: TLabel
         Left = 9
         Top = 11
@@ -180,7 +178,6 @@ object fmMemberManaging: TfmMemberManaging
       Color = 16053492
       Rounding = 10
       TabOrder = 1
-      ExplicitLeft = 520
       object SearchBtn: TImage
         Left = 203
         Top = 4
@@ -482,8 +479,6 @@ object fmMemberManaging: TfmMemberManaging
         Align = alClient
         BorderColor = 15329769
         TabOrder = 0
-        ExplicitWidth = 764
-        ExplicitHeight = 551
         object MemberListScrollBox: TcxScrollBox
           AlignWithMargins = True
           Left = 3
@@ -502,8 +497,6 @@ object fmMemberManaging: TfmMemberManaging
           Transparent = True
           VertScrollBar.Range = 150
           VertScrollBar.Tracking = True
-          ExplicitWidth = 755
-          ExplicitHeight = 545
           object MemberGrid: TStringGrid
             Left = -121
             Top = 2
@@ -564,7 +557,6 @@ object fmMemberManaging: TfmMemberManaging
       Font.Style = []
       ParentFont = False
       OnClick = NewInsertBtnClick
-      ExplicitLeft = 432
     end
   end
 end

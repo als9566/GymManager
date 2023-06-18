@@ -164,7 +164,7 @@ begin
     ShowMessage('회원권을 선택해주세요...')
   else
   begin
-    MemberController.TMemberController.MemberInsert(self);
+    MemberController.TMemberController.MemberInsert(self, iChoiceLocker);
   end;
 
 end;

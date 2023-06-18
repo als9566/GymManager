@@ -21,7 +21,7 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
-  dxSkinXmas2008Blue, cxButtons, BlurForm, cxControls, cxScrollBox;
+  dxSkinXmas2008Blue, cxButtons, BlurForm, cxControls, cxScrollBox, Data.DB;
 
 type
   TfmMemberManaging = class(TForm)
@@ -58,6 +58,7 @@ type
       MousePos: TPoint; var Handled: Boolean);
     procedure MemberGridMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
+    procedure MemberListShow(AMember: TDataSet);
   private
     { Private declarations }
   public
@@ -71,7 +72,7 @@ var
 implementation
 
 uses
-  CommonFunction, MainForm;
+  CommonFunction, MainForm, MemberController;
 
 {$R *.dfm}
 
@@ -89,53 +90,8 @@ begin
 end;
 
 procedure TfmMemberManaging.FormShow(Sender: TObject);
-var
-  I: Integer;
 begin
-  with MemberGrid do
-  begin
-    Cells[1,0]  := '이름';
-    Cells[2,0]  := '성별';
-    Cells[3,0]  := '생년월일';
-    Cells[3,0]  := '전화번호';
-    Cells[4,0]  := '회원 만료일';
-    Cells[5,0]  := '회원 잔여 일수';
-    Cells[6,0]  := '상태';
-    Cells[7,0]  := 'PT 잔여 횟수';
-    Cells[8,0]  := '락커넘버';
-    Cells[9,0]  := '운동복 만료일';
-    Cells[10,0] := '운동복 잔여 일수';
-    Cells[11,0] := '총결제금액';
-  end;
-
-  MemberListScrollBox.HorzScrollBar.Range := MemberGrid.Width - 130;
-
-  MemberGrid.RowCount := 101;
-
-  with MemberGrid do
-  begin
-    for I := 1 to 100 do
-    begin
-      Cells[1,I] := '홍길동';
-      Cells[2,I] := '남';
-      Cells[3,I] := '1999-11-11';
-      Cells[3,I] := '010-1111-1234';
-      Cells[4,I] := '2023-12-31';
-      Cells[5,I] := '131일';
-      Cells[6,I] := '진행';
-      //Cells[6,I] := '만료';
-      //Cells[7,I] := 'X';
-      Cells[7,I] := '10회';
-      Cells[8,I] := '8';
-      Cells[9,I] := '2023-12-31';
-      Cells[10,I] := '131일';
-      Cells[11,I] := '1,100,300원';
-    end;
-  end;
-
-  MemberGrid.Height := MemberGrid.RowCount * 40 + 130;
-  MemberListScrollBox.VertScrollBar.Range := MemberGrid.Height;
-
+  MemberController.TMemberController.MemberSelect(self);
 end;
 
 //StringGrid DefaultDrawing := False 방법
@@ -168,6 +124,8 @@ begin
     else
     begin
       Canvas.Font.Color := $004D4D4D;
+      if Cells[ACol,ARow] = '만료' then
+        Canvas.Font.Color := clRed;
       Canvas.Font.Name := '맑은 고딕';
       Canvas.Font.Size := 8;
     end;
@@ -291,6 +249,70 @@ begin
   fmBlur.Width := GymManagerForm.Width;
   fmBlur.imgBlur.Tag := 1;
   fmBlur.Show;
+
+end;
+
+procedure TfmMemberManaging.MemberListShow(AMember: TDataSet);
+var
+  I : Integer;
+begin
+
+  with MemberGrid do
+  begin
+    for I := 0 to ColCount - 1 do
+      Cols[I].Clear;
+
+    Cells[1,0]  := '이름';
+    Cells[2,0]  := '성별';
+    Cells[3,0]  := '생년월일';
+    Cells[3,0]  := '전화번호';
+    Cells[4,0]  := '회원 만료일';
+    Cells[5,0]  := '회원 잔여 일수';
+    Cells[6,0]  := '상태';
+    Cells[7,0]  := 'PT 잔여 횟수';
+    Cells[8,0]  := '락커넘버';
+    Cells[9,0]  := '운동복 만료일';
+    Cells[10,0] := '운동복 잔여 일수';
+    Cells[11,0] := '총결제금액';
+
+    MemberListScrollBox.HorzScrollBar.Range := Width - 130;
+
+    AMember.Active := true;
+
+    RowCount := AMember.RecordCount + 1;
+
+    I := 1;
+    While Not AMember.Eof do
+    begin
+      Cells[1,I] := AMember.FieldByName('name').AsString;
+      Cells[2,I] := AMember.FieldByName('gender').AsString;
+      Cells[3,I] := AMember.FieldByName('birthday').AsString;
+      Cells[3,I] := AMember.FieldByName('tel').AsString;
+      Cells[4,I] := AMember.FieldByName('회원만료일').AsString;
+      Cells[5,I] := AMember.FieldByName('회원 잔여 일수').AsString;
+
+      if AMember.FieldByName('회원 잔여 일수').AsInteger > 0  then
+        Cells[6,I] := '정상'
+      else
+        Cells[6,I] := '만료';
+      Cells[7,I] := AMember.FieldByName('PT 잔여 횟수').AsString;
+
+      if AMember.FieldByName('락커넘버').AsString = '' then
+        Cells[8,I] := '-'
+      else
+        Cells[8,I] := AMember.FieldByName('락커넘버').AsString;
+
+      Cells[9,I] := AMember.FieldByName('운동복 만료일').AsString;
+      Cells[10,I] := AMember.FieldByName('운동복 잔여 일수').AsString;
+      // TODO [총결제내역 가져오기]
+      Cells[11,I] := '1,100,300원';
+      AMember.Next;
+      Inc(I);
+    end;
+
+    Height := RowCount * 40 + 130;
+    MemberListScrollBox.VertScrollBar.Range := Height;
+  end;
 
 end;
 

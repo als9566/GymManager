@@ -2,14 +2,16 @@ unit MemberController;
 
 interface
 
-uses Forms, Windows, Messages, SysUtils, Variants, Classes, Controls, Dialogs, MemberInsertForm;
+uses Forms, Windows, Messages, SysUtils, Variants, Classes, Controls, Dialogs,
+     MemberInsertForm, MemberManagingForm, Data.DB;
 
 type
   TMemberController = class
   private
 
   public
-    constructor MemberInsert(const AView: TfmMemberInsert);
+    constructor MemberInsert(const AView: TfmMemberInsert; AChoiceLocker: Integer);
+    constructor MemberSelect(const AView: TfmMemberManaging);
   end;
 
 implementation
@@ -19,7 +21,7 @@ uses
 
 {** MemberInsert
 * }
-constructor TMemberController.MemberInsert(const AView: TfmMemberInsert);
+constructor TMemberController.MemberInsert(const AView: TfmMemberInsert; AChoiceLocker: Integer);
 var
   Member: TMember;
   PaymentDetails : TPaymentDetails;
@@ -35,9 +37,9 @@ begin
     Member.address := AView.AddressEdit.Text;
     Member.start_date := AView.StartDateEdit.Text;
     Member.membership := AView.MembershipComboBox.Text;
-
     if AView.LockerDayRadioGroup.Buttons[0].Checked then
-      Member.locker := StrToInt(AView.LockerDayEdit.Text);
+      Member.locker := AChoiceLocker;
+      //Member.locker := StrToInt(AView.LockerDayEdit.Text);
 
     if AView.WearRadioGroup.Buttons[0].Checked then
       Member.wear := StrToInt(AView.WearEdit.Text);
@@ -100,6 +102,16 @@ begin
     Member.Free;
     PaymentDetails.Free;
   end;
+end;
+
+{** MemberSelect
+* }
+constructor TMemberController.MemberSelect(const AView: TfmMemberManaging);
+var
+  Members : TDataSet;
+begin
+  Members := MemberModule.dmMember.Managing_List_Select(AView.SearchEdit.Text);
+  AView.MemberListShow(Members);
 end;
 
 end.

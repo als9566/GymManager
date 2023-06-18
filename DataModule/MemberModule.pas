@@ -45,6 +45,7 @@ type
   public
     { Public declarations }
     Function Member_List_Select(AName : String) :TDataSet;
+    Function Managing_List_Select(AName : String) :TDataSet;
   end;
 
 var
@@ -113,6 +114,44 @@ begin
     dmMember.FDQuery.SQL.Clear;
     dmMember.FDQuery.SQL.Text := 'SELECT ID, NAME, GENDER, TEL, PT   ' +#13#10
                                + '  FROM MEMBER                      ' +#13#10
+                               + ' WHERE NAME LIKE ''%'+ AName +'%'' ';
+
+    Result := dmMember.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
+Function TdmMember.Managing_List_Select(AName : String) :TDataSet;
+begin
+  try
+    dmMember.FDQuery.SQL.Clear;
+    dmMember.FDQuery.SQL.Text := 'SELECT name                                                                                                                                                  ' +#13#10
+                               + '      ,gender                                                                                                                                                ' +#13#10
+                               + '      ,birthday                                                                                                                                              ' +#13#10
+                               + '      ,tel                                                                                                                                                   ' +#13#10
+                               + '      ,date(START_DATE, ''+''||replace(membership, ''개월'', '''')||'' months'') "회원만료일"                                                                ' +#13#10
+                               + '      ,case                                                                                                                                                  ' +#13#10
+                               + '         when julianday(date(START_DATE, ''+''||replace(membership, ''개월'', '''')||'' months'')) - julianday(strftime(''%Y-%m-%d'', ''now'')) > 0 THEN     ' +#13#10
+                               + '            julianday(date(START_DATE, ''+''||replace(membership, ''개월'', '''')||'' months'')) - julianday(strftime(''%Y-%m-%d'', ''now''))                ' +#13#10
+                               + '         else 0                                                                                                                                              ' +#13#10
+                               + '       end as "회원 잔여 일수"                                                                                                                               ' +#13#10
+                               + '      ,case                                                                                                                                                  ' +#13#10
+                               + '         when pt > 0 then pt||''회''                                                                                                                         ' +#13#10
+                               + '         else ''X''                                                                                                                                          ' +#13#10
+                               + '       end as "PT 잔여 횟수"                                                                                                                                 ' +#13#10
+                               + '      ,(select num from locker                                                                                                                               ' +#13#10
+                               + '        where id = locker) "락커넘버"                                                                                                                        ' +#13#10
+                               + '      ,case                                                                                                                                                  ' +#13#10
+                               + '         when wear > 0 THEN date(START_DATE, ''+''||replace(wear, ''개월'', '''')||'' months'')                                                              ' +#13#10
+                               + '         else ''X''                                                                                                                                          ' +#13#10
+                               + '       end as "운동복 만료일"                                                                                                                                ' +#13#10
+                               + '      ,case                                                                                                                                                  ' +#13#10
+                               + '         when julianday(date(START_DATE, ''+''||replace(wear, ''개월'', '''')||'' months'')) - julianday(strftime(''%Y-%m-%d'', ''now'')) > 0 THEN           ' +#13#10
+                               + '            julianday(date(START_DATE, ''+''||replace(wear, ''개월'', '''')||'' months'')) - julianday(strftime(''%Y-%m-%d'', ''now''))                      ' +#13#10
+                               + '         else 0                                                                                                                                              ' +#13#10
+                               + '       end as "운동복 잔여 일수"                                                                                                                             ' +#13#10
+                               + '  FROM MEMBER                                                                                                                                                ' +#13#10
                                + ' WHERE NAME LIKE ''%'+ AName +'%'' ';
 
     Result := dmMember.FDQuery;
