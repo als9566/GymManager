@@ -53,7 +53,8 @@ uses
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
-
+// TODO insert할때 member테이블 pt컬럼 -하기
+// TODO delete할때 member테이블 pt컬럼 +하기
 Function TSchedule.Insert(ASchedule: TSchedule): Boolean;
 begin
 

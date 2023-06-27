@@ -117,6 +117,8 @@ begin
     if (iColumn = 0) or (iRow = 0) then
       abort;
 
+    // TODO [잔여 0 일때 등록 불가]
+
     if Application.MessageBox( PChar(DayLabel.Caption + ' ' + Cells[2,iRow] + ' 회원을 PT 등록 하시겠습니까?'), '등록확인', MB_YESNO+MB_IconQuestion) = IDNO  then
     begin
       Abort;

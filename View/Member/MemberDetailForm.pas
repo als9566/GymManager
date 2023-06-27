@@ -21,7 +21,7 @@ uses
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, cxControls, Vcl.ExtCtrls, cxScrollBox, Vcl.StdCtrls,
-  cxButtons, CurvyControls, dxGDIPlusClasses, Vcl.Grids;
+  cxButtons, CurvyControls, dxGDIPlusClasses, Vcl.Grids, Data.DB;
 
 type
   TfmMemberDetail = class(TForm)
@@ -29,7 +29,6 @@ type
     Label1: TLabel;
     cxButton1: TcxButton;
     MemberInfoPanel: TCurvyPanel;
-    Image1: TImage;
     MemberNameLabel: TLabel;
     MemberTelLabel: TLabel;
     MemberGenderLabel: TLabel;
@@ -63,6 +62,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure PaymentRecodeGridDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
+    procedure MemberDetailShow(AMember: TDataSet);
   private
     { Private declarations }
   public
@@ -75,7 +75,7 @@ var
 implementation
 
 uses
-  CommonFunction;
+  CommonFunction, MemberController;
 
 {$R *.dfm}
 // TODO 받은 파라미터 id로 맴버디테일 가져오는 로직
@@ -102,6 +102,8 @@ begin
     Cells[3,0] := '결제금액';
   end;
 
+  MemberController.TMemberController.MemberDetailSelect(self, 11);
+
 end;
 
 procedure TfmMemberDetail.PaymentRecodeGridDrawCell(Sender: TObject; ACol,
@@ -118,6 +120,24 @@ begin
     Canvas.Font.Size := 9;
     Canvas.TextOut(Rect.Left+20, Rect.Top+5, Cells[ACol,ARow]);
   end;
+end;
+
+procedure TfmMemberDetail.MemberDetailShow(AMember: TDataSet);
+begin
+  AMember.Active := true;
+
+  // 이름
+  MemberNameLabel.Caption   := AMember.FieldByName('name').AsString;
+  // 성별
+  MemberGenderLabel.Caption := AMember.FieldByName('gender').AsString;
+  // 전화번호
+  MemberTelLabel.Caption    := AMember.FieldByName('tel').AsString;
+  // 생년월일
+  BirthdayLabel.Caption     := AMember.FieldByName('birthday').AsString;
+  // 시작일자
+  StartDayLabel.Caption     := AMember.FieldByName('start_date').AsString;
+  // 주소
+  AddressLabel.Caption      := AMember.FieldByName('address').AsString;
 end;
 
 end.

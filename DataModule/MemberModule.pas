@@ -20,6 +20,7 @@ type
     Fstart_date : string;
     Fmembership : string;
     Flocker     : Integer;
+    FlockerEnd  : string;
     Fwear       : Integer;
     Fpt         : Integer;
   public
@@ -29,7 +30,8 @@ type
     property tel        : string  read Ftel        write Ftel;
     property address    : string  read Faddress    write Faddress;
     property start_date : string  read Fstart_date write Fstart_date;
-    property membership : string read Fmembership write Fmembership;
+    property membership : string  read Fmembership write Fmembership;
+    property lockerEnd  : string  read FlockerEnd  write FlockerEnd;
     property locker     : Integer read Flocker     write Flocker;
     property wear       : Integer read Fwear       write Fwear;
     property pt         : Integer read Fpt         write Fpt;
@@ -46,6 +48,7 @@ type
     { Public declarations }
     Function Member_List_Select(AName : String) :TDataSet;
     Function Managing_List_Select(AName : String) :TDataSet;
+    Function Member_Detail_Select(AId : Integer) :TDataSet;
     Function Member_Count_Select :TDataSet;
   end;
 
@@ -63,14 +66,35 @@ uses
 {$R *.dfm}
 
 Function TMember.Insert(AMember: TMember): Boolean;
+var
+  sLockerEnd : String;
 begin
 
   try
+
+    //Result := dmMember.FDQuery.FieldByName('MaxId').AsInteger;
+
+  except
+    //Result := 0;
+  end;
+
+  try
+
+    if AMember.lockerEnd <> '' then
+    begin
+      dmMember.FDQuery.SQL.Text := 'select date(''' + AMember.start_date +''', ''+'+AMember.lockerEnd+' months'') "End"';
+      dmMember.FDQuery.Active := true;
+
+      sLockerEnd := dmMember.FDQuery.FieldByName('End').AsString;
+    end;
+
     dmMember.FDQuery.SQL.Text := 'INSERT INTO member '
                                + '       (name, gender, birthday, tel, address,     '
-                               + '       start_date, membership, locker, wear, pt) '
+                               + '       start_date, membership, locker, wear, pt,  '
+                               + '       locker_end )                               '
                                + ' VALUES(:name, :gender, :birthday, :tel, :address, '
-                               + '        :start_date, :membership, :locker, :wear, :pt) ';
+                               + '        :start_date, :membership, :locker, :wear, :pt, '
+                               + '        :locker_end )';
 
     dmMember.FDQuery.ParamByName('name').AsString := AMember.name;
     dmMember.FDQuery.ParamByName('gender').AsString := AMember.gender;
@@ -82,6 +106,11 @@ begin
     dmMember.FDQuery.ParamByName('locker').AsInteger := AMember.locker;
     dmMember.FDQuery.ParamByName('wear').AsInteger := AMember.wear;
     dmMember.FDQuery.ParamByName('pt').AsInteger := AMember.pt;
+
+    if AMember.lockerEnd <> '' then
+      dmMember.FDQuery.ParamByName('locker_end').AsString := sLockerEnd
+    else
+      dmMember.FDQuery.ParamByName('locker_end').AsString := '';
 
     dmMember.FDQuery.ExecSQL;
 
@@ -180,6 +209,27 @@ begin
                                + '         where id = member_id) "ÃÑ°áÁ¦±Ý¾×"                                                                                                                  ' +#13#10
                                + '  FROM MEMBER                                                                                                                                                ' +#13#10
                                + ' WHERE NAME LIKE ''%'+ AName +'%'' ';
+
+    Result := dmMember.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
+Function TdmMember.Member_Detail_Select(AId : Integer) :TDataSet;
+begin
+  try
+    dmMember.FDQuery.SQL.Clear;
+    dmMember.FDQuery.SQL.Text := 'SELECT name        '
+                               + '     , gender      '
+                               + '     , tel         '
+                               + '     , birthday    '
+                               + '     , start_date  '
+                               + '     , address     '
+                               + '  FROM member      '
+                               + ' WHERE id = :id    ';
+
+    dmMember.FDQuery.ParamByName('id').AsInteger := AId;
 
     Result := dmMember.FDQuery;
   except

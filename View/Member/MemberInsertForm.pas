@@ -165,7 +165,6 @@ begin
   begin
     MemberController.TMemberController.MemberInsert(self, iChoiceLocker);
   end;
-
 end;
 
 procedure TfmMemberInsert.cxButton1Click(Sender: TObject);
@@ -361,7 +360,7 @@ var
   I, J : Integer;
   AComponent : TComponent;
 begin
-  if TCurvyPanel(Sender).Tag <> 0 then
+  if TCurvyPanel(Sender).Tag = 0 then
   begin
     ShowMessage('사용중인 락커입니다.');
     Abort;
@@ -417,14 +416,14 @@ begin
         Top := 10 + (53 * (I-1));
         Name := Format('LockerPanel_%d_%d',[J,I]);
 
-        if ALocker.FieldByName('locker_end').AsString = '' then
+        if ALocker.FieldByName('name').AsString = '' then
         begin
-          Tag := 0;
+          Tag := ALocker.FieldByName('id').AsInteger;
           BorderColor := $00EEEEEE;
         end
         else
         begin
-          Tag := ALocker.FieldByName('id').AsInteger;
+          Tag := 0;
           BorderColor := clRed;
         end;
 
@@ -439,7 +438,7 @@ begin
           Alignment := taCenter;
           AutoSize := False;
 
-          if ALocker.FieldByName('locker_end').AsString = '' then
+          if ALocker.FieldByName('name').AsString = '' then
             Caption := ALocker.FieldByName('num').AsString
           else
             Caption := 'X';

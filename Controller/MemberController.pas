@@ -3,7 +3,7 @@ unit MemberController;
 interface
 
 uses Forms, Windows, Messages, SysUtils, Variants, Classes, Controls, Dialogs,
-     MemberInsertForm, MemberManagingForm, Data.DB;
+     MemberInsertForm, MemberManagingForm, MemberDetailForm, Data.DB;
 
 type
   TMemberController = class
@@ -12,6 +12,7 @@ type
   public
     constructor MemberInsert(const AView: TfmMemberInsert; AChoiceLocker: Integer);
     constructor MemberSelect(const AView: TfmMemberManaging);
+    constructor MemberDetailSelect(const AView: TfmMemberDetail; AMemberId: Integer);
     constructor MemberCount(const AView: TfmMemberManaging);
   end;
 
@@ -40,7 +41,11 @@ begin
     Member.membership := AView.MembershipComboBox.Text;
     if AView.LockerDayRadioGroup.Buttons[0].Checked then
       Member.locker := AChoiceLocker;
-      //Member.locker := StrToInt(AView.LockerDayEdit.Text);
+
+    if AView.LockerDayRadioGroup.Buttons[0].Checked then
+      Member.lockerEnd := AView.LockerDayEdit.Text
+    else
+      Member.lockerEnd := '';
 
     if AView.WearRadioGroup.Buttons[0].Checked then
       Member.wear := StrToInt(AView.WearEdit.Text);
@@ -129,6 +134,16 @@ begin
   AView.MemberIngCnt.Caption := FormatFloat('##,###,##0', MemberCnt.FieldByName('진행').AsInteger);
   AView.MemberEndCnt.Caption := FormatFloat('##,###,##0', MemberCnt.FieldByName('전체').AsInteger
                                                         - MemberCnt.FieldByName('진행').AsInteger);
+end;
+
+{** MemberDetailSelect
+* }
+constructor TMemberController.MemberDetailSelect(const AView: TfmMemberDetail; AMemberId: Integer);
+var
+  MemberDetail : TDataSet;
+begin
+  MemberDetail := MemberModule.dmMember.Member_Detail_Select(AMemberId);
+  AView.MemberDetailShow(MemberDetail);
 end;
 
 end.
