@@ -82,7 +82,6 @@ uses
   CommonFunction, ShadowBox, MainForm, ScheduleController;
 
 {$R *.dfm}
-// TODO 회원이미지 출력
 procedure TfmScheduleView.backPanelClick(Sender: TObject);
 begin
   PopupOutPanel.Visible := False;

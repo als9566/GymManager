@@ -46,6 +46,6 @@ begin
   Application.CreateForm(TdmBasicPrice, dmBasicPrice);
   Application.CreateForm(TdmPaymentDetails, dmPaymentDetails);
   Application.CreateForm(TdmSchedule, dmSchedule);
-  Application.CreateForm(TfmMemberManaging, fmMemberManaging);
+  Application.CreateForm(TfmScheduleView, fmScheduleView);
   Application.Run;
 end.

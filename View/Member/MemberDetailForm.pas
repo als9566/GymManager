@@ -138,6 +138,17 @@ begin
   StartDayLabel.Caption     := AMember.FieldByName('start_date').AsString;
   // 주소
   AddressLabel.Caption      := AMember.FieldByName('address').AsString;
+
+  // PT 잔여
+  PTLabel.Caption := AMember.FieldByName('pt잔여').AsString;
+  // 운동복 잔여
+  WearLabel.Caption := '잔여 : ' + AMember.FieldByName('운동복 잔여').AsString
+                     + '일 / ' + AMember.FieldByName('운동복 만료일').AsString;
+  // 락커 잔여
+  LockerLabel.Caption := '잔여 : ' + AMember.FieldByName('락커 잔여일').AsString
+                     + '일 / ' + AMember.FieldByName('락커 만료일').AsString;
+
+  // TODO [수강내역 and 결제내역 불러오기]
 end;
 
 end.

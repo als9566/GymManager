@@ -240,9 +240,9 @@ object fmMemberDetail: TfmMemberDetail
         object PTLabel: TLabel
           Left = 16
           Top = 34
-          Width = 122
+          Width = 3
           Height = 15
-          Caption = #51092#50668' : 10'#54924', '#51652#54665' : 3'#54924
+          Caption = '.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = 6446686
           Font.Height = -12
@@ -266,9 +266,9 @@ object fmMemberDetail: TfmMemberDetail
         object WearLabel: TLabel
           Left = 173
           Top = 34
-          Width = 171
+          Width = 3
           Height = 15
-          Caption = #51092#50668' : 128'#51068' / 2023-12-31'#44620#51648
+          Caption = '.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = 6446686
           Font.Height = -12
@@ -292,9 +292,9 @@ object fmMemberDetail: TfmMemberDetail
         object LockerLabel: TLabel
           Left = 376
           Top = 34
-          Width = 171
+          Width = 3
           Height = 15
-          Caption = #51092#50668' : 128'#51068' / 2023-12-31'#44620#51648
+          Caption = '.'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = 6446686
           Font.Height = -12
