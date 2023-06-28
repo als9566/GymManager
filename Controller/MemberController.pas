@@ -15,6 +15,7 @@ type
     constructor MemberDetailSelect(const AView: TfmMemberDetail; AMemberId: Integer);
     constructor MemberCount(const AView: TfmMemberManaging);
     constructor ScheduleSelect(const AView: TfmMemberDetail; AMemberId: Integer);
+    constructor PaymentSelect(const AView: TfmMemberDetail; AMemberId: Integer);
   end;
 
 implementation
@@ -155,6 +156,16 @@ var
 begin
   Schedules := ScheduleModule.dmSchedule.Schedule_MemberId_Select(AMemberId);
   AView.ScheduleHistoryShow(Schedules);
+end;
+
+{** PaymentSelect
+* }
+constructor TMemberController.PaymentSelect(const AView: TfmMemberDetail; AMemberId: Integer);
+var
+  Payments : TDataSet;
+begin
+  Payments := PaymentDetailsModule.PaymentDetails.PaymentDetails_MemberId_Select(AMemberId);
+  AView.PaymentDetailShow(Payments);
 end;
 
 end.

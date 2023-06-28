@@ -61,6 +61,15 @@ type
       Rect: TRect; State: TGridDrawState);
     procedure MemberDetailShow(AMember: TDataSet);
     procedure ScheduleHistoryShow(ASchedule: TDataSet);
+    procedure PaymentDetailShow(APayment: TDataSet);
+    procedure PaymentRecodeGridMouseWheelDown(Sender: TObject;
+      Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+    procedure PaymentRecodeGridMouseWheelUp(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure EditPanelMouseWheelDown(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
+    procedure EditPanelMouseWheelUp(Sender: TObject; Shift: TShiftState;
+      MousePos: TPoint; var Handled: Boolean);
   private
     { Private declarations }
   public
@@ -102,6 +111,7 @@ begin
 
   MemberController.TMemberController.MemberDetailSelect(self, 11);
   MemberController.TMemberController.ScheduleSelect(self, 6);
+  MemberController.TMemberController.PaymentSelect(self, 6);
 
 end;
 
@@ -120,6 +130,8 @@ begin
     Canvas.TextOut(Rect.Left+20, Rect.Top+5, Cells[ACol,ARow]);
   end;
 end;
+
+
 
 {** MemberDetailShow
   회원정보 및 잔여정보 불러오기
@@ -203,6 +215,85 @@ begin
   end;
 end;
 
-// TODO [결제내역 불러오기]
+{** PaymentDetailShow
+  결제내역 불러오기
+* }
+procedure TfmMemberDetail.PaymentDetailShow(APayment: TDataSet);
+var
+  I,J : Integer;
+begin
+  J := 1;
+
+  APayment.Active := true;
+
+  if APayment.RecordCount = 0 then
+  begin
+    PaymentRecodePanel.visible := false;
+  end
+  else
+  begin
+    for I := 0 to APayment.RecordCount - 1 do
+    begin
+      with PaymentRecodeGrid do
+      begin
+        Cells[1,J] := APayment.FieldByName('input_date').AsString;
+        Cells[2,J] := '회원권 '+APayment.FieldByName('membership').AsString;
+        Cells[3,J] := APayment.FieldByName('membership_price').AsString;
+        if APayment.FieldByName('pt').AsString <> '' then
+        begin
+          Inc(J);
+          RowCount := J + 1;
+          Cells[1,J] := APayment.FieldByName('input_date').AsString;
+          Cells[2,J] := 'PT '+APayment.FieldByName('pt').AsString;
+          Cells[3,J] := APayment.FieldByName('pt_price').AsString;
+        end;
+        if APayment.FieldByName('wear').AsString <> '' then
+        begin
+          Inc(J);
+          RowCount := J + 1;
+          Cells[1,J] := APayment.FieldByName('input_date').AsString;
+          Cells[2,J] := '회원복 '+APayment.FieldByName('wear').AsString;
+          Cells[3,J] := APayment.FieldByName('wear_price').AsString;
+        end;
+        if APayment.FieldByName('locker').AsString <> '' then
+        begin
+          Inc(J);
+          RowCount := J + 1;
+          Cells[1,J] := APayment.FieldByName('input_date').AsString;
+          Cells[2,J] := '락커 '+APayment.FieldByName('locker').AsString;
+          Cells[3,J] := APayment.FieldByName('locker_price').AsString;
+        end;
+      end;
+      APayment.Next;
+    end;
+    PaymentRecodeGrid.Height := (PaymentRecodeGrid.RowCount+1) * 40;
+    PaymentRecodeScrollBox.VertScrollBar.Range := PaymentRecodeGrid.Height;
+  end;
+
+end;
+
+procedure TfmMemberDetail.PaymentRecodeGridMouseWheelDown(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  PaymentRecodeScrollBox.VertScrollBar.Position := PaymentRecodeScrollBox.VertScrollBar.Position + 20;
+end;
+
+procedure TfmMemberDetail.PaymentRecodeGridMouseWheelUp(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  PaymentRecodeScrollBox.VertScrollBar.Position := PaymentRecodeScrollBox.VertScrollBar.Position - 20;
+end;
+
+procedure TfmMemberDetail.EditPanelMouseWheelDown(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  EditPanel.VertScrollBar.Position := EditPanel.VertScrollBar.Position + 20;
+end;
+
+procedure TfmMemberDetail.EditPanelMouseWheelUp(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  EditPanel.VertScrollBar.Position := EditPanel.VertScrollBar.Position - 20;
+end;
 
 end.

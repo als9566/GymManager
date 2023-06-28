@@ -5,9 +5,7 @@ object dmMain: TdmMain
   Width = 215
   object GymConnection: TFDConnection
     Params.Strings = (
-      'Database='
-      'ConnectionDef=SQLite_Demo')
-    Connected = True
+      'DriverID=SQLite')
     Left = 63
     Top = 40
   end

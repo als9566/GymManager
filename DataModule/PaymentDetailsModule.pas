@@ -33,6 +33,7 @@ type
     property locker           : string   read Flocker           write Flocker;
     property lockerPrice      : Integer  read FlockerPrice      write FlockerPrice;
     Function Insert(APaymentDetails: TPaymentDetails) :Boolean;
+    Function PaymentDetails_MemberId_Select(Aid : Integer) :TDataSet;
   end;
 
 type
@@ -63,9 +64,11 @@ begin
   try
     dmPaymentDetails.FDQuery.SQL.Text := 'INSERT INTO payment_details                                             '
                                        + '       ( member_id,  payment_detail_no,  membership,  membership_price, '
-                                       + '         pt,  pt_price,  wear,  wear_price,  locker,  locker_price )    '
+                                       + '         pt,  pt_price,  wear,  wear_price,  locker,  locker_price,     '
+                                       + '         input_date )    '
                                        + ' VALUES(:member_id, :payment_detail_no, :membership, :membership_price, '
-                                       + '        :pt, :pt_price, :wear, :wear_price, :locker, :locker_price )    ';
+                                       + '        :pt, :pt_price, :wear, :wear_price, :locker, :locker_price,     '
+                                       + '        date(''now''))    ';
 
     dmPaymentDetails.FDQuery.ParamByName('member_id'        ).AsInteger := APaymentDetails.memberId;
     dmPaymentDetails.FDQuery.ParamByName('payment_detail_no').AsInteger := APaymentDetails.paymentDetailsNo;
@@ -88,6 +91,21 @@ begin
     Result := false;
   end;
 
+end;
+
+Function TPaymentDetails.PaymentDetails_MemberId_Select(Aid : Integer) :TDataSet;
+begin
+  try
+    dmPaymentDetails.FDQuery.SQL.Clear;
+    dmPaymentDetails.FDQuery.SQL.Text := 'SELECT * FROM payment_details ' +#13#10
+                                       + ' WHERE member_id = :id    ';
+
+    dmPaymentDetails.FDQuery.ParamByName('id').AsInteger := Aid;
+
+    Result := dmPaymentDetails.FDQuery;
+  except
+    Result := nil;
+  end;
 end;
 
 end.

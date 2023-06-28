@@ -80,6 +80,8 @@ object fmMemberDetail: TfmMemberDetail
       Transparent = True
       VertScrollBar.Range = 600
       VertScrollBar.Tracking = True
+      OnMouseWheelDown = EditPanelMouseWheelDown
+      OnMouseWheelUp = EditPanelMouseWheelUp
       object MemberInfoPanel: TCurvyPanel
         AlignWithMargins = True
         Left = 5
@@ -390,13 +392,16 @@ object fmMemberDetail: TfmMemberDetail
             Width = 526
             Height = 168
             Align = alClient
+            AutoScroll = False
             BorderStyle = cxcbsNone
+            HorzScrollBar.Range = 300
             HorzScrollBar.Tracking = True
             LookAndFeel.Kind = lfUltraFlat
             LookAndFeel.NativeStyle = False
             LookAndFeel.SkinName = 'DevExpressStyle'
             TabOrder = 0
             Transparent = True
+            VertScrollBar.Range = 500
             VertScrollBar.Tracking = True
             object PaymentRecodeGrid: TStringGrid
               Left = -121
@@ -416,6 +421,8 @@ object fmMemberDetail: TfmMemberDetail
               ScrollBars = ssNone
               TabOrder = 0
               OnDrawCell = PaymentRecodeGridDrawCell
+              OnMouseWheelDown = PaymentRecodeGridMouseWheelDown
+              OnMouseWheelUp = PaymentRecodeGridMouseWheelUp
               ColWidths = (
                 120
                 105
