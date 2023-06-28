@@ -49,9 +49,6 @@ type
     PTRecordPanel: TCurvyPanel;
     Label11: TLabel;
     PTRecordScrollBox: TcxScrollBox;
-    Label12: TLabel;
-    Label13: TLabel;
-    Label14: TLabel;
     PaymentRecodePanel: TCurvyPanel;
     Label16: TLabel;
     CurvyPanel1: TCurvyPanel;
@@ -63,6 +60,7 @@ type
     procedure PaymentRecodeGridDrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
     procedure MemberDetailShow(AMember: TDataSet);
+    procedure ScheduleHistoryShow(ASchedule: TDataSet);
   private
     { Private declarations }
   public
@@ -103,6 +101,7 @@ begin
   end;
 
   MemberController.TMemberController.MemberDetailSelect(self, 11);
+  MemberController.TMemberController.ScheduleSelect(self, 6);
 
 end;
 
@@ -122,6 +121,9 @@ begin
   end;
 end;
 
+{** MemberDetailShow
+  회원정보 및 잔여정보 불러오기
+* }
 procedure TfmMemberDetail.MemberDetailShow(AMember: TDataSet);
 begin
   AMember.Active := true;
@@ -147,8 +149,60 @@ begin
   // 락커 잔여
   LockerLabel.Caption := '잔여 : ' + AMember.FieldByName('락커 잔여일').AsString
                      + '일 / ' + AMember.FieldByName('락커 만료일').AsString;
-
-  // TODO [수강내역 and 결제내역 불러오기]
 end;
+
+{** ScheduleHistoryShow
+  PT 기록 불러오기
+* }
+procedure TfmMemberDetail.ScheduleHistoryShow(ASchedule: TDataSet);
+var
+  I : Integer;
+  sLabel : TLabel;
+begin
+  ASchedule.Active := true;
+
+  if ASchedule.RecordCount = 0 then
+  begin
+    sLabel := TLabel.Create(Self);
+    with sLabel do
+    begin
+      Parent := PTRecordScrollBox;
+      Left := 4;
+      Top := 5;
+      Name := Format('ScheduleLabel_%d',[0]);
+      AutoSize := true;
+      Font.Name := '맑은고딕';
+      Font.Color := $00625E5E;
+      Font.Style := [fsBold];
+      Font.Size := 9;
+      Caption := '수강내역이 없습니다.';
+    end;
+  end
+  else
+  begin
+    for I := 0 to ASchedule.RecordCount - 1 do
+    begin
+      sLabel := TLabel.Create(Self);
+      with sLabel do
+      begin
+        Parent := PTRecordScrollBox;
+        Left := 4;
+        Top := 5 + (I*20);
+        Name := Format('ScheduleLabel_%d',[I]);
+        AutoSize := true;
+        Font.Name := '맑은고딕';
+        Font.Color := $00625E5E;
+        Font.Style := [fsBold];
+        Font.Size := 9;
+        Caption := '['+IntToStr(I+1)+'] '+ ASchedule.FieldByName('day').AsString
+                 + ' ' + ASchedule.FieldByName('time').AsString + ':00';
+      end;
+      ASchedule.Next;
+    end;
+    PTRecordScrollBox.VertScrollBar.Range := 5 + (I*20) + 10;
+  end;
+end;
+
+// TODO [결제내역 불러오기]
 
 end.

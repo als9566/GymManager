@@ -14,12 +14,13 @@ type
     constructor MemberSelect(const AView: TfmMemberManaging);
     constructor MemberDetailSelect(const AView: TfmMemberDetail; AMemberId: Integer);
     constructor MemberCount(const AView: TfmMemberManaging);
+    constructor ScheduleSelect(const AView: TfmMemberDetail; AMemberId: Integer);
   end;
 
 implementation
 
 uses
-  CommonFunction, MemberModule, PaymentDetailsModule;
+  CommonFunction, MemberModule, PaymentDetailsModule, ScheduleModule;
 
 {** MemberInsert
 * }
@@ -144,6 +145,16 @@ var
 begin
   MemberDetail := MemberModule.dmMember.Member_Detail_Select(AMemberId);
   AView.MemberDetailShow(MemberDetail);
+end;
+
+{** ScheduleSelect
+* }
+constructor TMemberController.ScheduleSelect(const AView: TfmMemberDetail; AMemberId: Integer);
+var
+  Schedules : TDataSet;
+begin
+  Schedules := ScheduleModule.dmSchedule.Schedule_MemberId_Select(AMemberId);
+  AView.ScheduleHistoryShow(Schedules);
 end;
 
 end.

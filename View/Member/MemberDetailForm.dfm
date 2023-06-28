@@ -344,45 +344,6 @@ object fmMemberDetail: TfmMemberDetail
           Transparent = True
           VertScrollBar.Range = 90
           VertScrollBar.Tracking = True
-          object Label12: TLabel
-            Left = 4
-            Top = 5
-            Width = 124
-            Height = 15
-            Caption = '[1]  2023-05-18 16:00'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 6446686
-            Font.Height = -12
-            Font.Name = #47569#51008' '#44256#46357
-            Font.Style = [fsBold]
-            ParentFont = False
-          end
-          object Label13: TLabel
-            Left = 4
-            Top = 26
-            Width = 124
-            Height = 15
-            Caption = '[2]  2023-05-20 17:00'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 6446686
-            Font.Height = -12
-            Font.Name = #47569#51008' '#44256#46357
-            Font.Style = [fsBold]
-            ParentFont = False
-          end
-          object Label14: TLabel
-            Left = 4
-            Top = 47
-            Width = 124
-            Height = 15
-            Caption = '[3]  2023-05-25 15:00'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 6446686
-            Font.Height = -12
-            Font.Name = #47569#51008' '#44256#46357
-            Font.Style = [fsBold]
-            ParentFont = False
-          end
         end
       end
       object PaymentRecodePanel: TCurvyPanel
