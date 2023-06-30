@@ -85,7 +85,6 @@ uses
   CommonFunction, MemberController;
 
 {$R *.dfm}
-// TODO 받은 파라미터 id로 맴버디테일 가져오는 로직
 procedure TfmMemberDetail.cxButton1Click(Sender: TObject);
 begin
   ModalResult := mrOK;

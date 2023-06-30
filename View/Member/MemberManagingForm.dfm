@@ -516,6 +516,7 @@ object fmMemberManaging: TfmMemberManaging
             Options = [goVertLine, goHorzLine, goRangeSelect]
             ScrollBars = ssNone
             TabOrder = 0
+            OnDblClick = MemberGridDblClick
             OnDrawCell = MemberGridDrawCell
             OnMouseLeave = MemberGridMouseLeave
             OnMouseMove = MemberGridMouseMove

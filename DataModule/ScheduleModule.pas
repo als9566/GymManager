@@ -275,6 +275,8 @@ begin
 
     dmSchedule.FDQuery.ParamByName('id').AsInteger := Aid;
 
+    dmSchedule.FDQuery.Active := true;
+
     Result := dmSchedule.FDQuery.FieldByName('member_id').AsInteger;
   except
     Result := 0;

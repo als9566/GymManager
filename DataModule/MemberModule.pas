@@ -177,7 +177,8 @@ Function TdmMember.Managing_List_Select(AName : String) :TDataSet;
 begin
   try
     dmMember.FDQuery.SQL.Clear;
-    dmMember.FDQuery.SQL.Text := 'SELECT name                                                                                                                                                  ' +#13#10
+    dmMember.FDQuery.SQL.Text := 'SELECT id                                                                                                                                                    ' +#13#10
+                               + '      ,name                                                                                                                                                  ' +#13#10
                                + '      ,gender                                                                                                                                                ' +#13#10
                                + '      ,birthday                                                                                                                                              ' +#13#10
                                + '      ,tel                                                                                                                                                   ' +#13#10

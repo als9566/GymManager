@@ -61,6 +61,7 @@ type
     procedure MemberListShow(AMember: TDataSet);
     procedure SearchBtnClick(Sender: TObject);
     procedure SearchEditKeyPress(Sender: TObject; var Key: Char);
+    procedure MemberGridDblClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,7 +77,6 @@ implementation
 uses
   CommonFunction, MainForm, MemberController;
 
-//TODO 회원 클릭시 디테일
 {$R *.dfm}
 
 procedure TfmMemberManaging.FormClose(Sender: TObject;
@@ -99,6 +99,31 @@ begin
 end;
 
 //StringGrid DefaultDrawing := False 방법
+procedure TfmMemberManaging.MemberGridDblClick(Sender: TObject);
+var
+  P: TPoint;
+  iColumn, iRow: Longint;
+begin
+  GetCursorPos(P);
+  with MemberGrid do
+  begin
+    P := ScreenToClient(P);
+    MouseToCell(P.X, P.Y, iColumn, iRow);
+
+    if (iColumn = 0) or (iRow = 0) then
+      abort;
+
+    fmBlur := TfmBlur.Create(Self);
+    fmBlur.Top := GymManagerForm.Top;
+    fmBlur.Left := GymManagerForm.Left;
+    fmBlur.Height := GymManagerForm.Height;
+    fmBlur.Width := GymManagerForm.Width;
+    fmBlur.imgBlur.Tag := 4;
+    fmBlur.parameter1.Text := Cells[0,iRow];
+    fmBlur.Show;
+  end;
+end;
+
 procedure TfmMemberManaging.MemberGridDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
 begin
@@ -302,6 +327,7 @@ begin
     I := 1;
     While Not AMember.Eof do
     begin
+      Cells[0,I] := AMember.FieldByName('id').AsString;
       Cells[1,I] := AMember.FieldByName('name').AsString;
       Cells[2,I] := AMember.FieldByName('gender').AsString;
       Cells[3,I] := AMember.FieldByName('tel').AsString;
