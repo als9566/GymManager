@@ -191,12 +191,15 @@ begin
     end
     else
     begin // 회원디테일
+      ScheduleController.TScheduleController.Member_Id_Find(self, iColumn-1, iRow+5);
+
       fmBlur := TfmBlur.Create(Self);
       fmBlur.Top := GymManagerForm.Top;
       fmBlur.Left := GymManagerForm.Left;
       fmBlur.Height := GymManagerForm.Height;
       fmBlur.Width := GymManagerForm.Width;
       fmBlur.imgBlur.Tag := 4;
+      fmBlur.parameter1.Text := IntToStr(self.Tag);
       fmBlur.Show;
     end;
   end;

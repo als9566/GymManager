@@ -18,6 +18,7 @@ type
     constructor Member_Find(const AView: TfmScheduleCreate; AName : String);
     constructor Schedule_Create(const AView: TfmScheduleCreate; ARow : Integer);
     constructor Schedule_Delete(const AView: TfmScheduleView; iAddDay, iTime : Integer);
+    constructor Member_Id_Find(const AView: TfmScheduleView; iAddDay, iTime : Integer);
   end;
 
 implementation
@@ -110,6 +111,16 @@ begin
   finally
     Schedule.Free;
   end;
+end;
+
+constructor TScheduleController.Member_Id_Find(const AView: TfmScheduleView; iAddDay, iTime : Integer);
+var
+  iScheduleId : Integer;
+begin
+
+  iScheduleId := ScheduleModule.dmSchedule.Schedule_ID_Select(AView.First_Date.Text, iAddDay, iTime);
+  AView.Tag := ScheduleModule.dmSchedule.Member_Id_Select(iScheduleId);
+
 end;
 
 end.

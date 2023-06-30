@@ -40,6 +40,7 @@ type
     Function Schedule_ID_Select(ADate : String; iAddDay, iTime : Integer) : Integer;
     Function Date_Calculation_Select(ADate : String; iAddDay : Integer) : String;
     Function Schedule_MemberId_Select(Aid : Integer) :TDataSet;
+    Function Member_Id_Select(Aid : Integer) : Integer;
   end;
 
 var
@@ -262,6 +263,21 @@ begin
     Result := dmSchedule.FDQuery;
   except
     Result := nil;
+  end;
+end;
+
+Function TdmSchedule.Member_Id_Select(Aid : Integer) :Integer;
+begin
+  try
+    dmSchedule.FDQuery.SQL.Clear;
+    dmSchedule.FDQuery.SQL.Text := 'SELECT member_id FROM pt_schedule ' +#13#10
+                                 + ' WHERE id = :id    ';
+
+    dmSchedule.FDQuery.ParamByName('id').AsInteger := Aid;
+
+    Result := dmSchedule.FDQuery.FieldByName('member_id').AsInteger;
+  except
+    Result := 0;
   end;
 end;
 

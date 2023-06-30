@@ -88,6 +88,7 @@ begin
   else if imgBlur.Tag = 4 then
   begin
     fmMemberDetail := TfmMemberDetail.Create(Self);
+    fmMemberDetail.Tag := StrToInt(parameter1.Text);
     fmMemberDetail.Top := (GymManagerForm.Height - fmMemberDetail.Height) div 2 + GymManagerForm.Top;
     fmMemberDetail.Left := (GymManagerForm.Width - fmMemberDetail.Width) div 2 + GymManagerForm.Left;
     fmMemberDetail.ShowModal;

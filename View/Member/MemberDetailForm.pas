@@ -109,9 +109,9 @@ begin
     Cells[3,0] := '결제금액';
   end;
 
-  MemberController.TMemberController.MemberDetailSelect(self, 11);
-  MemberController.TMemberController.ScheduleSelect(self, 6);
-  MemberController.TMemberController.PaymentSelect(self, 6);
+  MemberController.TMemberController.MemberDetailSelect(self, self.Tag);
+  MemberController.TMemberController.ScheduleSelect(self, self.Tag);
+  MemberController.TMemberController.PaymentSelect(self, self.Tag);
 
 end;
 
