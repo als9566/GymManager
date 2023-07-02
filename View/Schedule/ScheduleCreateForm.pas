@@ -117,7 +117,11 @@ begin
     if (iColumn = 0) or (iRow = 0) then
       abort;
 
-    // TODO [잔여 0 일때 등록 불가]
+    if StrToInt(Cells[6,iRow]) = 0 then
+    begin
+      ShowMessage('PT 잔여 횟수가 없습니다...');
+      Abort;
+    end;
 
     if Application.MessageBox( PChar(DayLabel.Caption + ' ' + Cells[2,iRow] + ' 회원을 PT 등록 하시겠습니까?'), '등록확인', MB_YESNO+MB_IconQuestion) = IDNO  then
     begin
@@ -295,6 +299,7 @@ begin
       Cells[3,I] := AMember.FieldByName('GENDER').AsString;
       Cells[4,I] := AMember.FieldByName('TEL').AsString;
       Cells[5,I] := '잔여PT : '+AMember.FieldByName('PT').AsString+'회';
+      Cells[6,I] := AMember.FieldByName('PT').AsString;
       AMember.Next;
       Inc(I);
     end;

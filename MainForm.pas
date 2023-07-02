@@ -54,6 +54,8 @@ type
     procedure ImgBtnMouseEnter(Sender: TObject);
     procedure ImgBtnMouseLeave(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure catMenuItemsButtonClicked(Sender: TObject;
+      const Button: TButtonItem);
   private
     { Private declarations }
     procedure WMNCHitTest(var message: TWMNCHitTest); message WM_NCHITTEST;
@@ -73,7 +75,9 @@ implementation
 {$R *.dfm}
 
 uses
-  LockerManagingForm, MemberManagingForm, CommonFunction;
+  LockerManagingForm, MemberManagingForm,
+  ScheduleViewForm, SettingViewForm,
+  CommonFunction;
 
 //깜빡임 제거
 //로직 가운데에 넣기
@@ -247,17 +251,69 @@ begin
 
 end;
 
-procedure TGymManagerForm.MENU_CREATE(li_tag: Integer);
+procedure TGymManagerForm.catMenuItemsButtonClicked(Sender: TObject;
+  const Button: TButtonItem);
 begin
+  MENU_CREATE(Button.Index);
+
+  SV.Close;
+end;
+
+procedure TGymManagerForm.MENU_CREATE(li_tag: Integer);
+var
+  iCount : Integer;
+begin
+  LockMDIChild(True);
+
+  for iCount := 0 to MDIChildCount - 1 do
+  begin
+    if MDIChildren[iCount].Tag = li_tag then
+    begin
+      MDIChildren[iCount].BringToFront;
+      LockMDIChild(False);
+      Exit;
+    end;
+  end;
+
   Case li_tag Of
-     2 :
-     begin  {Locker}
+     0 :
+     begin  {Home}
        fmLockerManaging := TfmLockerManaging.Create(Application);
        with fmLockerManaging do begin
         Tag := li_tag;
        end;
      end;
+     1 :
+     begin  {회원관리}
+       fmMemberManaging := TfmMemberManaging.Create(Application);
+       with fmMemberManaging do begin
+        Tag := li_tag;
+       end;
+     end;
+     2 :
+     begin  {PT Schedule}
+       fmScheduleView := TfmScheduleView.Create(Application);
+       with fmScheduleView do begin
+        Tag := li_tag;
+       end;
+     end;
+     3 :
+     begin  {락커}
+       fmLockerManaging := TfmLockerManaging.Create(Application);
+       with fmLockerManaging do begin
+        Tag := li_tag;
+       end;
+     end;
+     4 :
+     begin  {설정}
+       fmSettingView := TfmSettingView.Create(Application);
+       with fmSettingView do begin
+        Tag := li_tag;
+       end;
+     end;
   End;
+
+  LockMDIChild(False);
 end;
 
 procedure TGymManagerForm.LockMDIChild(Lock: Boolean);

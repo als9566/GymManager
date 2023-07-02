@@ -91,8 +91,8 @@ begin
   if fmLogin.bcheck then
   begin
     MainForm.bLogin := true;
-    MainForm.sUserName := fmLogin.msgLabel.Caption;
-    GymManagerForm.SV.CloseStyle := svcCompact;
+    MainForm.sUserName := fmLogin.NameEdit.Text;
+    //GymManagerForm.SV.CloseStyle := svcCompact;
     GymManagerForm.imgMenu.Visible := True;
     LoginThread := nil;
     fmLogin.Close;

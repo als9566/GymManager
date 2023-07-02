@@ -1,4 +1,5 @@
 object fmLogin: TfmLogin
+  Tag = 999
   Left = 0
   Top = 0
   Caption = 'fmLogin'

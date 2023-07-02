@@ -368,6 +368,7 @@ object fmSettingView: TfmSettingView
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
           ParentFont = False
+          ReadOnly = True
           TabOrder = 0
           Text = #54861#44600#46041
         end
