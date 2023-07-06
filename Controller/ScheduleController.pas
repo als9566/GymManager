@@ -98,6 +98,7 @@ begin
   Schedule := TSchedule.Create;
 
   Schedule.id := ScheduleModule.dmSchedule.Schedule_ID_Select(AView.First_Date.Text, iAddDay, iTime);
+  Schedule.member_id := ScheduleModule.dmSchedule.Member_Id_Select(Schedule.id);
 
   try
     if ScheduleModule.Schedule.Delete(Schedule) = true then

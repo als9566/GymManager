@@ -55,8 +55,6 @@ uses
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
-// TODO insert할때 member테이블 pt컬럼 -하기
-// TODO delete할때 member테이블 pt컬럼 +하기
 Function TSchedule.Insert(ASchedule: TSchedule): Boolean;
 begin
 
@@ -85,6 +83,14 @@ begin
 
     dmSchedule.FDQuery.ExecSQL;
 
+    dmSchedule.FDQuery.SQL.Text := 'UPDATE member      '
+                                 + '   SET pt = pt - 1 '
+                                 + ' WHERE id = :id    ';
+
+    dmSchedule.FDQuery.ParamByName('id').AsInteger := ASchedule.member_id;
+
+    dmSchedule.FDQuery.ExecSQL;
+
     MainModule.dmMain.GymConnection.Commit;
 
     Result := true;
@@ -103,6 +109,14 @@ begin
                                  + ' WHERE ID = :ID         ';
 
     dmSchedule.FDQuery.ParamByName('ID').AsInteger := ASchedule.id;
+
+    dmSchedule.FDQuery.ExecSQL;
+
+    dmSchedule.FDQuery.SQL.Text := 'UPDATE member      '
+                                 + '   SET pt = pt + 1 '
+                                 + ' WHERE id = :id    ';
+
+    dmSchedule.FDQuery.ParamByName('id').AsInteger := ASchedule.member_id;
 
     dmSchedule.FDQuery.ExecSQL;
 
