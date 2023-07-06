@@ -167,53 +167,34 @@ object fmLockerManaging: TfmLockerManaging
       TabOrder = 1
       Transparent = True
       VertScrollBar.Tracking = True
+      DesignSize = (
+        761
+        551)
+      object GuideText: TLabel
+        Left = 252
+        Top = 256
+        Width = 274
+        Height = 15
+        Anchors = []
+        Caption = '<'#49373#49457#46108' '#46973#52964#44032' '#50630#49845#45768#45796'. '#46973#52964#49373#49457#51012' '#54644#51452#49464#50836'...>'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
     end
-    object NewInsertBtn: TcxButton
-      Left = 678
+    object LockerCreateBtn: TcxButton
+      Left = 693
       Top = 9
       Width = 75
       Height = 25
       Anchors = [akTop, akRight]
-      Caption = #46973#52964#49373#49457
+      Caption = #46973#52964#49688#51221
       LookAndFeel.NativeStyle = False
       LookAndFeel.SkinName = 'DevExpressStyle'
       TabOrder = 2
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = #47569#51008' '#44256#46357
-      Font.Style = []
-      ParentFont = False
-      OnClick = NewInsertBtnClick
-    end
-    object ModifyBtn: TcxButton
-      Left = 597
-      Top = 9
-      Width = 75
-      Height = 25
-      Anchors = [akTop, akRight]
-      Caption = #46973#52964#49688#51221
-      LookAndFeel.NativeStyle = False
-      LookAndFeel.SkinName = 'DevExpressStyle'
-      TabOrder = 3
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = #47569#51008' '#44256#46357
-      Font.Style = []
-      ParentFont = False
-      OnClick = ModifyBtnClick
-    end
-    object LockerCreateBtn: TcxButton
-      Left = 501
-      Top = 9
-      Width = 75
-      Height = 25
-      Anchors = [akTop, akRight]
-      Caption = #46973#52964#49688#51221
-      LookAndFeel.NativeStyle = False
-      LookAndFeel.SkinName = 'DevExpressStyle'
-      TabOrder = 4
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

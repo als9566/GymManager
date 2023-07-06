@@ -36,9 +36,8 @@ type
     Shape2: TShape;
     Shape3: TShape;
     LockerPanel: TcxScrollBox;
-    NewInsertBtn: TcxButton;
-    ModifyBtn: TcxButton;
     LockerCreateBtn: TcxButton;
+    GuideText: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure NewInsertBtnClick(Sender: TObject);
@@ -65,7 +64,6 @@ uses
 {$R *.dfm}
 
 //TODO 새로고침 버튼로직 만들기
-//TODO 락커수정 로직만들기(락커가 하나도 없다면 추가view, 등록되어있다면 수정view)
 
 procedure TfmLockerManaging.FormClose(Sender: TObject;
   var Action: TCloseAction);
@@ -210,6 +208,19 @@ begin
   LockerTotalCnt.Caption := ALocker.FieldByName('전체').AsString;
   LockerIngCnt.Caption := ALocker.FieldByName('사용').AsString;
   LockerEndCnt.Caption := IntToStr(ALocker.FieldByName('전체').AsInteger - ALocker.FieldByName('사용').AsInteger);
+
+  if ALocker.FieldByName('전체').AsInteger = 0 then
+  begin
+    LockerCreateBtn.Caption := '락커생성';
+    LockerCreateBtn.OnClick := NewInsertBtnClick;
+    GuideText.Visible := true;
+  end
+  else
+  begin
+    LockerCreateBtn.Caption := '락커수정';
+    LockerCreateBtn.OnClick := ModifyBtnClick;
+    GuideText.Visible := false;
+  end;
 
   LockWindowUpdate(0);
 end;
