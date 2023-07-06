@@ -20,7 +20,8 @@ uses
   dxSkinTheAsphaltWorld, dxSkinsDefaultPainters, dxSkinValentine,
   dxSkinVisualStudio2013Blue, dxSkinVisualStudio2013Dark,
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,Data.DB,
-  dxSkinXmas2008Blue, cxScrollBox, CurvyControls, Vcl.Menus, cxButtons, BlurForm;
+  dxSkinXmas2008Blue, cxScrollBox, CurvyControls, Vcl.Menus, cxButtons, BlurForm,
+  dxGDIPlusClasses;
 
 type
   TfmLockerManaging = class(TForm)
@@ -38,12 +39,14 @@ type
     LockerPanel: TcxScrollBox;
     LockerCreateBtn: TcxButton;
     GuideText: TLabel;
+    refreshBtn: TImage;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure NewInsertBtnClick(Sender: TObject);
     procedure ShowData(ALocker: TDataSet);
     procedure ModifyBtnClick(Sender: TObject);
     procedure BaseSetting(ALocker: TDataSet);
+    procedure refreshBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -62,9 +65,6 @@ uses
   CommonFunction, MainForm, LockerController;
 
 {$R *.dfm}
-
-//TODO 새로고침 버튼로직 만들기
-
 procedure TfmLockerManaging.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
@@ -89,6 +89,7 @@ begin
   fmBlur.Width := GymManagerForm.Width;
   fmBlur.imgBlur.Tag := 3;
   fmBlur.Show;
+  refreshBtnClick(Self);
 end;
 
 {** 신규버튼 이벤트 (락커생성창 띄우기)
@@ -103,6 +104,26 @@ begin
   fmBlur.Width := GymManagerForm.Width;
   fmBlur.imgBlur.Tag := 2;
   fmBlur.Show;
+  refreshBtnClick(Self);
+end;
+
+{** 새로고침
+* }
+procedure TfmLockerManaging.refreshBtnClick(Sender: TObject);
+var
+  tempComponent : TComponent;
+  I, J : Integer;
+begin
+  for I := 1 to iMaxY do
+  begin
+    for J := 1 to iMaxX do
+    begin
+      tempComponent := FindComponent(Format('LockerPanel_%d_%d',[J,I]));
+      TCurvyPanel(tempComponent).Destroy;
+    end;
+  end;
+  LockerController.TLockerController.LockerArraySelect(Self);
+  LockerController.TLockerController.CountSelect(Self);
 end;
 
 {** 락커동적 생성
