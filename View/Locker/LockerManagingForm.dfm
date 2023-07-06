@@ -204,5 +204,23 @@ object fmLockerManaging: TfmLockerManaging
       ParentFont = False
       OnClick = ModifyBtnClick
     end
+    object LockerCreateBtn: TcxButton
+      Left = 501
+      Top = 9
+      Width = 75
+      Height = 25
+      Anchors = [akTop, akRight]
+      Caption = #46973#52964#49688#51221
+      LookAndFeel.NativeStyle = False
+      LookAndFeel.SkinName = 'DevExpressStyle'
+      TabOrder = 4
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = #47569#51008' '#44256#46357
+      Font.Style = []
+      ParentFont = False
+      OnClick = ModifyBtnClick
+    end
   end
 end

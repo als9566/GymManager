@@ -27,6 +27,7 @@ type
     Function Select :TDataSet;
     Function Max_Select_X : Integer;
     Function Max_Select_Y : Integer;
+    Function Count_Select :TDataSet;
   end;
 
 type
@@ -164,6 +165,25 @@ begin
 
   except
     Result := 0;
+  end;
+end;
+
+Function TLocker.Count_Select :TDataSet;
+begin
+  try
+    dmLocker.FDQuery.SQL.Text := 'SELECT                                                                                         '
+                               + '        Count(*)             "전체"                                                            '
+	                             + '      , Count(member.name)   "사용"                                                            '
+                               + '  FROM locker                                                                                  '
+                               + '  LEFT OUTER JOIN (SELECT * FROM member                                                        '
+                               + '                    WHERE julianday(locker_end) >= julianday(strftime(''%Y-%m-%d'', ''now''))  '
+                               + '                   ) member                                                                    '
+                               + '    ON locker.id = member.locker                                                               '
+                               + ' ORDER BY locker.y, locker.x                                                                   ';
+
+    Result := dmLocker.FDQuery;
+  except
+    Result := nil;
   end;
 end;
 

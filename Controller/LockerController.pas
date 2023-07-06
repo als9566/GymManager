@@ -15,6 +15,7 @@ type
     constructor LockerArraySelect(const AView: TfmLockerManaging);
     constructor MemberLockerSelect(const AView: TfmMemberInsert);
     constructor LockerModifySelect(const AView: TfmLockerModify);
+    constructor CountSelect(const AView: TfmLockerManaging);
   end;
 
 implementation
@@ -155,6 +156,14 @@ begin
   LockerModifyForm.LockerY := LockerModule.Locker.Max_Select_Y;
   Locker := LockerModule.Locker.Select();
   AView.ShowData(Locker);
+end;
+
+constructor TLockerController.CountSelect(const AView: TfmLockerManaging);
+var
+  LockerCnt : TDataSet;
+begin
+  LockerCnt := LockerModule.Locker.Count_Select;
+  AView.BaseSetting(LockerCnt);
 end;
 
 end.

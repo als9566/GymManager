@@ -38,11 +38,13 @@ type
     LockerPanel: TcxScrollBox;
     NewInsertBtn: TcxButton;
     ModifyBtn: TcxButton;
+    LockerCreateBtn: TcxButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure NewInsertBtnClick(Sender: TObject);
     procedure ShowData(ALocker: TDataSet);
     procedure ModifyBtnClick(Sender: TObject);
+    procedure BaseSetting(ALocker: TDataSet);
   private
     { Private declarations }
   public
@@ -74,6 +76,7 @@ end;
 procedure TfmLockerManaging.FormShow(Sender: TObject);
 begin
   LockerController.TLockerController.LockerArraySelect(Self);
+  LockerController.TLockerController.CountSelect(Self);
 end;
 
 {** 수정버튼 이벤트 (락커수정창 띄우기)
@@ -192,6 +195,22 @@ begin
       ALocker.Next;
     end;
   end;
+  LockWindowUpdate(0);
+end;
+
+{** 락커 수 및 버튼 동적 적용
+  @param [Sender] TDataSet
+* }
+procedure TfmLockerManaging.BaseSetting(ALocker: TDataSet);
+begin
+  ALocker.Active := true;
+
+  LockWindowUpdate(Handle);
+
+  LockerTotalCnt.Caption := ALocker.FieldByName('전체').AsString;
+  LockerIngCnt.Caption := ALocker.FieldByName('사용').AsString;
+  LockerEndCnt.Caption := IntToStr(ALocker.FieldByName('전체').AsInteger - ALocker.FieldByName('사용').AsInteger);
+
   LockWindowUpdate(0);
 end;
 
