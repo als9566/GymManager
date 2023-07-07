@@ -30,7 +30,9 @@ uses
   ScheduleModule in 'DataModule\ScheduleModule.pas' {dmSchedule: TDataModule},
   ScheduleController in 'Controller\ScheduleController.pas',
   MemberDetailForm in 'View\Member\MemberDetailForm.pas' {fmMemberDetail},
-  ScheduleCreateForm in 'View\Schedule\ScheduleCreateForm.pas' {fmScheduleCreate};
+  ScheduleCreateForm in 'View\Schedule\ScheduleCreateForm.pas' {fmScheduleCreate},
+  DashboardForm in 'View\Dashboard\DashboardForm.pas' {fmDashboard},
+  ShadowBoxMain in 'Function\ShadowBoxMain.pas';
 
 {$R *.res}
 
@@ -47,5 +49,6 @@ begin
   Application.CreateForm(TdmPaymentDetails, dmPaymentDetails);
   Application.CreateForm(TdmSchedule, dmSchedule);
   Application.CreateForm(TfmLogin, fmLogin);
+  Application.CreateForm(TfmDashboard, fmDashboard);
   Application.Run;
 end.

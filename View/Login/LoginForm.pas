@@ -58,7 +58,7 @@ uses
 procedure TLoginThread.FormCreate;
 begin
   MainForm.GymManagerForm.LockMDIChild(true);
-  MainForm.GymManagerForm.MENU_CREATE(2);
+  MainForm.GymManagerForm.MENU_CREATE(0);
   MainForm.GymManagerForm.LockMDIChild(False);
 end;
 

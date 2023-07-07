@@ -418,7 +418,6 @@ object GymManagerForm: TGymManagerForm
     Margins.Bottom = 0
     Align = alLeft
     TabOrder = 1
-    ExplicitLeft = 52
   end
   object Panel3: TPanel
     AlignWithMargins = True
@@ -456,7 +455,7 @@ object GymManagerForm: TGymManagerForm
     Color = clBlack
     DisplayMode = svmOverlay
     Opened = False
-    OpenedWidth = 200
+    OpenedWidth = 180
     Placement = svpLeft
     TabOrder = 4
     object catMenuItems: TCategoryButtons

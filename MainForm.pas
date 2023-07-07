@@ -77,12 +77,15 @@ implementation
 uses
   LockerManagingForm, MemberManagingForm,
   ScheduleViewForm, SettingViewForm,
+  DashboardForm,
   CommonFunction;
 
 //깜빡임 제거
 //로직 가운데에 넣기
 //LockWindowUpdate(Handle);
 //LockWindowUpdate(0);
+
+// TODO [홈 대시보드 만들기]
 
 procedure TGymManagerForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -278,8 +281,8 @@ begin
   Case li_tag Of
      0 :
      begin  {Home}
-       fmLockerManaging := TfmLockerManaging.Create(Application);
-       with fmLockerManaging do begin
+       fmDashboard := TfmDashboard.Create(Application);
+       with fmDashboard do begin
         Tag := li_tag;
        end;
      end;
