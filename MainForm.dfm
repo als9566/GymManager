@@ -450,14 +450,16 @@ object GymManagerForm: TGymManagerForm
     Top = 31
     Width = 0
     Height = 628
-    AnimationDelay = 10
-    AnimationStep = 50
+    AnimationDelay = 1
+    AnimationStep = 10
     Color = clBlack
     DisplayMode = svmOverlay
     Opened = False
     OpenedWidth = 180
+    ParentDoubleBuffered = True
     Placement = svpLeft
     TabOrder = 4
+    UseAnimation = False
     object catMenuItems: TCategoryButtons
       Left = -4
       Top = -20

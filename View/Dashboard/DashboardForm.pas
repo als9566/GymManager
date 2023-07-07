@@ -57,7 +57,49 @@ type
     cxStyleRepository7: TcxStyleRepository;
     cxStyle7: TcxStyle;
     Label1: TLabel;
+    Label2: TLabel;
+    cxGrid3: TcxGrid;
+    cxGridDBChartView2: TcxGridDBChartView;
+    cxGridDBChartSeries2: TcxGridDBChartSeries;
+    cxGridLevel2: TcxGridLevel;
+    CurvyPanel3: TCurvyPanel;
+    Label3: TLabel;
+    cxGrid2: TcxGrid;
+    cxGridDBChartView1: TcxGridDBChartView;
+    cxGridDBChartSeries1: TcxGridDBChartSeries;
+    cxGridLevel1: TcxGridLevel;
+    CurvyPanel4: TCurvyPanel;
+    Label4: TLabel;
+    cxGrid4: TcxGrid;
+    cxGridDBChartView3: TcxGridDBChartView;
+    cxGridDBChartSeries3: TcxGridDBChartSeries;
+    cxGridLevel3: TcxGridLevel;
+    CurvyPanel5: TCurvyPanel;
+    Label5: TLabel;
+    cxGrid5: TcxGrid;
+    cxGridDBChartView4: TcxGridDBChartView;
+    cxGridDBChartSeries4: TcxGridDBChartSeries;
+    cxGridLevel4: TcxGridLevel;
+    cxGrid6: TcxGrid;
+    cxGridDBChartView5: TcxGridDBChartView;
+    cxGridDBChartSeries5: TcxGridDBChartSeries;
+    cxGridLevel5: TcxGridLevel;
+    cxGridDBChartView4Series1: TcxGridDBChartSeries;
+    cxGridDBChartView4Series4: TcxGridDBChartSeries;
+    cxGridDBChartView4Series5: TcxGridDBChartSeries;
+    MenuNameLabel: TLabel;
+    Shape1: TShape;
     procedure FormShow(Sender: TObject);
+    procedure cxGridDBChartView1DiagramPieCustomDrawValue(
+      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
+    procedure cxGridDBChartView1DiagramPieCustomDrawLegendItem(
+      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
+    procedure DashboardScrollBoxMouseWheelDown(Sender: TObject;
+      Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+    procedure DashboardScrollBoxMouseWheelUp(Sender: TObject;
+      Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
   private
     { Private declarations }
   public
@@ -73,6 +115,46 @@ uses
   CommonFunction, MainForm, ShadowBoxMain;
 
 {$R *.dfm}
+
+procedure TfmDashboard.cxGridDBChartView1DiagramPieCustomDrawLegendItem(
+  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
+begin
+  if AViewInfo.Index = 0 then
+  begin
+    AViewInfo.LegendKeyParams.Color := clBlack;
+  end;
+  if AViewInfo.Index = 1 then
+  begin
+    AViewInfo.LegendKeyParams.Color := clBlack;
+  end;
+end;
+
+procedure TfmDashboard.cxGridDBChartView1DiagramPieCustomDrawValue(
+  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
+begin
+  if AViewInfo.ValueIndex = 0 then
+  begin
+    ACanvas.Brush.Color := clBlack;
+  end;
+  if AViewInfo.ValueIndex = 1 then
+  begin
+    ACanvas.Brush.Color := clBlack;
+  end;
+end;
+
+procedure TfmDashboard.DashboardScrollBoxMouseWheelDown(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  DashboardScrollBox.VertScrollBar.Position := DashboardScrollBox.VertScrollBar.Position + 20;
+end;
+
+procedure TfmDashboard.DashboardScrollBoxMouseWheelUp(Sender: TObject;
+  Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+begin
+  DashboardScrollBox.VertScrollBar.Position := DashboardScrollBox.VertScrollBar.Position - 20;
+end;
 
 procedure TfmDashboard.FormShow(Sender: TObject);
 begin
