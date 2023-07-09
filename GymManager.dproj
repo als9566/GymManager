@@ -201,6 +201,12 @@
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Function\ShadowBoxMain.pas"/>
+        <DCCReference Include="Controller\DashboardController.pas"/>
+        <DCCReference Include="DataModule\DashboardModule.pas">
+            <Form>dmDashboard</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

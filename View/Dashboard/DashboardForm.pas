@@ -22,7 +22,9 @@ uses
   dxSkinVisualStudio2013Light, dxSkinVS2010, dxSkinWhiteprint,
   dxSkinXmas2008Blue, cxScrollBox, cxStyles, cxCustomData, Data.DB, cxDBData,
   CurvyControls, cxGridLevel, cxGridChartView, cxGridDBChartView,
-  cxGridCustomView, cxGrid, dxmdaset, cxClasses, Vcl.ExtCtrls, Vcl.StdCtrls;
+  cxGridCustomView, cxGrid, dxmdaset, cxClasses, Vcl.ExtCtrls, Vcl.StdCtrls,
+  cxContainer, cxEdit, Vcl.ComCtrls, dxCore, cxDateUtils, dxGDIPlusClasses,
+  cxTextEdit, cxMaskEdit, cxDropDownEdit, cxCalendar;
 
 type
   TfmDashboard = class(TForm)
@@ -44,12 +46,8 @@ type
     dxMemData1Values3: TIntegerField;
     dxMemData1Values4: TIntegerField;
     dxMemData1FloatValues: TFloatField;
-    cxGrid1: TcxGrid;
-    cxGrid1DBChartView1: TcxGridDBChartView;
-    cxGrid1DBChartView1Series1: TcxGridDBChartSeries;
-    cxGrid1Level1: TcxGridLevel;
     cxStyleRepository4: TcxStyleRepository;
-    cxStyle4: TcxStyle;
+    LineValue: TcxStyle;
     cxStyleRepository5: TcxStyleRepository;
     cxStyle5: TcxStyle;
     cxStyleRepository6: TcxStyleRepository;
@@ -89,6 +87,15 @@ type
     cxGridDBChartView4Series5: TcxGridDBChartSeries;
     MenuNameLabel: TLabel;
     Shape1: TShape;
+    FirstDatePanel: TCurvyPanel;
+    End_Date: TcxDateEdit;
+    refreshBtn: TImage;
+    MemberCntGrid: TcxGrid;
+    MemberCntChartView: TcxGridChartView;
+    cxGrid2Level2: TcxGridLevel;
+    LineCategoryAxis: TcxStyle;
+    LineGridLine: TcxStyle;
+    LineValueAxis: TcxStyle;
     procedure FormShow(Sender: TObject);
     procedure cxGridDBChartView1DiagramPieCustomDrawValue(
       Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
@@ -100,6 +107,9 @@ type
       Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure DashboardScrollBoxMouseWheelUp(Sender: TObject;
       Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
+    procedure MemberCntShow(AMemberCnt: TDataSet);
+    procedure setDay(ADay: TDataSet);
+    procedure refreshBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -108,11 +118,12 @@ type
 
 var
   fmDashboard: TfmDashboard;
+  dsDay: TDataSet;
 
 implementation
 
 uses
-  CommonFunction, MainForm, ShadowBoxMain;
+  CommonFunction, MainForm, ShadowBoxMain, DashboardController;
 
 {$R *.dfm}
 
@@ -162,6 +173,73 @@ begin
     Control := CurvyPanel1;
   with TShadowBox.Create(Self) do
     Control := CurvyPanel2;
+
+  End_Date.Text := formatDateTime('yyyy-mm-dd',now);
+
+  DashboardController.TDashboardController.GetDay7(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text);
+  
+end;
+
+{** 회원수 차트 불러오기
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.MemberCntShow(AMemberCnt: TDataSet);
+Var
+  I, iMax, iMin : Integer;
+begin
+  AMemberCnt.Active := true;
+
+  iMax := AMemberCnt.FieldByName('6').AsInteger;
+  iMin := AMemberCnt.FieldByName('6').AsInteger;
+
+  MemberCntChartView.ViewData.CategoryCount := 7;
+  MemberCntChartView.ClearSeries;
+  MemberCntChartView.BeginUpdate;
+
+  MemberCntChartView.CreateSeries;
+  MemberCntChartView.Series[MemberCntChartView.SeriesCount-1].DisplayText := '';
+  MemberCntChartView.Series[MemberCntChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+
+  For I := 6 DownTo 0 Do
+  Begin
+    MemberCntChartView.ViewData.Categories[abs(I-6)] := dsDay.FieldByName(IntToStr(I)).AsString;
+    
+    MemberCntChartView.ViewData.Values[0, abs(I-6)] := AMemberCnt.FieldByName(IntToStr(I)).AsFloat;
+    if iMax < AMemberCnt.FieldByName(IntToStr(I)).AsInteger then
+      iMax := AMemberCnt.FieldByName(IntToStr(I)).AsInteger;
+    if iMin > AMemberCnt.FieldByName(IntToStr(I)).AsInteger then
+      iMin := AMemberCnt.FieldByName(IntToStr(I)).AsInteger;  
+  End;
+
+  if iMax < iMin + 6 then
+  begin
+    iMin := iMax - 6;
+    if iMin < 0 then
+      iMin := 0;
+  end;
+
+  if iMin <> 0 then
+    iMin := iMin - 1;
+    
+  MemberCntChartView.DiagramLine.AxisValue.MaxValue := iMax;
+  MemberCntChartView.DiagramLine.AxisValue.MinValue := iMin;
+
+  MemberCntChartView.EndUpdate;
+end;
+
+procedure TfmDashboard.refreshBtnClick(Sender: TObject);
+begin
+  DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text);
+end;
+
+{** 일주일 날짜 세팅
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.setDay(ADay: TDataSet);
+begin
+  dsDay := ADay;
+  dsDay.Active := true;
 end;
 
 end.

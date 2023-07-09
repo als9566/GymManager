@@ -50,6 +50,7 @@ type
     Function Managing_List_Select(AName : String) :TDataSet;
     Function Member_Detail_Select(AId : Integer) :TDataSet;
     Function Member_Count_Select :TDataSet;
+    Function Member_Count_Dash(ADate : String) :TDataSet;
   end;
 
 var
@@ -253,6 +254,31 @@ begin
                                + ' WHERE id = :id    ';
 
     dmMember.FDQuery.ParamByName('id').AsInteger := AId;
+
+    Result := dmMember.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
+Function TdmMember.Member_Count_Dash(ADate : String) :TDataSet;
+var
+  sSelect : String;
+  I : Integer;
+begin
+
+  sSelect := '(SELECT SUM(date(START_DATE) <= date(strftime(''%Y-%m-%d'', '''+ADate+'''), ''-0 DAY''))) "0" ';
+  for I := 1 to 6 do
+  begin
+    sSelect := sSelect
+    + ', (SELECT SUM(date(START_DATE) <= date(strftime(''%Y-%m-%d'', '''+ADate+'''), ''-'+IntToStr(I)+' DAY''))) "'+IntToStr(I)+'" ';
+  end;
+
+  try
+    dmMember.FDQuery.SQL.Clear;
+    dmMember.FDQuery.SQL.Text := 'SELECT '
+                               +  sSelect
+                               + ' FROM MEMBER';
 
     Result := dmMember.FDQuery;
   except

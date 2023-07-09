@@ -32,7 +32,9 @@ uses
   MemberDetailForm in 'View\Member\MemberDetailForm.pas' {fmMemberDetail},
   ScheduleCreateForm in 'View\Schedule\ScheduleCreateForm.pas' {fmScheduleCreate},
   DashboardForm in 'View\Dashboard\DashboardForm.pas' {fmDashboard},
-  ShadowBoxMain in 'Function\ShadowBoxMain.pas';
+  ShadowBoxMain in 'Function\ShadowBoxMain.pas',
+  DashboardController in 'Controller\DashboardController.pas',
+  DashboardModule in 'DataModule\DashboardModule.pas' {dmDashboard: TDataModule};
 
 {$R *.res}
 
@@ -40,8 +42,9 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TGymManagerForm, GymManagerForm);
-  Application.CreateForm(TdmMember, dmMember);
   Application.CreateForm(TdmMain, dmMain);
+  Application.CreateForm(TdmDashboard, dmDashboard);
+  Application.CreateForm(TdmMember, dmMember);
   Application.CreateForm(TdmLocker, dmLocker);
   Application.CreateForm(TdmLogin, dmLogin);
   Application.CreateForm(TdmSetting, dmSetting);

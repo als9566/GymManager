@@ -6,6 +6,7 @@ object dmMain: TdmMain
   object GymConnection: TFDConnection
     Params.Strings = (
       'DriverID=SQLite')
+    Connected = True
     Left = 63
     Top = 40
   end
