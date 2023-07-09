@@ -541,54 +541,58 @@ object fmDashboard: TfmDashboard
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object cxGrid3: TcxGrid
+        object GenderGrid: TcxGrid
+          Tag = 1000
           AlignWithMargins = True
           Left = 5
-          Top = 32
+          Top = 28
           Width = 245
-          Height = 200
+          Height = 204
           Margins.Left = 5
-          Margins.Top = 20
+          Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
           Align = alBottom
           BorderStyle = cxcbsNone
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -11
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
           ParentFont = False
           TabOrder = 0
-          object cxGridDBChartView2: TcxGridDBChartView
-            Categories.DataBinding.FieldName = 'Legends'
-            DataController.DataSource = DataSource1
-            DiagramColumn.Styles.CategoryGridLines = cxStyle1
-            DiagramColumn.Styles.Plot = cxStyle3
-            DiagramColumn.Styles.ValueGridLines = cxStyle2
-            DiagramLine.Legend.Position = cppNone
+          LookAndFeel.NativeStyle = True
+          LookAndFeel.SkinName = 'DevExpressStyle'
+          ExplicitLeft = 10
+          ExplicitTop = 33
+          object GenderChartView: TcxGridChartView
+            DiagramLine.Legend.Border = lbNone
             DiagramLine.AxisCategory.GridLines = False
             DiagramLine.AxisCategory.TickMarkKind = tmkNone
+            DiagramLine.AxisCategory.ValueAxisBetweenCategories = True
             DiagramLine.AxisValue.TickMarkKind = tmkNone
+            DiagramLine.AxisValue.MinMaxValues = mmvCustom
             DiagramLine.Styles.Values = LineValue
-            DiagramLine.Styles.CategoryAxis = cxStyle6
-            DiagramLine.Styles.GridLines = cxStyle5
-            DiagramLine.Styles.ValueAxis = cxStyle7
+            DiagramLine.Styles.CategoryAxis = LineCategoryAxis
+            DiagramLine.Styles.GridLines = LineGridLine
+            DiagramLine.Styles.ValueAxis = LineValueAxis
             DiagramLine.Values.HotSpotSize = 10
             DiagramLine.Values.MarkerSize = 6
             DiagramLine.Values.MarkerStyle = cmsCircle
             DiagramPie.Active = True
             DiagramPie.Legend.Position = cppRight
-            DiagramPie.OnCustomDrawLegendItem = cxGridDBChartView1DiagramPieCustomDrawLegendItem
-            DiagramPie.OnCustomDrawValue = cxGridDBChartView1DiagramPieCustomDrawValue
+            DiagramPie.OnCustomDrawLegendItem = GenderChartViewDiagramPieCustomDrawLegendItem
+            DiagramPie.OnCustomDrawValue = GenderChartViewDiagramPieCustomDrawValue
             DiagramPie.SeriesCaptions = False
-            DiagramPie.Styles.Values = cxStyle2
-            object cxGridDBChartSeries2: TcxGridDBChartSeries
-              DataBinding.FieldName = 'Values1'
-            end
+            DiagramPie.Styles.ValueCaptions = PieValueCaption
+            DiagramPie.Styles.Values = PieValue
+            DiagramPie.Values.CaptionPosition = pdvcpCenter
+            Legend.Position = cppNone
+            ToolBox.Border = tbNone
           end
           object cxGridLevel2: TcxGridLevel
-            GridView = cxGridDBChartView2
+            Caption = 'CHART'
+            GridView = GenderChartView
           end
         end
       end
@@ -726,10 +730,9 @@ object fmDashboard: TfmDashboard
             DiagramLine.Values.MarkerStyle = cmsCircle
             DiagramPie.Active = True
             DiagramPie.Legend.Position = cppRight
-            DiagramPie.OnCustomDrawLegendItem = cxGridDBChartView1DiagramPieCustomDrawLegendItem
-            DiagramPie.OnCustomDrawValue = cxGridDBChartView1DiagramPieCustomDrawValue
             DiagramPie.SeriesCaptions = False
-            DiagramPie.Styles.Values = cxStyle2
+            DiagramPie.Styles.ValueCaptions = cxStyle1
+            DiagramPie.Values.CaptionPosition = pdvcpCenter
             object cxGridDBChartSeries1: TcxGridDBChartSeries
               DataBinding.FieldName = 'Values1'
             end
@@ -911,8 +914,6 @@ object fmDashboard: TfmDashboard
             DiagramLine.Values.MarkerStyle = cmsCircle
             DiagramPie.Active = True
             DiagramPie.Legend.Position = cppRight
-            DiagramPie.OnCustomDrawLegendItem = cxGridDBChartView1DiagramPieCustomDrawLegendItem
-            DiagramPie.OnCustomDrawValue = cxGridDBChartView1DiagramPieCustomDrawValue
             DiagramPie.SeriesCaptions = False
             DiagramPie.Styles.Values = cxStyle2
             object cxGridDBChartSeries5: TcxGridDBChartSeries
@@ -1055,6 +1056,26 @@ object fmDashboard: TfmDashboard
       AssignedValues = [svColor, svTextColor]
       Color = 14935011
       TextColor = 3487029
+    end
+    object PieValue: TcxStyle
+      AssignedValues = [svColor, svFont, svTextColor]
+      Color = clWindow
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clCream
+      Font.Height = -11
+      Font.Name = #47569#51008#44256#46357
+      Font.Style = []
+      TextColor = clWhite
+    end
+    object PieValueCaption: TcxStyle
+      AssignedValues = [svColor, svFont, svTextColor]
+      Color = clBlack
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -9
+      Font.Name = #47569#51008' '#44256#46357
+      Font.Style = [fsBold]
+      TextColor = clWhite
     end
   end
   object cxStyleRepository5: TcxStyleRepository

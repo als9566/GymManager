@@ -52,5 +52,6 @@ begin
   Application.CreateForm(TdmPaymentDetails, dmPaymentDetails);
   Application.CreateForm(TdmSchedule, dmSchedule);
   Application.CreateForm(TfmLogin, fmLogin);
+  Application.CreateForm(TfmDashboard, fmDashboard);
   Application.Run;
 end.

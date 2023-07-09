@@ -56,10 +56,6 @@ type
     cxStyle7: TcxStyle;
     Label1: TLabel;
     Label2: TLabel;
-    cxGrid3: TcxGrid;
-    cxGridDBChartView2: TcxGridDBChartView;
-    cxGridDBChartSeries2: TcxGridDBChartSeries;
-    cxGridLevel2: TcxGridLevel;
     CurvyPanel3: TCurvyPanel;
     Label3: TLabel;
     cxGrid2: TcxGrid;
@@ -96,20 +92,26 @@ type
     LineCategoryAxis: TcxStyle;
     LineGridLine: TcxStyle;
     LineValueAxis: TcxStyle;
+    GenderGrid: TcxGrid;
+    GenderChartView: TcxGridChartView;
+    cxGridLevel2: TcxGridLevel;
+    PieValue: TcxStyle;
+    PieValueCaption: TcxStyle;
     procedure FormShow(Sender: TObject);
-    procedure cxGridDBChartView1DiagramPieCustomDrawValue(
-      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
-      AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
-    procedure cxGridDBChartView1DiagramPieCustomDrawLegendItem(
-      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
-      AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
     procedure DashboardScrollBoxMouseWheelDown(Sender: TObject;
       Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure DashboardScrollBoxMouseWheelUp(Sender: TObject;
       Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
     procedure MemberCntShow(AMemberCnt: TDataSet);
+    procedure GenderShow(AGender: TDataSet);
     procedure setDay(ADay: TDataSet);
     procedure refreshBtnClick(Sender: TObject);
+    procedure GenderChartViewDiagramPieCustomDrawLegendItem(
+      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
+    procedure GenderChartViewDiagramPieCustomDrawValue(
+      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
   private
     { Private declarations }
   public
@@ -126,34 +128,6 @@ uses
   CommonFunction, MainForm, ShadowBoxMain, DashboardController;
 
 {$R *.dfm}
-
-procedure TfmDashboard.cxGridDBChartView1DiagramPieCustomDrawLegendItem(
-  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
-  AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
-begin
-  if AViewInfo.Index = 0 then
-  begin
-    AViewInfo.LegendKeyParams.Color := clBlack;
-  end;
-  if AViewInfo.Index = 1 then
-  begin
-    AViewInfo.LegendKeyParams.Color := clBlack;
-  end;
-end;
-
-procedure TfmDashboard.cxGridDBChartView1DiagramPieCustomDrawValue(
-  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
-  AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
-begin
-  if AViewInfo.ValueIndex = 0 then
-  begin
-    ACanvas.Brush.Color := clBlack;
-  end;
-  if AViewInfo.ValueIndex = 1 then
-  begin
-    ACanvas.Brush.Color := clBlack;
-  end;
-end;
 
 procedure TfmDashboard.DashboardScrollBoxMouseWheelDown(Sender: TObject;
   Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
@@ -177,8 +151,8 @@ begin
   End_Date.Text := formatDateTime('yyyy-mm-dd',now);
 
   DashboardController.TDashboardController.GetDay7(Self, End_Date.Text);
-  DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text);
-  
+  DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text); 
+  DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text); 
 end;
 
 {** 회원수 차트 불러오기
@@ -228,9 +202,62 @@ begin
   MemberCntChartView.EndUpdate;
 end;
 
+procedure TfmDashboard.GenderChartViewDiagramPieCustomDrawLegendItem(
+  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
+begin
+  if AViewInfo.Index = 0 then
+  begin                                
+    AViewInfo.LegendKeyParams.Color := $00995A4A;
+  end;
+  if AViewInfo.Index = 1 then
+  begin
+    AViewInfo.LegendKeyParams.Color := $00B5B860;
+  end;
+end;
+
+procedure TfmDashboard.GenderChartViewDiagramPieCustomDrawValue(
+  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
+begin
+  if AViewInfo.ValueIndex = 0 then
+  begin                            
+    ACanvas.Brush.Color := $00995A4A;    
+  end;
+  if AViewInfo.ValueIndex = 1 then
+  begin
+    ACanvas.Brush.Color := $00B5B860; 
+  end;
+end;
+
+{** 성별 차트 불러오기
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.GenderShow(AGender: TDataSet);
+begin
+  AGender.Active := true;
+
+  GenderChartView.ViewData.CategoryCount := 2;
+  GenderChartView.ClearSeries;
+  GenderChartView.BeginUpdate;
+
+  GenderChartView.CreateSeries;
+  GenderChartView.Series[GenderChartView.SeriesCount-1].DisplayText := '';
+  GenderChartView.Series[GenderChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+
+  GenderChartView.ViewData.Categories[0] := '남';
+  GenderChartView.ViewData.Categories[1] := '여';
+
+  GenderChartView.ViewData.Values[0, 0] := AGender.FieldByName('남자').AsFloat;
+  GenderChartView.ViewData.Values[0, 1] := AGender.FieldByName('여자').AsFloat;
+
+  GenderChartView.EndUpdate;
+end;
+
 procedure TfmDashboard.refreshBtnClick(Sender: TObject);
 begin
   DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text); 
 end;
 
 {** 일주일 날짜 세팅

@@ -51,6 +51,7 @@ type
     Function Member_Detail_Select(AId : Integer) :TDataSet;
     Function Member_Count_Select :TDataSet;
     Function Member_Count_Dash(ADate : String) :TDataSet;
+    Function Member_Gender_Dash(ADate : String) :TDataSet;
   end;
 
 var
@@ -279,6 +280,32 @@ begin
     dmMember.FDQuery.SQL.Text := 'SELECT '
                                +  sSelect
                                + ' FROM MEMBER';
+
+    Result := dmMember.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
+Function TdmMember.Member_Gender_Dash(ADate : String) :TDataSet;
+begin
+  try
+    dmMember.FDQuery.SQL.Clear;
+    dmMember.FDQuery.SQL.Text := 'SELECT                                    '
+                               + '    SUM(                                  '
+                               + '        CASE                              '
+                               + '           WHEN gender = ''남'' THEN 1    '
+                               + '           WHEN gender = ''여'' THEN 0    '
+                               + '            END                           '
+                               + '        ) "남자"                          '
+                               + '   ,SUM(                                  '
+                               + '        CASE                              '
+                               + '           WHEN gender = ''여'' THEN 1    '
+                               + '           WHEN gender = ''남'' THEN 0    '
+                               + '           END                            '
+                               + '        ) "여자"                          '
+                               + ' FROM MEMBER                              '
+                               + 'WHERE date(start_date) <= date(strftime(''%Y-%m-%d'', '''+ADate+''')) ';
 
     Result := dmMember.FDQuery;
   except

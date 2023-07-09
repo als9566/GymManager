@@ -12,6 +12,7 @@ type
   public
     constructor GetMemberCnt(const AView: TfmDashboard; ADate: String);
     constructor GetDay7(const AView: TfmDashboard; ADate: String);
+    constructor GetMemberGender(const AView: TfmDashboard; ADate: String);
   end;
 
 implementation
@@ -27,6 +28,16 @@ var
 begin
   MemberCnt := MemberModule.dmMember.Member_Count_Dash(ADate);
   AView.MemberCntShow(MemberCnt);
+end;
+
+{** GetMemberGender
+* }
+constructor TDashboardController.GetMemberGender(const AView: TfmDashboard; ADate: String);
+var
+  Gender : TDataSet;
+begin
+  Gender := MemberModule.dmMember.Member_Gender_Dash(ADate);
+  AView.GenderShow(Gender);
 end;
 
 {** GetDay7
