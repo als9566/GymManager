@@ -13,12 +13,13 @@ type
     constructor GetMemberCnt(const AView: TfmDashboard; ADate: String);
     constructor GetDay7(const AView: TfmDashboard; ADate: String);
     constructor GetMemberGender(const AView: TfmDashboard; ADate: String);
+    constructor GetLockerCnt(const AView: TfmDashboard);
   end;
 
 implementation
 
 uses
-  CommonFunction, MemberModule, DashboardModule;
+  CommonFunction, MemberModule, DashboardModule, LockerModule;
 
 {** GetMemberCnt
 * }
@@ -38,6 +39,16 @@ var
 begin
   Gender := MemberModule.dmMember.Member_Gender_Dash(ADate);
   AView.GenderShow(Gender);
+end;
+
+{** GetLockerCnt
+* }
+constructor TDashboardController.GetLockerCnt(const AView: TfmDashboard);
+var
+  LockerCnt : TDataSet;
+begin
+  LockerCnt := LockerModule.Locker.Count_Select;
+  AView.LockerCntShow(LockerCnt);
 end;
 
 {** GetDay7

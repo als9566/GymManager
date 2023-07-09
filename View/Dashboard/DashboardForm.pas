@@ -58,10 +58,6 @@ type
     Label2: TLabel;
     CurvyPanel3: TCurvyPanel;
     Label3: TLabel;
-    cxGrid2: TcxGrid;
-    cxGridDBChartView1: TcxGridDBChartView;
-    cxGridDBChartSeries1: TcxGridDBChartSeries;
-    cxGridLevel1: TcxGridLevel;
     CurvyPanel4: TCurvyPanel;
     Label4: TLabel;
     cxGrid4: TcxGrid;
@@ -97,6 +93,9 @@ type
     cxGridLevel2: TcxGridLevel;
     PieValue: TcxStyle;
     PieValueCaption: TcxStyle;
+    LockerGrid: TcxGrid;
+    LockerChartView: TcxGridChartView;
+    cxGridLevel1: TcxGridLevel;
     procedure FormShow(Sender: TObject);
     procedure DashboardScrollBoxMouseWheelDown(Sender: TObject;
       Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
@@ -112,6 +111,13 @@ type
     procedure GenderChartViewDiagramPieCustomDrawValue(
       Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
       AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
+    procedure LockerCntShow(ALocker: TDataSet);
+    procedure LockerChartViewDiagramPieCustomDrawLegendItem(
+      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
+    procedure LockerChartViewDiagramPieCustomDrawValue(
+      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);  
   private
     { Private declarations }
   public
@@ -152,7 +158,8 @@ begin
 
   DashboardController.TDashboardController.GetDay7(Self, End_Date.Text);
   DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text); 
-  DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text); 
+  DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetLockerCnt(Self); 
 end;
 
 {** 회원수 차트 불러오기
@@ -202,6 +209,71 @@ begin
   MemberCntChartView.EndUpdate;
 end;
 
+{** 성별 차트 불러오기
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.GenderShow(AGender: TDataSet);
+begin
+  AGender.Active := true;
+
+  GenderChartView.ViewData.CategoryCount := 2;
+  GenderChartView.ClearSeries;
+  GenderChartView.BeginUpdate;
+
+  GenderChartView.CreateSeries;
+  GenderChartView.Series[GenderChartView.SeriesCount-1].DisplayText := '';
+  GenderChartView.Series[GenderChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+
+  GenderChartView.ViewData.Categories[0] := '남';
+  GenderChartView.ViewData.Categories[1] := '여';
+
+  GenderChartView.ViewData.Values[0, 0] := AGender.FieldByName('남자').AsFloat;
+  GenderChartView.ViewData.Values[0, 1] := AGender.FieldByName('여자').AsFloat;
+
+  GenderChartView.EndUpdate;
+end;
+
+{** 락커 차트 불러오기
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.LockerCntShow(ALocker: TDataSet);
+begin
+  ALocker.Active := true;
+
+  LockerChartView.ViewData.CategoryCount := 2;
+  LockerChartView.ClearSeries;
+  LockerChartView.BeginUpdate;
+
+  LockerChartView.CreateSeries;
+  LockerChartView.Series[LockerChartView.SeriesCount-1].DisplayText := '';
+  LockerChartView.Series[LockerChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+
+  LockerChartView.ViewData.Categories[0] := '사용';
+  LockerChartView.ViewData.Categories[1] := '미사용';
+
+  LockerChartView.ViewData.Values[0, 0] := ALocker.FieldByName('사용').AsFloat;
+  LockerChartView.ViewData.Values[0, 1] := ALocker.FieldByName('전체').AsFloat - ALocker.FieldByName('사용').AsFloat;
+
+  LockerChartView.EndUpdate;
+end;
+
+procedure TfmDashboard.refreshBtnClick(Sender: TObject);
+begin
+  DashboardController.TDashboardController.GetDay7(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text); 
+  DashboardController.TDashboardController.GetLockerCnt(Self);
+end;
+
+{** 일주일 날짜 세팅
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.setDay(ADay: TDataSet);
+begin
+  dsDay := ADay;
+  dsDay.Active := true;
+end;
+
 procedure TfmDashboard.GenderChartViewDiagramPieCustomDrawLegendItem(
   Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
   AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
@@ -230,43 +302,32 @@ begin
   end;
 end;
 
-{** 성별 차트 불러오기
-  @param [Sender] TDataSet
-* }
-procedure TfmDashboard.GenderShow(AGender: TDataSet);
+procedure TfmDashboard.LockerChartViewDiagramPieCustomDrawLegendItem(
+  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
 begin
-  AGender.Active := true;
-
-  GenderChartView.ViewData.CategoryCount := 2;
-  GenderChartView.ClearSeries;
-  GenderChartView.BeginUpdate;
-
-  GenderChartView.CreateSeries;
-  GenderChartView.Series[GenderChartView.SeriesCount-1].DisplayText := '';
-  GenderChartView.Series[GenderChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
-
-  GenderChartView.ViewData.Categories[0] := '남';
-  GenderChartView.ViewData.Categories[1] := '여';
-
-  GenderChartView.ViewData.Values[0, 0] := AGender.FieldByName('남자').AsFloat;
-  GenderChartView.ViewData.Values[0, 1] := AGender.FieldByName('여자').AsFloat;
-
-  GenderChartView.EndUpdate;
+  if AViewInfo.Index = 0 then
+  begin                                
+    AViewInfo.LegendKeyParams.Color := $0064CE95;
+  end;
+  if AViewInfo.Index = 1 then
+  begin
+    AViewInfo.LegendKeyParams.Color := $00FDB727;
+  end;
 end;
 
-procedure TfmDashboard.refreshBtnClick(Sender: TObject);
+procedure TfmDashboard.LockerChartViewDiagramPieCustomDrawValue(
+  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
 begin
-  DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text);
-  DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text); 
-end;
-
-{** 일주일 날짜 세팅
-  @param [Sender] TDataSet
-* }
-procedure TfmDashboard.setDay(ADay: TDataSet);
-begin
-  dsDay := ADay;
-  dsDay.Active := true;
+  if AViewInfo.ValueIndex = 0 then
+  begin                            
+    ACanvas.Brush.Color := $0064CE95;    
+  end;
+  if AViewInfo.ValueIndex = 1 then
+  begin
+    ACanvas.Brush.Color := $00FDB727; 
+  end;
 end;
 
 end.
