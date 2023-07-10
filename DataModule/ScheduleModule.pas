@@ -41,6 +41,7 @@ type
     Function Date_Calculation_Select(ADate : String; iAddDay : Integer) : String;
     Function Schedule_MemberId_Select(Aid : Integer) :TDataSet;
     Function Member_Id_Select(Aid : Integer) : Integer;
+    Function Member_Gender_Dash(ADate : String) :TDataSet;
   end;
 
 var
@@ -294,6 +295,23 @@ begin
     Result := dmSchedule.FDQuery.FieldByName('member_id').AsInteger;
   except
     Result := 0;
+  end;
+end;
+
+Function TdmSchedule.Member_Gender_Dash(ADate : String) :TDataSet;
+begin
+  try
+    dmSchedule.FDQuery.SQL.Clear;
+    dmSchedule.FDQuery.SQL.Text := 'select day, count(*) cnt                                 '
+                                 + '  from pt_schedule                                       '
+                                 + ' where date(day) <= date('''+ADate+''', ''-0 days'')     '
+                                 + '   and date(day) >= date('''+ADate+''', ''-6 days'')     '
+                                 + ' group by day                                            '
+                                 + ' order by day                                            ';
+
+    Result := dmSchedule.FDQuery;
+  except
+    Result := nil;
   end;
 end;
 

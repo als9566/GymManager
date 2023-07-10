@@ -8,7 +8,7 @@ object fmDashboard: TfmDashboard
   Margins.Bottom = 5
   BorderStyle = bsNone
   Caption = 'fmDashboard'
-  ClientHeight = 685
+  ClientHeight = 693
   ClientWidth = 1033
   Color = 16447735
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object fmDashboard: TfmDashboard
   OnShow = FormShow
   DesignSize = (
     1033
-    685)
+    693)
   PixelsPerInch = 96
   TextHeight = 13
   object MenuNameLabel: TLabel
@@ -486,7 +486,7 @@ object fmDashboard: TfmDashboard
     Left = 0
     Top = 64
     Width = 1030
-    Height = 663
+    Height = 671
     Anchors = [akTop, akBottom]
     AutoScroll = False
     BorderStyle = cxcbsNone
@@ -503,6 +503,7 @@ object fmDashboard: TfmDashboard
     VertScrollBar.Tracking = True
     OnMouseWheelDown = DashboardScrollBoxMouseWheelDown
     OnMouseWheelUp = DashboardScrollBoxMouseWheelUp
+    ExplicitHeight = 663
     object DashboardPanel: TPanel
       Left = 0
       Top = 0
@@ -563,8 +564,6 @@ object fmDashboard: TfmDashboard
           TabOrder = 0
           LookAndFeel.NativeStyle = True
           LookAndFeel.SkinName = 'DevExpressStyle'
-          ExplicitLeft = 10
-          ExplicitTop = 33
           object GenderChartView: TcxGridChartView
             DiagramLine.Legend.Border = lbNone
             DiagramLine.AxisCategory.GridLines = False
@@ -642,9 +641,6 @@ object fmDashboard: TfmDashboard
           TabOrder = 0
           LookAndFeel.NativeStyle = True
           LookAndFeel.SkinName = 'DevExpressStyle'
-          ExplicitLeft = 0
-          ExplicitTop = 32
-          ExplicitWidth = 706
           object MemberCntChartView: TcxGridChartView
             DiagramLine.Active = True
             DiagramLine.Legend.Border = lbNone
@@ -714,8 +710,6 @@ object fmDashboard: TfmDashboard
           TabOrder = 0
           LookAndFeel.NativeStyle = True
           LookAndFeel.SkinName = 'DevExpressStyle'
-          ExplicitLeft = 10
-          ExplicitTop = 33
           object LockerChartView: TcxGridChartView
             DiagramLine.Legend.Border = lbNone
             DiagramLine.AxisCategory.GridLines = False
@@ -770,43 +764,57 @@ object fmDashboard: TfmDashboard
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object cxGrid4: TcxGrid
+        object PTGrid: TcxGrid
+          Tag = 1000
           AlignWithMargins = True
           Left = 5
-          Top = 32
+          Top = 28
           Width = 696
-          Height = 200
+          Height = 204
           Margins.Left = 5
-          Margins.Top = 20
+          Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
           Align = alBottom
           BorderStyle = cxcbsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
-          object cxGridDBChartView3: TcxGridDBChartView
-            Categories.DataBinding.FieldName = 'Legends'
-            DataController.DataSource = DataSource1
-            DiagramColumn.Styles.CategoryGridLines = cxStyle1
-            DiagramColumn.Styles.Plot = cxStyle3
-            DiagramColumn.Styles.ValueGridLines = cxStyle2
-            DiagramLine.Legend.Position = cppNone
+          LookAndFeel.NativeStyle = True
+          LookAndFeel.SkinName = 'DevExpressStyle'
+          ExplicitLeft = 10
+          ExplicitTop = 33
+          object PTChartView: TcxGridChartView
+            DiagramLine.Legend.Border = lbNone
             DiagramLine.AxisCategory.GridLines = False
             DiagramLine.AxisCategory.TickMarkKind = tmkNone
+            DiagramLine.AxisCategory.ValueAxisBetweenCategories = True
             DiagramLine.AxisValue.TickMarkKind = tmkNone
+            DiagramLine.AxisValue.MinMaxValues = mmvCustom
             DiagramLine.Styles.Values = LineValue
-            DiagramLine.Styles.CategoryAxis = cxStyle6
-            DiagramLine.Styles.GridLines = cxStyle5
-            DiagramLine.Styles.ValueAxis = cxStyle7
+            DiagramLine.Styles.CategoryAxis = LineCategoryAxis
+            DiagramLine.Styles.GridLines = LineGridLine
+            DiagramLine.Styles.ValueAxis = LineValueAxis
             DiagramLine.Values.HotSpotSize = 10
             DiagramLine.Values.MarkerSize = 6
             DiagramLine.Values.MarkerStyle = cmsCircle
             DiagramStackedColumn.Active = True
-            object cxGridDBChartSeries3: TcxGridDBChartSeries
-              DataBinding.FieldName = 'Values1'
-            end
+            DiagramStackedColumn.AxisValue.TickMarkKind = tmkNone
+            DiagramStackedColumn.AxisValue.MinMaxValues = mmvCustom
+            DiagramStackedColumn.Styles.Values = StackValue
+            DiagramStackedColumn.Styles.CategoryAxis = LineCategoryAxis
+            DiagramStackedColumn.Styles.GridLines = LineGridLine
+            DiagramStackedColumn.Styles.ValueAxis = LineValueAxis
+            Legend.Position = cppNone
+            ToolBox.Border = tbNone
           end
-          object cxGridLevel3: TcxGridLevel
-            GridView = cxGridDBChartView3
+          object cxGridLevel6: TcxGridLevel
+            Caption = 'CHART'
+            GridView = PTChartView
           end
         end
       end
@@ -1080,6 +1088,11 @@ object fmDashboard: TfmDashboard
       Font.Name = #47569#51008' '#44256#46357
       Font.Style = [fsBold]
       TextColor = clWhite
+    end
+    object StackValue: TcxStyle
+      AssignedValues = [svColor, svTextColor]
+      Color = clSkyBlue
+      TextColor = clBlack
     end
   end
   object cxStyleRepository5: TcxStyleRepository

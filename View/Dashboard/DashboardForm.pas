@@ -60,10 +60,6 @@ type
     Label3: TLabel;
     CurvyPanel4: TCurvyPanel;
     Label4: TLabel;
-    cxGrid4: TcxGrid;
-    cxGridDBChartView3: TcxGridDBChartView;
-    cxGridDBChartSeries3: TcxGridDBChartSeries;
-    cxGridLevel3: TcxGridLevel;
     CurvyPanel5: TCurvyPanel;
     Label5: TLabel;
     cxGrid5: TcxGrid;
@@ -96,6 +92,10 @@ type
     LockerGrid: TcxGrid;
     LockerChartView: TcxGridChartView;
     cxGridLevel1: TcxGridLevel;
+    StackValue: TcxStyle;
+    PTGrid: TcxGrid;
+    PTChartView: TcxGridChartView;
+    cxGridLevel6: TcxGridLevel;
     procedure FormShow(Sender: TObject);
     procedure DashboardScrollBoxMouseWheelDown(Sender: TObject;
       Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
@@ -117,7 +117,8 @@ type
       AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
     procedure LockerChartViewDiagramPieCustomDrawValue(
       Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
-      AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);  
+      AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
+    procedure PTCntShow(APt: TDataSet);
   private
     { Private declarations }
   public
@@ -159,7 +160,8 @@ begin
   DashboardController.TDashboardController.GetDay7(Self, End_Date.Text);
   DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text); 
   DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text);
-  DashboardController.TDashboardController.GetLockerCnt(Self); 
+  DashboardController.TDashboardController.GetLockerCnt(Self);
+  DashboardController.TDashboardController.GetPTCnt(Self, End_Date.Text);
 end;
 
 {** 회원수 차트 불러오기
@@ -255,6 +257,53 @@ begin
   LockerChartView.ViewData.Values[0, 1] := ALocker.FieldByName('전체').AsFloat - ALocker.FieldByName('사용').AsFloat;
 
   LockerChartView.EndUpdate;
+end;
+
+{** PT 차트 불러오기
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.PTCntShow(APt: TDataSet);
+var
+  I: Integer;
+  iMax, iMin : Integer;
+begin
+  APt.Active := true;
+
+  iMax := 0; iMin := 0;
+
+  PTChartView.ViewData.CategoryCount := 7;
+  PTChartView.ClearSeries;
+  PTChartView.BeginUpdate;
+
+  PTChartView.CreateSeries;
+  PTChartView.Series[PTChartView.SeriesCount-1].DisplayText := '';
+  PTChartView.Series[PTChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+
+  for I := 6 DownTo 0 do
+  begin
+    PTChartView.ViewData.Categories[abs(I-6)] := dsDay.FieldByName(IntToStr(I)).AsString;
+  end;
+
+  for I := 0 to 6 do
+  begin
+    if PTChartView.ViewData.Categories[I] = APt.FieldByName('day').AsString then
+    begin
+      PTChartView.ViewData.Values[0, I] := APt.FieldByName('cnt').AsFloat;
+      if iMax < APt.FieldByName('cnt').AsInteger then
+        iMax := APt.FieldByName('cnt').AsInteger;
+      if iMin > APt.FieldByName('cnt').AsInteger then
+        iMin := APt.FieldByName('cnt').AsInteger;
+      APt.Next;
+    end;
+  end;
+
+  if iMax < iMin + 6 then
+    iMax := iMin + 6;
+
+  PTChartView.DiagramStackedColumn.AxisValue.MaxValue := iMax;
+  PTChartView.DiagramStackedColumn.AxisValue.MinValue := iMin;
+
+  PTChartView.EndUpdate;
 end;
 
 procedure TfmDashboard.refreshBtnClick(Sender: TObject);
