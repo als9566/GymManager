@@ -34,6 +34,8 @@ type
     property lockerPrice      : Integer  read FlockerPrice      write FlockerPrice;
     Function Insert(APaymentDetails: TPaymentDetails) :Boolean;
     Function PaymentDetails_MemberId_Select(Aid : Integer) :TDataSet;
+    Function Payment_Dash(ADate : String) :TDataSet;
+    Function Payment_Percent_Dash(ADate : String) :TDataSet;
   end;
 
 type
@@ -101,6 +103,46 @@ begin
                                        + ' WHERE member_id = :id    ';
 
     dmPaymentDetails.FDQuery.ParamByName('id').AsInteger := Aid;
+
+    Result := dmPaymentDetails.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
+Function TPaymentDetails.Payment_Dash(ADate : String) :TDataSet;
+begin
+  try
+    dmPaymentDetails.FDQuery.SQL.Clear;
+    dmPaymentDetails.FDQuery.SQL.Text := 'select input_date                                               '
+                                       + '      ,sum(membership_price) ''membership''                     '
+                                       + '      ,sum(pt_price)         ''pt''                             '
+                                       + '      ,sum(wear_price)       ''wear''                           '
+                                       + '      ,sum(locker_price)     ''locker''                         '
+                                       + '  from payment_details                                          '
+                                       + ' where date(input_date) <= date('''+ADate+''', ''-0 days'')     '
+                                       + '   and date(input_date) >= date('''+ADate+''', ''-6 days'')     '
+                                       + ' group by input_date                                            '
+                                       + ' order by input_date                                            ';
+
+    Result := dmPaymentDetails.FDQuery;
+  except
+    Result := nil;
+  end;
+end;
+
+Function TPaymentDetails.Payment_Percent_Dash(ADate : String) :TDataSet;
+begin
+  try
+    dmPaymentDetails.FDQuery.SQL.Clear;
+    dmPaymentDetails.FDQuery.SQL.Text := 'select input_date                                               '
+                                       + '      ,sum(membership_price) ''membership''                     '
+                                       + '      ,sum(pt_price)         ''pt''                             '
+                                       + '      ,sum(wear_price)       ''wear''                           '
+                                       + '      ,sum(locker_price)     ''locker''                         '
+                                       + '  from payment_details                                          '
+                                       + ' where date(input_date) = date('''+ADate+''')                   '
+                                       + ' group by input_date                                            ';
 
     Result := dmPaymentDetails.FDQuery;
   except

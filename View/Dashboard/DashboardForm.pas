@@ -28,12 +28,6 @@ uses
 
 type
   TfmDashboard = class(TForm)
-    cxStyleRepository1: TcxStyleRepository;
-    cxStyle1: TcxStyle;
-    cxStyleRepository3: TcxStyleRepository;
-    cxStyle3: TcxStyle;
-    cxStyleRepository2: TcxStyleRepository;
-    cxStyle2: TcxStyle;
     DashboardScrollBox: TcxScrollBox;
     DashboardPanel: TPanel;
     CurvyPanel2: TCurvyPanel;
@@ -46,14 +40,8 @@ type
     dxMemData1Values3: TIntegerField;
     dxMemData1Values4: TIntegerField;
     dxMemData1FloatValues: TFloatField;
-    cxStyleRepository4: TcxStyleRepository;
+    cxStyleRepository: TcxStyleRepository;
     LineValue: TcxStyle;
-    cxStyleRepository5: TcxStyleRepository;
-    cxStyle5: TcxStyle;
-    cxStyleRepository6: TcxStyleRepository;
-    cxStyle6: TcxStyle;
-    cxStyleRepository7: TcxStyleRepository;
-    cxStyle7: TcxStyle;
     Label1: TLabel;
     Label2: TLabel;
     CurvyPanel3: TCurvyPanel;
@@ -62,17 +50,6 @@ type
     Label4: TLabel;
     CurvyPanel5: TCurvyPanel;
     Label5: TLabel;
-    cxGrid5: TcxGrid;
-    cxGridDBChartView4: TcxGridDBChartView;
-    cxGridDBChartSeries4: TcxGridDBChartSeries;
-    cxGridLevel4: TcxGridLevel;
-    cxGrid6: TcxGrid;
-    cxGridDBChartView5: TcxGridDBChartView;
-    cxGridDBChartSeries5: TcxGridDBChartSeries;
-    cxGridLevel5: TcxGridLevel;
-    cxGridDBChartView4Series1: TcxGridDBChartSeries;
-    cxGridDBChartView4Series4: TcxGridDBChartSeries;
-    cxGridDBChartView4Series5: TcxGridDBChartSeries;
     MenuNameLabel: TLabel;
     Shape1: TShape;
     FirstDatePanel: TCurvyPanel;
@@ -96,6 +73,16 @@ type
     PTGrid: TcxGrid;
     PTChartView: TcxGridChartView;
     cxGridLevel6: TcxGridLevel;
+    PaymentGrid: TcxGrid;
+    PaymentChartView: TcxGridChartView;
+    cxGridLevel3: TcxGridLevel;
+    StackSeriesValue1: TcxStyle;
+    StackSeriesValue2: TcxStyle;
+    StackSeriesValue3: TcxStyle;
+    StackSeriesValue4: TcxStyle;
+    PaymentPercentGrid: TcxGrid;
+    PaymentPercentChartView: TcxGridChartView;
+    cxGridLevel4: TcxGridLevel;
     procedure FormShow(Sender: TObject);
     procedure DashboardScrollBoxMouseWheelDown(Sender: TObject;
       Shift: TShiftState; MousePos: TPoint; var Handled: Boolean);
@@ -119,6 +106,14 @@ type
       Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
       AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
     procedure PTCntShow(APt: TDataSet);
+    procedure PaymentShow(APayment: TDataSet);
+    procedure PaymentPercentShow(APayment: TDataSet);
+    procedure PaymentPercentChartViewDiagramPieCustomDrawLegendItem(
+      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
+    procedure PaymentPercentChartViewDiagramPieCustomDrawValue(
+      Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+      AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
   private
     { Private declarations }
   public
@@ -154,6 +149,12 @@ begin
     Control := CurvyPanel1;
   with TShadowBox.Create(Self) do
     Control := CurvyPanel2;
+  with TShadowBox.Create(Self) do
+    Control := CurvyPanel3;
+  with TShadowBox.Create(Self) do
+    Control := CurvyPanel4;
+  with TShadowBox.Create(Self) do
+    Control := CurvyPanel5;
 
   End_Date.Text := formatDateTime('yyyy-mm-dd',now);
 
@@ -162,6 +163,8 @@ begin
   DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text);
   DashboardController.TDashboardController.GetLockerCnt(Self);
   DashboardController.TDashboardController.GetPTCnt(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetPayment(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetPaymentPercent(Self, End_Date.Text);
 end;
 
 {** 회원수 차트 불러오기
@@ -306,12 +309,131 @@ begin
   PTChartView.EndUpdate;
 end;
 
+{** 매출 차트 불러오기
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.PaymentShow(APayment: TDataSet);
+Var
+  I : Integer;
+begin
+  APayment.Active := true;
+
+  PaymentChartView.ViewData.CategoryCount := 7;
+  PaymentChartView.ClearSeries;
+  PaymentChartView.BeginUpdate;
+
+  PaymentChartView.CreateSeries;
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].DisplayText := '회원권';
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].Styles.Values := StackSeriesValue1;
+
+  for I := 6 DownTo 0 do
+  begin
+    PaymentChartView.ViewData.Categories[abs(I-6)] := dsDay.FieldByName(IntToStr(I)).AsString;
+  end;
+
+  for I := 0 to 6 do
+  begin
+    if PaymentChartView.ViewData.Categories[I] = APayment.FieldByName('input_date').AsString then
+    begin
+      PaymentChartView.ViewData.Values[PaymentChartView.SeriesCount-1, I] := APayment.FieldByName('membership').AsFloat;
+      APayment.Next;
+    end;
+  end;
+
+  PaymentChartView.CreateSeries;
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].DisplayText := 'PT';
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].Styles.Values := StackSeriesValue2;
+
+  APayment.First;
+
+  for I := 0 to 6 do
+  begin
+    if PaymentChartView.ViewData.Categories[I] = APayment.FieldByName('input_date').AsString then
+    begin
+      PaymentChartView.ViewData.Values[PaymentChartView.SeriesCount-1, I] := APayment.FieldByName('pt').AsFloat;
+      APayment.Next;
+    end;
+  end;
+
+  PaymentChartView.CreateSeries;
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].DisplayText := '운동복';
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].Styles.Values := StackSeriesValue3;
+
+  APayment.First;
+
+  for I := 0 to 6 do
+  begin
+    if PaymentChartView.ViewData.Categories[I] = APayment.FieldByName('input_date').AsString then
+    begin
+      PaymentChartView.ViewData.Values[PaymentChartView.SeriesCount-1, I] := APayment.FieldByName('wear').AsFloat;
+      APayment.Next;
+    end;
+  end;
+
+  PaymentChartView.CreateSeries;
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].DisplayText := '락커';
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+  PaymentChartView.Series[PaymentChartView.SeriesCount-1].Styles.Values := StackSeriesValue4;
+
+  APayment.First;
+
+  for I := 0 to 6 do
+  begin
+    if PaymentChartView.ViewData.Categories[I] = APayment.FieldByName('input_date').AsString then
+    begin
+      PaymentChartView.ViewData.Values[PaymentChartView.SeriesCount-1, I] := APayment.FieldByName('locker').AsFloat;
+      APayment.Next;
+    end;
+  end;
+
+  PaymentChartView.EndUpdate;
+
+end;
+
+{** 매출 퍼센트 차트 불러오기
+  @param [Sender] TDataSet
+* }
+procedure TfmDashboard.PaymentPercentShow(APayment: TDataSet);
+begin
+  APayment.Active := true;
+
+  PaymentPercentChartView.ViewData.CategoryCount := 4;
+  PaymentPercentChartView.ClearSeries;
+  PaymentPercentChartView.BeginUpdate;
+
+  PaymentPercentChartView.CreateSeries;
+  PaymentPercentChartView.Series[PaymentPercentChartView.SeriesCount-1].DisplayText := '';
+  PaymentPercentChartView.Series[PaymentPercentChartView.SeriesCount-1].ValueCaptionFormat := '#,###';
+
+  PaymentPercentChartView.ViewData.Categories[0] := '회원권';
+  PaymentPercentChartView.ViewData.Categories[1] := 'PT';
+  PaymentPercentChartView.ViewData.Categories[2] := '운동복';
+  PaymentPercentChartView.ViewData.Categories[3] := '락커';
+
+  if APayment.RecordCount <> 0 then
+  begin
+    PaymentPercentChartView.ViewData.Values[0, 0] := APayment.FieldByName('membership').AsFloat;
+    PaymentPercentChartView.ViewData.Values[0, 1] := APayment.FieldByName('pt').AsFloat;
+    PaymentPercentChartView.ViewData.Values[0, 2] := APayment.FieldByName('wear').AsFloat;
+    PaymentPercentChartView.ViewData.Values[0, 3] := APayment.FieldByName('locker').AsFloat;
+  end;
+
+  PaymentPercentChartView.EndUpdate;
+
+end;
+
 procedure TfmDashboard.refreshBtnClick(Sender: TObject);
 begin
   DashboardController.TDashboardController.GetDay7(Self, End_Date.Text);
   DashboardController.TDashboardController.GetMemberCnt(Self, End_Date.Text);
   DashboardController.TDashboardController.GetMemberGender(Self, End_Date.Text); 
   DashboardController.TDashboardController.GetLockerCnt(Self);
+  DashboardController.TDashboardController.GetPTCnt(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetPayment(Self, End_Date.Text);
+  DashboardController.TDashboardController.GetPaymentPercent(Self, End_Date.Text);
 end;
 
 {** 일주일 날짜 세팅
@@ -356,7 +478,7 @@ procedure TfmDashboard.LockerChartViewDiagramPieCustomDrawLegendItem(
   AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
 begin
   if AViewInfo.Index = 0 then
-  begin                                
+  begin
     AViewInfo.LegendKeyParams.Color := $0064CE95;
   end;
   if AViewInfo.Index = 1 then
@@ -370,12 +492,56 @@ procedure TfmDashboard.LockerChartViewDiagramPieCustomDrawValue(
   AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
 begin
   if AViewInfo.ValueIndex = 0 then
-  begin                            
-    ACanvas.Brush.Color := $0064CE95;    
+  begin
+    ACanvas.Brush.Color := $0064CE95;
   end;
   if AViewInfo.ValueIndex = 1 then
   begin
-    ACanvas.Brush.Color := $00FDB727; 
+    ACanvas.Brush.Color := $00FDB727;
+  end;
+end;
+
+procedure TfmDashboard.PaymentPercentChartViewDiagramPieCustomDrawLegendItem(
+  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridChartLegendItemViewInfo; var ADone: Boolean);
+begin
+  if AViewInfo.Index = 0 then
+  begin
+    AViewInfo.LegendKeyParams.Color := $00B6DA00;
+  end
+  else if AViewInfo.Index = 1 then
+  begin
+    AViewInfo.LegendKeyParams.Color := $001DCAFF;
+  end
+  else if AViewInfo.Index = 2 then
+  begin
+    AViewInfo.LegendKeyParams.Color := $009456F3;
+  end
+  else if AViewInfo.Index = 3 then
+  begin
+    AViewInfo.LegendKeyParams.Color := $00FE5370;
+  end;
+end;
+
+procedure TfmDashboard.PaymentPercentChartViewDiagramPieCustomDrawValue(
+  Sender: TcxGridChartDiagram; ACanvas: TcxCanvas;
+  AViewInfo: TcxGridChartDiagramValueViewInfo; var ADone: Boolean);
+begin
+  if AViewInfo.ValueIndex = 0 then
+  begin
+    ACanvas.Brush.Color := $00B6DA00;
+  end
+  else if AViewInfo.ValueIndex = 1 then
+  begin
+    ACanvas.Brush.Color := $001DCAFF;
+  end
+  else if AViewInfo.ValueIndex = 2 then
+  begin
+    ACanvas.Brush.Color := $009456F3;
+  end
+  else if AViewInfo.ValueIndex = 3 then
+  begin
+    ACanvas.Brush.Color := $00FE5370;
   end;
 end;
 

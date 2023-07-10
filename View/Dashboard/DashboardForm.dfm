@@ -8,7 +8,7 @@ object fmDashboard: TfmDashboard
   Margins.Bottom = 5
   BorderStyle = bsNone
   Caption = 'fmDashboard'
-  ClientHeight = 693
+  ClientHeight = 834
   ClientWidth = 1033
   Color = 16447735
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object fmDashboard: TfmDashboard
   OnShow = FormShow
   DesignSize = (
     1033
-    693)
+    834)
   PixelsPerInch = 96
   TextHeight = 13
   object MenuNameLabel: TLabel
@@ -486,7 +486,7 @@ object fmDashboard: TfmDashboard
     Left = 0
     Top = 64
     Width = 1030
-    Height = 671
+    Height = 812
     Anchors = [akTop, akBottom]
     AutoScroll = False
     BorderStyle = cxcbsNone
@@ -666,7 +666,7 @@ object fmDashboard: TfmDashboard
         end
       end
       object CurvyPanel3: TCurvyPanel
-        Left = 20
+        Left = 16
         Top = 260
         Width = 255
         Height = 237
@@ -741,7 +741,7 @@ object fmDashboard: TfmDashboard
         end
       end
       object CurvyPanel4: TCurvyPanel
-        Left = 287
+        Left = 283
         Top = 260
         Width = 706
         Height = 237
@@ -803,6 +803,7 @@ object fmDashboard: TfmDashboard
             DiagramLine.Values.MarkerSize = 6
             DiagramLine.Values.MarkerStyle = cmsCircle
             DiagramStackedColumn.Active = True
+            DiagramStackedColumn.AxisCategory.GridLines = False
             DiagramStackedColumn.AxisValue.TickMarkKind = tmkNone
             DiagramStackedColumn.AxisValue.MinMaxValues = mmvCustom
             DiagramStackedColumn.Styles.Values = StackValue
@@ -821,7 +822,7 @@ object fmDashboard: TfmDashboard
       object CurvyPanel5: TCurvyPanel
         Left = 16
         Top = 516
-        Width = 978
+        Width = 973
         Height = 237
         Margins.Left = 10
         Anchors = [akTop]
@@ -842,98 +843,103 @@ object fmDashboard: TfmDashboard
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object cxGrid5: TcxGrid
-          Left = 19
-          Top = 40
-          Width = 646
-          Height = 200
+        object PaymentGrid: TcxGrid
+          Tag = 1000
+          Left = 9
+          Top = 35
+          Width = 674
+          Height = 197
           Margins.Left = 5
-          Margins.Top = 20
+          Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
-          Align = alCustom
           BorderStyle = cxcbsNone
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
-          object cxGridDBChartView4: TcxGridDBChartView
-            Categories.DataBinding.FieldName = 'Legends'
-            DataController.DataSource = DataSource1
-            DiagramColumn.Styles.CategoryGridLines = cxStyle1
-            DiagramColumn.Styles.Plot = cxStyle3
-            DiagramColumn.Styles.ValueGridLines = cxStyle2
-            DiagramLine.Active = True
-            DiagramLine.Legend.Position = cppNone
+          LookAndFeel.NativeStyle = True
+          LookAndFeel.SkinName = 'DevExpressStyle'
+          object PaymentChartView: TcxGridChartView
+            DiagramLine.Legend.Border = lbNone
             DiagramLine.AxisCategory.GridLines = False
             DiagramLine.AxisCategory.TickMarkKind = tmkNone
+            DiagramLine.AxisCategory.ValueAxisBetweenCategories = True
             DiagramLine.AxisValue.TickMarkKind = tmkNone
+            DiagramLine.AxisValue.MinMaxValues = mmvCustom
             DiagramLine.Styles.Values = LineValue
-            DiagramLine.Styles.CategoryAxis = cxStyle6
-            DiagramLine.Styles.GridLines = cxStyle5
-            DiagramLine.Styles.ValueAxis = cxStyle7
+            DiagramLine.Styles.CategoryAxis = LineCategoryAxis
+            DiagramLine.Styles.GridLines = LineGridLine
+            DiagramLine.Styles.ValueAxis = LineValueAxis
             DiagramLine.Values.HotSpotSize = 10
             DiagramLine.Values.MarkerSize = 6
             DiagramLine.Values.MarkerStyle = cmsCircle
-            object cxGridDBChartSeries4: TcxGridDBChartSeries
-              DataBinding.FieldName = 'Values1'
-            end
-            object cxGridDBChartView4Series1: TcxGridDBChartSeries
-              DataBinding.FieldName = 'Values2'
-            end
-            object cxGridDBChartView4Series4: TcxGridDBChartSeries
-              DataBinding.FieldName = 'Values3'
-            end
-            object cxGridDBChartView4Series5: TcxGridDBChartSeries
-              DataBinding.FieldName = 'Values4'
-            end
+            DiagramStackedColumn.Active = True
+            DiagramStackedColumn.Legend.Position = cppBottom
+            DiagramStackedColumn.AxisCategory.GridLines = False
+            DiagramStackedColumn.AxisCategory.TickMarkKind = tmkNone
+            DiagramStackedColumn.AxisValue.TickMarkKind = tmkNone
+            DiagramStackedColumn.Styles.CategoryAxis = LineCategoryAxis
+            DiagramStackedColumn.Styles.GridLines = LineGridLine
+            DiagramStackedColumn.Styles.ValueAxis = LineValueAxis
+            Legend.Position = cppNone
+            ToolBox.Border = tbNone
           end
-          object cxGridLevel4: TcxGridLevel
-            GridView = cxGridDBChartView4
+          object cxGridLevel3: TcxGridLevel
+            Caption = 'CHART'
+            GridView = PaymentChartView
           end
         end
-        object cxGrid6: TcxGrid
+        object PaymentPercentGrid: TcxGrid
+          Tag = 1000
           Left = 693
-          Top = 32
-          Width = 268
-          Height = 200
+          Top = 35
+          Width = 269
+          Height = 197
           Margins.Left = 5
-          Margins.Top = 20
+          Margins.Top = 5
           Margins.Right = 5
           Margins.Bottom = 5
-          Align = alCustom
           BorderStyle = cxcbsNone
           Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWindowText
           Font.Height = -11
           Font.Name = #47569#51008' '#44256#46357
           Font.Style = []
           ParentFont = False
           TabOrder = 1
-          object cxGridDBChartView5: TcxGridDBChartView
-            Categories.DataBinding.FieldName = 'Legends'
-            DataController.DataSource = DataSource1
-            DiagramColumn.Styles.CategoryGridLines = cxStyle1
-            DiagramColumn.Styles.Plot = cxStyle3
-            DiagramColumn.Styles.ValueGridLines = cxStyle2
-            DiagramLine.Legend.Position = cppNone
+          LookAndFeel.NativeStyle = True
+          LookAndFeel.SkinName = 'DevExpressStyle'
+          object PaymentPercentChartView: TcxGridChartView
+            DiagramLine.Legend.Border = lbNone
             DiagramLine.AxisCategory.GridLines = False
             DiagramLine.AxisCategory.TickMarkKind = tmkNone
+            DiagramLine.AxisCategory.ValueAxisBetweenCategories = True
             DiagramLine.AxisValue.TickMarkKind = tmkNone
+            DiagramLine.AxisValue.MinMaxValues = mmvCustom
             DiagramLine.Styles.Values = LineValue
-            DiagramLine.Styles.CategoryAxis = cxStyle6
-            DiagramLine.Styles.GridLines = cxStyle5
-            DiagramLine.Styles.ValueAxis = cxStyle7
+            DiagramLine.Styles.CategoryAxis = LineCategoryAxis
+            DiagramLine.Styles.GridLines = LineGridLine
+            DiagramLine.Styles.ValueAxis = LineValueAxis
             DiagramLine.Values.HotSpotSize = 10
             DiagramLine.Values.MarkerSize = 6
             DiagramLine.Values.MarkerStyle = cmsCircle
             DiagramPie.Active = True
-            DiagramPie.Legend.Position = cppRight
+            DiagramPie.Legend.Position = cppBottom
+            DiagramPie.OnCustomDrawLegendItem = PaymentPercentChartViewDiagramPieCustomDrawLegendItem
+            DiagramPie.OnCustomDrawValue = PaymentPercentChartViewDiagramPieCustomDrawValue
             DiagramPie.SeriesCaptions = False
-            DiagramPie.Styles.Values = cxStyle2
-            object cxGridDBChartSeries5: TcxGridDBChartSeries
-              DataBinding.FieldName = 'Values1'
-            end
+            DiagramPie.Styles.ValueCaptions = PieValueCaption
+            DiagramPie.Styles.Values = PieValue
+            Legend.Position = cppNone
+            ToolBox.Border = tbNone
           end
-          object cxGridLevel5: TcxGridLevel
-            GridView = cxGridDBChartView5
+          object cxGridLevel4: TcxGridLevel
+            Caption = 'CHART'
+            GridView = PaymentPercentChartView
           end
         end
       end
@@ -973,34 +979,6 @@ object fmDashboard: TfmDashboard
       StyleHot.LookAndFeel.SkinName = 'Silver'
       TabOrder = 0
       Width = 97
-    end
-  end
-  object cxStyleRepository1: TcxStyleRepository
-    Left = 640
-    Top = 8
-    PixelsPerInch = 96
-    object cxStyle1: TcxStyle
-      AssignedValues = [svColor]
-      Color = clRed
-    end
-  end
-  object cxStyleRepository3: TcxStyleRepository
-    Left = 200
-    Top = 8
-    PixelsPerInch = 96
-    object cxStyle3: TcxStyle
-      AssignedValues = [svColor]
-      Color = clYellow
-    end
-  end
-  object cxStyleRepository2: TcxStyleRepository
-    Left = 680
-    Top = 8
-    PixelsPerInch = 96
-    object cxStyle2: TcxStyle
-      AssignedValues = [svColor, svTextColor]
-      Color = clWindow
-      TextColor = clWhite
     end
   end
   object DataSource1: TDataSource
@@ -1045,8 +1023,8 @@ object fmDashboard: TfmDashboard
       FieldName = 'FloatValues'
     end
   end
-  object cxStyleRepository4: TcxStyleRepository
-    Left = 288
+  object cxStyleRepository: TcxStyleRepository
+    Left = 824
     Top = 8
     PixelsPerInch = 96
     object LineValue: TcxStyle
@@ -1094,35 +1072,21 @@ object fmDashboard: TfmDashboard
       Color = clSkyBlue
       TextColor = clBlack
     end
-  end
-  object cxStyleRepository5: TcxStyleRepository
-    Left = 800
-    Top = 8
-    PixelsPerInch = 96
-    object cxStyle5: TcxStyle
-      AssignedValues = [svColor, svTextColor]
-      Color = 15724527
-      TextColor = 15724527
+    object StackSeriesValue1: TcxStyle
+      AssignedValues = [svColor]
+      Color = 15580050
     end
-  end
-  object cxStyleRepository6: TcxStyleRepository
-    Left = 840
-    Top = 8
-    PixelsPerInch = 96
-    object cxStyle6: TcxStyle
-      AssignedValues = [svColor, svTextColor]
-      Color = 14935011
-      TextColor = 3487029
+    object StackSeriesValue2: TcxStyle
+      AssignedValues = [svColor]
+      Color = 15969747
     end
-  end
-  object cxStyleRepository7: TcxStyleRepository
-    Left = 600
-    Top = 8
-    PixelsPerInch = 96
-    object cxStyle7: TcxStyle
-      AssignedValues = [svColor, svTextColor]
-      Color = 14935011
-      TextColor = 3487029
+    object StackSeriesValue3: TcxStyle
+      AssignedValues = [svColor]
+      Color = 15856559
+    end
+    object StackSeriesValue4: TcxStyle
+      AssignedValues = [svColor]
+      Color = 14013951
     end
   end
 end

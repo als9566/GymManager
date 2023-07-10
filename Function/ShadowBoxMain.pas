@@ -152,7 +152,7 @@ begin
     Bitmap.IgnorePalette := True;
     Bitmap.HandleType := bmDIB;
 
-    PrepareBitmap32Shadow(Bitmap, 242); // Darkness
+    PrepareBitmap32Shadow(Bitmap, 230); // Darkness
 
     BlendFunction.BlendOp := AC_SRC_OVER;
     BlendFunction.BlendFlags := 0;

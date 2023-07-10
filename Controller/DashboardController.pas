@@ -15,12 +15,15 @@ type
     constructor GetMemberGender(const AView: TfmDashboard; ADate: String);
     constructor GetLockerCnt(const AView: TfmDashboard);
     constructor GetPTCnt(const AView: TfmDashboard; ADate: String);
+    constructor GetPayment(const AView: TfmDashboard; ADate: String);
+    constructor GetPaymentPercent(const AView: TfmDashboard; ADate: String);
   end;
 
 implementation
 
 uses
-  CommonFunction, MemberModule, DashboardModule, LockerModule, ScheduleModule;
+  CommonFunction, MemberModule, DashboardModule, LockerModule,
+  ScheduleModule, PaymentDetailsModule;
 
 {** GetMemberCnt
 * }
@@ -60,6 +63,26 @@ var
 begin
   PTCnt := ScheduleModule.dmSchedule.Member_Gender_Dash(ADate);
   AView.PTCntShow(PTCnt);
+end;
+
+{** GetPayment
+* }
+constructor TDashboardController.GetPayment(const AView: TfmDashboard; ADate: String);
+var
+  Payment : TDataSet;
+begin
+  Payment := PaymentDetailsModule.PaymentDetails.Payment_Dash(ADate);
+  AView.PaymentShow(Payment);
+end;
+
+{** GetPaymentPercent
+* }
+constructor TDashboardController.GetPaymentPercent(const AView: TfmDashboard; ADate: String);
+var
+  Payment : TDataSet;
+begin
+  Payment := PaymentDetailsModule.PaymentDetails.Payment_Percent_Dash(ADate);
+  AView.PaymentPercentShow(Payment);
 end;
 
 {** GetDay7
