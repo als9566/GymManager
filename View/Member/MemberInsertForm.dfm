@@ -44,6 +44,9 @@ object fmMemberInsert: TfmMemberInsert
     Anchors = [akLeft, akTop, akRight, akBottom]
     Rounding = 26
     TabOrder = 0
+    DesignSize = (
+      637
+      476)
     object Label1: TLabel
       Left = 27
       Top = 23
@@ -58,10 +61,10 @@ object fmMemberInsert: TfmMemberInsert
       ParentFont = False
     end
     object EditPanel: TcxScrollBox
-      Left = 19
+      Left = 15
       Top = 57
       Width = 599
-      Height = 408
+      Height = 404
       AutoScroll = False
       BorderStyle = cxcbsNone
       HorzScrollBar.Range = 551
@@ -889,38 +892,74 @@ object fmMemberInsert: TfmMemberInsert
         end
       end
     end
-    object cxButton1: TcxButton
-      Left = 559
+    object SaveBtnPanel: TCurvyPanel
+      Left = 495
       Top = 23
-      Width = 43
+      Width = 55
       Height = 25
-      LookAndFeel.NativeStyle = False
-      LookAndFeel.SkinName = 'VisualStudio2013Light'
-      OptionsImage.Glyph.SourceDPI = 96
-      OptionsImage.Glyph.Data = {
-        89504E470D0A1A0A0000000D49484452000000100000001008060000001FF3FF
-        610000001974455874536F6674776172650041646F626520496D616765526561
-        647971C9653C00000023744558745469746C650043616E63656C3B53746F703B
-        457869743B426172733B526962626F6E3B4C9696B20000009449444154785E95
-        93410A834010047D5C2027F3093F104C6461C5CD37F312C5D3641AD27810BAF1
-        5030CC587510B68B88EE3BDCFAA46236F0FB190E66CA7B12C9125EFE24F1771E
-        584C9009234626230FE514F1F21B2E8E22A2650654A42999011951320322A265
-        E0FFF6411301219B88935F49511129F3A622567611C8B3905DA462794FD693EC
-        231B5C2C19795E78CE131CCC3FD2409CCC2C3656140000000049454E44AE4260
-        82}
-      OptionsImage.Layout = blGlyphBottom
-      PaintStyle = bpsGlyph
+      Anchors = [akTop, akRight]
+      BorderColor = 11908533
+      Color = clWhite
+      Rounding = 5
       TabOrder = 1
-      OnClick = cxButton1Click
+      object SaveBtn: TLabel
+        Left = 0
+        Top = 0
+        Width = 55
+        Height = 25
+        Align = alClient
+        Alignment = taCenter
+        Caption = #51200#51109
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 4934475
+        Font.Height = -12
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Layout = tlCenter
+        OnClick = SaveBtnClick
+        OnMouseDown = SaveBtnMouseDown
+        OnMouseMove = SaveBtnMouseMove
+        OnMouseUp = SaveBtnMouseUp
+        OnMouseLeave = SaveBtnMouseLeave
+      end
     end
-    object Button1: TButton
-      Left = 452
+    object CloseBtnPanel: TCurvyPanel
+      Left = 564
       Top = 23
-      Width = 75
+      Width = 45
       Height = 25
-      Caption = #51200#51109
+      Anchors = [akTop, akRight]
+      BorderColor = 11908533
+      Color = clWhite
+      Rounding = 5
       TabOrder = 2
-      OnClick = Button1Click
+      object CloseBtn: TLabel
+        Left = 0
+        Top = 0
+        Width = 45
+        Height = 25
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'X'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 4195022
+        Font.Height = -16
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Layout = tlCenter
+        OnClick = CloseBtnClick
+        OnMouseDown = CloseBtnMouseDown
+        OnMouseMove = CloseBtnMouseMove
+        OnMouseUp = CloseBtnMouseUp
+        OnMouseLeave = CloseBtnMouseLeave
+        ExplicitWidth = 41
+      end
     end
   end
 end

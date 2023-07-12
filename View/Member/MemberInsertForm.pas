@@ -74,8 +74,6 @@ type
     Label11: TLabel;
     MembershipComboBox: TcxComboBox;
     Label1: TLabel;
-    cxButton1: TcxButton;
-    Button1: TButton;
     LockerDayEdit: TEdit;
     LockerHiddenLabel: TLabel;
     WearEdit: TEdit;
@@ -103,7 +101,10 @@ type
     Label6: TLabel;
     Shape4: TShape;
     MembershipPriceEdit: TEdit;
-    procedure cxButton1Click(Sender: TObject);
+    SaveBtnPanel: TCurvyPanel;
+    SaveBtn: TLabel;
+    CloseBtnPanel: TCurvyPanel;
+    CloseBtn: TLabel;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure MembershipComboBoxPropertiesDrawItem(AControl: TcxCustomComboBox;
@@ -114,7 +115,6 @@ type
     procedure MembershipComboBoxPropertiesInitPopup(Sender: TObject);
     procedure DoCustomDrawBorder(AViewInfo: TcxContainerViewInfo; ACanvas: TcxCanvas; const R: TRect; var AHandled: Boolean;
       out ABorderWidth: Integer);
-    procedure Button1Click(Sender: TObject);
     procedure RadioGroupPropertiesEditValueChanged(Sender: TObject);
     procedure ShowLockerData(ALocker: TDataSet);
     procedure EditPanelMouseWheelDown(Sender: TObject; Shift: TShiftState;
@@ -130,6 +130,22 @@ type
     procedure EditOnlyNumberKeyPress(Sender: TObject; var Key: Char);
     procedure PriceCommaKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure CloseBtnClick(Sender: TObject);
+    procedure SaveBtnClick(Sender: TObject);
+    procedure SaveBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure SaveBtnMouseLeave(Sender: TObject);
+    procedure SaveBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure SaveBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure CloseBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure CloseBtnMouseLeave(Sender: TObject);
+    procedure CloseBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure CloseBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -149,25 +165,7 @@ uses
 
 {$R *.dfm}
 
-procedure TfmMemberInsert.Button1Click(Sender: TObject);
-begin
-  if NameEdit.Text = '' then
-    ShowMessage('이름을 입력해주세요...')
-  else if BirthdayDateEdit.Text = '' then
-    ShowMessage('생년월일을 입력해주세요...')
-  else if (Tel1Edit.Text = '') or (Tel2Edit.Text = '') or (Tel3Edit.Text = '') then
-    ShowMessage('전화번호를 입력해주세요...')
-  else if StartDateEdit.Text = '' then
-    ShowMessage('시작일자를 입력해주세요...')
-  else if MembershipComboBox.ItemIndex = -1 then
-    ShowMessage('회원권을 선택해주세요...')
-  else
-  begin
-    MemberController.TMemberController.MemberInsert(self, iChoiceLocker);
-  end;
-end;
-
-procedure TfmMemberInsert.cxButton1Click(Sender: TObject);
+procedure TfmMemberInsert.CloseBtnClick(Sender: TObject);
 begin
   ModalResult := mrOK;
 end;
@@ -395,6 +393,24 @@ end;
 {** 락커동적 생성
   @param [Sender] TDataSet
 * }
+procedure TfmMemberInsert.SaveBtnClick(Sender: TObject);
+begin
+  if NameEdit.Text = '' then
+    ShowMessage('이름을 입력해주세요...')
+  else if BirthdayDateEdit.Text = '' then
+    ShowMessage('생년월일을 입력해주세요...')
+  else if (Tel1Edit.Text = '') or (Tel2Edit.Text = '') or (Tel3Edit.Text = '') then
+    ShowMessage('전화번호를 입력해주세요...')
+  else if StartDateEdit.Text = '' then
+    ShowMessage('시작일자를 입력해주세요...')
+  else if MembershipComboBox.ItemIndex = -1 then
+    ShowMessage('회원권을 선택해주세요...')
+  else
+  begin
+    MemberController.TMemberController.MemberInsert(self, iChoiceLocker);
+  end;
+end;
+
 procedure TfmMemberInsert.ShowLockerData(ALocker: TDataSet);
 var
   sCurvyPanel : TCurvyPanel;
@@ -483,6 +499,52 @@ begin
   TEdit(Sender).Text := StringReplace(TEdit(Sender).Text, ',' ,'',[rfReplaceAll]);
   TEdit(Sender).Text := FormatFloat('#,##0', StrToInt(TEdit(Sender).Text));
   TEdit(Sender).SelStart := Length(TEdit(Sender).Text) + 1;
+end;
+
+procedure TfmMemberInsert.CloseBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  CloseBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmMemberInsert.CloseBtnMouseLeave(Sender: TObject);
+begin
+  CloseBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmMemberInsert.CloseBtnMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+  CloseBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmMemberInsert.CloseBtnMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  CloseBtnPanel.Color := clWhite;
+end;
+
+procedure TfmMemberInsert.SaveBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  SaveBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmMemberInsert.SaveBtnMouseLeave(Sender: TObject);
+begin
+  SaveBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmMemberInsert.SaveBtnMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+  SaveBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmMemberInsert.SaveBtnMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  SaveBtnPanel.Color := clWhite;
 end;
 
 end.

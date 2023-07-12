@@ -74,7 +74,7 @@ object fmLockerManaging: TfmLockerManaging
         746
         41)
       object LockerCntLabel2: TLabel
-        Left = 77
+        Left = 111
         Top = 11
         Width = 26
         Height = 17
@@ -87,7 +87,7 @@ object fmLockerManaging: TfmLockerManaging
         ParentFont = False
       end
       object LockerCntLabel3: TLabel
-        Left = 174
+        Left = 206
         Top = 11
         Width = 39
         Height = 17
@@ -100,7 +100,7 @@ object fmLockerManaging: TfmLockerManaging
         ParentFont = False
       end
       object LockerEndCnt: TLabel
-        Left = 218
+        Left = 250
         Top = 11
         Width = 24
         Height = 17
@@ -113,7 +113,7 @@ object fmLockerManaging: TfmLockerManaging
         ParentFont = False
       end
       object LockerIngCnt: TLabel
-        Left = 111
+        Left = 143
         Top = 11
         Width = 24
         Height = 17
@@ -126,7 +126,7 @@ object fmLockerManaging: TfmLockerManaging
         ParentFont = False
       end
       object LockerTotalCnt: TLabel
-        Left = 13
+        Left = 45
         Top = 11
         Width = 24
         Height = 17
@@ -139,7 +139,7 @@ object fmLockerManaging: TfmLockerManaging
         ParentFont = False
       end
       object Shape2: TShape
-        Left = 56
+        Left = 88
         Top = 11
         Width = 2
         Height = 17
@@ -147,7 +147,7 @@ object fmLockerManaging: TfmLockerManaging
         Pen.Color = clSilver
       end
       object Shape3: TShape
-        Left = 161
+        Left = 193
         Top = 11
         Width = 1
         Height = 17
@@ -587,6 +587,19 @@ object fmLockerManaging: TfmLockerManaging
         Stretch = True
         OnClick = refreshBtnClick
       end
+      object Label1: TLabel
+        Left = 5
+        Top = 11
+        Width = 32
+        Height = 17
+        Caption = 'Total'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clGrayText
+        Font.Height = -13
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
     end
     object LockerPanel: TcxScrollBox
       Left = 7
@@ -621,23 +634,41 @@ object fmLockerManaging: TfmLockerManaging
         ParentFont = False
       end
     end
-    object LockerCreateBtn: TcxButton
-      Left = 667
-      Top = 9
-      Width = 75
+    object LockerCreateBtnPanel: TCurvyPanel
+      Left = 689
+      Top = 8
+      Width = 68
       Height = 25
       Anchors = [akTop, akRight]
-      Caption = #46973#52964#49688#51221
-      LookAndFeel.NativeStyle = False
-      LookAndFeel.SkinName = 'DevExpressStyle'
+      BorderColor = 11908533
+      Color = clWhite
+      Rounding = 5
       TabOrder = 2
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = #47569#51008' '#44256#46357
-      Font.Style = []
-      ParentFont = False
-      OnClick = ModifyBtnClick
+      object LockerCreateBtn: TLabel
+        Left = 0
+        Top = 0
+        Width = 68
+        Height = 25
+        Align = alClient
+        Alignment = taCenter
+        Caption = #51200#51109
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 4934475
+        Font.Height = -12
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Layout = tlCenter
+        OnMouseDown = LockerCreateBtnMouseDown
+        OnMouseMove = LockerCreateBtnMouseMove
+        OnMouseUp = LockerCreateBtnMouseUp
+        OnMouseLeave = LockerCreateBtnMouseLeave
+        ExplicitLeft = 3
+        ExplicitTop = -3
+        ExplicitWidth = 55
+      end
     end
   end
 end

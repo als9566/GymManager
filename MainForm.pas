@@ -80,13 +80,6 @@ uses
   DashboardForm,
   CommonFunction;
 
-//깜빡임 제거
-//로직 가운데에 넣기
-//LockWindowUpdate(Handle);
-//LockWindowUpdate(0);
-
-// TODO [홈 대시보드 만들기]
-
 procedure TGymManagerForm.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Action := caFree;

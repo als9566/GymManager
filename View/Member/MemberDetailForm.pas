@@ -54,6 +54,8 @@ type
     CurvyPanel1: TCurvyPanel;
     PaymentRecodeScrollBox: TcxScrollBox;
     PaymentRecodeGrid: TStringGrid;
+    CloseBtnPanel: TCurvyPanel;
+    CloseBtn: TLabel;
     procedure cxButton1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -70,6 +72,14 @@ type
       MousePos: TPoint; var Handled: Boolean);
     procedure EditPanelMouseWheelUp(Sender: TObject; Shift: TShiftState;
       MousePos: TPoint; var Handled: Boolean);
+    procedure CloseBtnClick(Sender: TObject);
+    procedure CloseBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure CloseBtnMouseLeave(Sender: TObject);
+    procedure CloseBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure CloseBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -85,9 +95,37 @@ uses
   CommonFunction, MemberController;
 
 {$R *.dfm}
+procedure TfmMemberDetail.CloseBtnClick(Sender: TObject);
+begin
+  ModalResult := mrOK;
+end;
+
 procedure TfmMemberDetail.cxButton1Click(Sender: TObject);
 begin
   ModalResult := mrOK;
+end;
+
+procedure TfmMemberDetail.CloseBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  CloseBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmMemberDetail.CloseBtnMouseLeave(Sender: TObject);
+begin
+  CloseBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmMemberDetail.CloseBtnMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+  CloseBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmMemberDetail.CloseBtnMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  CloseBtnPanel.Color := clWhite;
 end;
 
 procedure TfmMemberDetail.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -111,6 +149,8 @@ begin
   MemberController.TMemberController.MemberDetailSelect(self, self.Tag);
   MemberController.TMemberController.ScheduleSelect(self, self.Tag);
   MemberController.TMemberController.PaymentSelect(self, self.Tag);
+
+  cxButton1.Visible := false;
 
 end;
 

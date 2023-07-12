@@ -41,6 +41,7 @@ type
     First_Date: TcxDateEdit;
     leftBtn: TImage;
     rightBtn: TImage;
+    Shape1: TShape;
     procedure ShowDay(ADay: TDataSet);
     procedure ShowSchedule(ASchedule: TDataSet);
     procedure ScheduleGridDrawCell(Sender: TObject; ACol, ARow: Integer;

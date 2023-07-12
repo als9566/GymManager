@@ -37,9 +37,11 @@ type
     Shape2: TShape;
     Shape3: TShape;
     LockerPanel: TcxScrollBox;
-    LockerCreateBtn: TcxButton;
     GuideText: TLabel;
     refreshBtn: TImage;
+    Label1: TLabel;
+    LockerCreateBtnPanel: TCurvyPanel;
+    LockerCreateBtn: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure NewInsertBtnClick(Sender: TObject);
@@ -47,6 +49,13 @@ type
     procedure ModifyBtnClick(Sender: TObject);
     procedure BaseSetting(ALocker: TDataSet);
     procedure refreshBtnClick(Sender: TObject);
+    procedure LockerCreateBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure LockerCreateBtnMouseLeave(Sender: TObject);
+    procedure LockerCreateBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure LockerCreateBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -75,6 +84,29 @@ procedure TfmLockerManaging.FormShow(Sender: TObject);
 begin
   LockerController.TLockerController.LockerArraySelect(Self);
   LockerController.TLockerController.CountSelect(Self);
+end;
+
+procedure TfmLockerManaging.LockerCreateBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  LockerCreateBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmLockerManaging.LockerCreateBtnMouseLeave(Sender: TObject);
+begin
+  LockerCreateBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmLockerManaging.LockerCreateBtnMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  LockerCreateBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmLockerManaging.LockerCreateBtnMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  LockerCreateBtnPanel.Color := clWhite;
 end;
 
 {** 수정버튼 이벤트 (락커수정창 띄우기)

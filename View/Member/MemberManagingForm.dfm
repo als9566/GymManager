@@ -543,23 +543,41 @@ object fmMemberManaging: TfmMemberManaging
         end
       end
     end
-    object NewInsertBtn: TcxButton
-      Left = 435
+    object NewInsertBtnPanel: TCurvyPanel
+      Left = 439
       Top = 9
       Width = 75
       Height = 25
       Anchors = [akTop, akRight]
-      Caption = #49888#44508#46321#47197
-      LookAndFeel.NativeStyle = False
-      LookAndFeel.SkinName = 'DevExpressStyle'
+      BorderColor = 11908533
+      Color = clWhite
+      Rounding = 5
       TabOrder = 3
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = #47569#51008' '#44256#46357
-      Font.Style = []
-      ParentFont = False
-      OnClick = NewInsertBtnClick
+      object NewInsertBtn: TLabel
+        Left = 0
+        Top = 0
+        Width = 75
+        Height = 25
+        Align = alClient
+        Alignment = taCenter
+        Caption = #49888#44508#46321#47197
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 4934475
+        Font.Height = -12
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Layout = tlCenter
+        OnClick = NewInsertBtnClick
+        OnMouseDown = NewInsertBtnMouseDown
+        OnMouseMove = NewInsertBtnMouseMove
+        OnMouseUp = NewInsertBtnMouseUp
+        OnMouseLeave = NewInsertBtnMouseLeave
+        ExplicitWidth = 48
+        ExplicitHeight = 15
+      end
     end
   end
 end

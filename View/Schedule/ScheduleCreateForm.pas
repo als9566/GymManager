@@ -27,7 +27,6 @@ type
   TfmScheduleCreate = class(TForm)
     backPanel: TCurvyPanel;
     Label1: TLabel;
-    cxButton1: TcxButton;
     DayEdit: TEdit;
     TimeEdit: TEdit;
     parameter1: TEdit;
@@ -43,6 +42,8 @@ type
     SearchPanel: TCurvyPanel;
     SearchBtn: TImage;
     SearchEdit: TEdit;
+    CloseBtnPanel: TCurvyPanel;
+    CloseBtn: TLabel;
     procedure cxButton1Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -59,6 +60,14 @@ type
     procedure MemberListGridMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
     procedure MemberListGridDblClick(Sender: TObject);
+    procedure CloseBtnClick(Sender: TObject);
+    procedure CloseBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure CloseBtnMouseLeave(Sender: TObject);
+    procedure CloseBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure CloseBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -74,6 +83,34 @@ uses
   CommonFunction, ScheduleController;
 
 {$R *.dfm}
+procedure TfmScheduleCreate.CloseBtnClick(Sender: TObject);
+begin
+  ModalResult := mrOK;
+end;
+
+procedure TfmScheduleCreate.CloseBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  CloseBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmScheduleCreate.CloseBtnMouseLeave(Sender: TObject);
+begin
+  CloseBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmScheduleCreate.CloseBtnMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+  CloseBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmScheduleCreate.CloseBtnMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  CloseBtnPanel.Color := clWhite;
+end;
+
 procedure TfmScheduleCreate.cxButton1Click(Sender: TObject);
 begin
   ModalResult := mrOK;

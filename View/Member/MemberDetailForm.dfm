@@ -42,8 +42,8 @@ object fmMemberDetail: TfmMemberDetail
       ParentFont = False
     end
     object cxButton1: TcxButton
-      Left = 561
-      Top = 22
+      Left = 634
+      Top = -10
       Width = 43
       Height = 25
       LookAndFeel.NativeStyle = False
@@ -435,6 +435,41 @@ object fmMemberDetail: TfmMemberDetail
             end
           end
         end
+      end
+    end
+    object CloseBtnPanel: TCurvyPanel
+      Left = 555
+      Top = 21
+      Width = 45
+      Height = 25
+      BorderColor = 11908533
+      Color = clWhite
+      Rounding = 5
+      TabOrder = 2
+      object CloseBtn: TLabel
+        Left = 0
+        Top = 0
+        Width = 45
+        Height = 25
+        Align = alClient
+        Alignment = taCenter
+        Caption = 'X'
+        Color = clWhite
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = 4195022
+        Font.Height = -16
+        Font.Name = #47569#51008' '#44256#46357
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        Layout = tlCenter
+        OnClick = CloseBtnClick
+        OnMouseDown = CloseBtnMouseDown
+        OnMouseMove = CloseBtnMouseMove
+        OnMouseUp = CloseBtnMouseUp
+        OnMouseLeave = CloseBtnMouseLeave
+        ExplicitLeft = 16
+        ExplicitWidth = 29
       end
     end
   end

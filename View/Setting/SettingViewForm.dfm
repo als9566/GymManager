@@ -46,6 +46,15 @@ object fmSettingView: TfmSettingView
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Shape1: TShape
+      Left = 6
+      Top = 40
+      Width = 987
+      Height = 2
+      Anchors = [akLeft, akTop, akRight]
+      Brush.Color = clSilver
+      Pen.Color = clSilver
+    end
     object CurvyPanel1: TCurvyPanel
       Left = 44
       Top = 227
@@ -54,6 +63,9 @@ object fmSettingView: TfmSettingView
       Anchors = []
       BorderColor = 13882323
       TabOrder = 0
+      DesignSize = (
+        933
+        102)
       object PriceSetMenuLabel: TLabel
         Left = 19
         Top = 11
@@ -94,7 +106,7 @@ object fmSettingView: TfmSettingView
         ParentFont = False
       end
       object WearPriceLabel: TLabel
-        Left = 606
+        Left = 618
         Top = 49
         Width = 86
         Height = 21
@@ -107,7 +119,7 @@ object fmSettingView: TfmSettingView
         ParentFont = False
       end
       object Label4: TLabel
-        Left = 784
+        Left = 796
         Top = 49
         Width = 16
         Height = 21
@@ -171,15 +183,6 @@ object fmSettingView: TfmSettingView
         Font.Style = [fsBold]
         ParentFont = False
       end
-      object PriceSaveBtn: TButton
-        Left = 828
-        Top = 48
-        Width = 75
-        Height = 25
-        Caption = #51200#51109
-        TabOrder = 4
-        OnClick = PriceSaveBtnClick
-      end
       object PTPricePanel: TCurvyPanel
         Left = 301
         Top = 43
@@ -208,7 +211,7 @@ object fmSettingView: TfmSettingView
         end
       end
       object WearPricePanel: TCurvyPanel
-        Left = 703
+        Left = 715
         Top = 43
         Width = 75
         Height = 33
@@ -288,6 +291,42 @@ object fmSettingView: TfmSettingView
           Text = '0'
         end
       end
+      object PriceSaveBtnPanel: TCurvyPanel
+        Left = 828
+        Top = 47
+        Width = 69
+        Height = 25
+        Anchors = [akTop, akRight]
+        BorderColor = 11908533
+        Color = clWhite
+        Rounding = 5
+        TabOrder = 4
+        object PriceSaveBtn: TLabel
+          Left = 0
+          Top = 0
+          Width = 69
+          Height = 25
+          Align = alClient
+          Alignment = taCenter
+          Caption = #51200#51109
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 4934475
+          Font.Height = -12
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          Layout = tlCenter
+          OnClick = PriceSaveBtnClick
+          OnMouseDown = PriceSaveBtnMouseDown
+          OnMouseMove = PriceSaveBtnMouseMove
+          OnMouseUp = PriceSaveBtnMouseUp
+          OnMouseLeave = PriceSaveBtnMouseLeave
+          ExplicitWidth = 24
+          ExplicitHeight = 15
+        end
+      end
     end
     object CurvyPanel2: TCurvyPanel
       Left = 44
@@ -297,6 +336,9 @@ object fmSettingView: TfmSettingView
       Anchors = []
       BorderColor = 13882323
       TabOrder = 1
+      DesignSize = (
+        933
+        97)
       object AccountLabel: TLabel
         Left = 19
         Top = 11
@@ -335,15 +377,6 @@ object fmSettingView: TfmSettingView
         Font.Name = #47569#51008' '#44256#46357
         Font.Style = [fsBold]
         ParentFont = False
-      end
-      object AccountSaveBtn: TButton
-        Left = 656
-        Top = 48
-        Width = 75
-        Height = 25
-        Caption = #51200#51109
-        TabOrder = 2
-        OnClick = AccountSaveBtnClick
       end
       object UsernamePanel: TCurvyPanel
         Left = 247
@@ -399,6 +432,42 @@ object fmSettingView: TfmSettingView
           PasswordChar = '*'
           TabOrder = 0
           Text = '1234'
+        end
+      end
+      object AccountSaveBtnPanel: TCurvyPanel
+        Left = 655
+        Top = 47
+        Width = 69
+        Height = 25
+        Anchors = [akTop, akRight]
+        BorderColor = 11908533
+        Color = clWhite
+        Rounding = 5
+        TabOrder = 2
+        object AccountSaveBtn: TLabel
+          Left = 0
+          Top = 0
+          Width = 69
+          Height = 25
+          Align = alClient
+          Alignment = taCenter
+          Caption = #51200#51109
+          Color = clWhite
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = 4934475
+          Font.Height = -12
+          Font.Name = #47569#51008' '#44256#46357
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          Layout = tlCenter
+          OnClick = AccountSaveBtnClick
+          OnMouseDown = AccountSaveBtnMouseDown
+          OnMouseMove = AccountSaveBtnMouseMove
+          OnMouseUp = AccountSaveBtnMouseUp
+          OnMouseLeave = AccountSaveBtnMouseLeave
+          ExplicitWidth = 24
+          ExplicitHeight = 15
         end
       end
     end

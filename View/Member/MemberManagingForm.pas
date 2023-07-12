@@ -41,10 +41,11 @@ type
     SearchBtn: TImage;
     SearchEdit: TEdit;
     GridPanel: TPanel;
-    NewInsertBtn: TcxButton;
     MemberListPanel: TCurvyPanel;
     MemberListScrollBox: TcxScrollBox;
     MemberGrid: TStringGrid;
+    NewInsertBtnPanel: TCurvyPanel;
+    NewInsertBtn: TLabel;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormResize(Sender: TObject);
@@ -62,6 +63,13 @@ type
     procedure SearchBtnClick(Sender: TObject);
     procedure SearchEditKeyPress(Sender: TObject; var Key: Char);
     procedure MemberGridDblClick(Sender: TObject);
+    procedure NewInsertBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure NewInsertBtnMouseLeave(Sender: TObject);
+    procedure NewInsertBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure NewInsertBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -362,6 +370,29 @@ begin
     MemberListScrollBox.VertScrollBar.Range := Height;
   end;
 
+end;
+
+procedure TfmMemberManaging.NewInsertBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  NewInsertBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmMemberManaging.NewInsertBtnMouseLeave(Sender: TObject);
+begin
+  NewInsertBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmMemberManaging.NewInsertBtnMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  NewInsertBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmMemberManaging.NewInsertBtnMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  NewInsertBtnPanel.Color := clWhite;
 end;
 
 end.

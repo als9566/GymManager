@@ -321,7 +321,7 @@ object fmScheduleView: TfmScheduleView
     end
     object refreshBtn: TImage
       Left = 748
-      Top = 13
+      Top = 12
       Width = 20
       Height = 20
       Cursor = crHandPoint
@@ -754,7 +754,7 @@ object fmScheduleView: TfmScheduleView
     end
     object leftBtn: TImage
       Left = 284
-      Top = 12
+      Top = 10
       Width = 25
       Height = 25
       Center = True
@@ -946,7 +946,7 @@ object fmScheduleView: TfmScheduleView
     end
     object rightBtn: TImage
       Left = 460
-      Top = 12
+      Top = 10
       Width = 29
       Height = 25
       Anchors = [akTop, akRight]
@@ -1131,6 +1131,15 @@ object fmScheduleView: TfmScheduleView
       Stretch = True
       OnClick = rightBtnClick
     end
+    object Shape1: TShape
+      Left = 6
+      Top = 40
+      Width = 775
+      Height = 2
+      Anchors = [akLeft, akTop, akRight]
+      Brush.Color = clSilver
+      Pen.Color = clSilver
+    end
     object CurvyPanel1: TCurvyPanel
       Left = 16
       Top = 56
@@ -1255,7 +1264,7 @@ object fmScheduleView: TfmScheduleView
     end
     object FirstDatePanel: TCurvyPanel
       Left = 627
-      Top = 9
+      Top = 8
       Width = 112
       Height = 29
       Anchors = [akTop, akRight]

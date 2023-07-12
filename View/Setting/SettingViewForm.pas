@@ -23,8 +23,6 @@ type
     AccountLabel: TLabel;
     UsernameLabel: TLabel;
     PasswordLabel: TLabel;
-    PriceSaveBtn: TButton;
-    AccountSaveBtn: TButton;
     PTPricePanel: TCurvyPanel;
     PTPriceEdit: TEdit;
     WearPricePanel: TCurvyPanel;
@@ -39,9 +37,28 @@ type
     Label3: TLabel;
     MembershipPricePanel: TCurvyPanel;
     MembershipPriceEdit: TEdit;
-    procedure PriceSaveBtnClick(Sender: TObject);
+    Shape1: TShape;
+    PriceSaveBtnPanel: TCurvyPanel;
+    PriceSaveBtn: TLabel;
+    AccountSaveBtnPanel: TCurvyPanel;
+    AccountSaveBtn: TLabel;
     procedure FormShow(Sender: TObject);
+    procedure PriceSaveBtnClick(Sender: TObject);
     procedure AccountSaveBtnClick(Sender: TObject);
+    procedure PriceSaveBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PriceSaveBtnMouseLeave(Sender: TObject);
+    procedure PriceSaveBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure PriceSaveBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure AccountSaveBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure AccountSaveBtnMouseLeave(Sender: TObject);
+    procedure AccountSaveBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure AccountSaveBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -72,6 +89,52 @@ end;
 procedure TfmSettingView.PriceSaveBtnClick(Sender: TObject);
 begin
   SettingController.TSettingController.BasicPriceUpdate(self);
+end;
+
+procedure TfmSettingView.PriceSaveBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  PriceSaveBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmSettingView.PriceSaveBtnMouseLeave(Sender: TObject);
+begin
+  PriceSaveBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmSettingView.PriceSaveBtnMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  PriceSaveBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmSettingView.PriceSaveBtnMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  PriceSaveBtnPanel.Color := clWhite;
+end;
+
+procedure TfmSettingView.AccountSaveBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  AccountSaveBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmSettingView.AccountSaveBtnMouseLeave(Sender: TObject);
+begin
+  AccountSaveBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmSettingView.AccountSaveBtnMouseMove(Sender: TObject;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  AccountSaveBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmSettingView.AccountSaveBtnMouseUp(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  AccountSaveBtnPanel.Color := clWhite;
 end;
 
 end.

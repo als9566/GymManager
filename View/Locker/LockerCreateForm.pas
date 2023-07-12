@@ -27,15 +27,16 @@ type
   TfmLockerCreate = class(TForm)
     backPanel: TCurvyPanel;
     Label1: TLabel;
-    cxButton1: TcxButton;
-    Button1: TButton;
     ScrollBox: TcxScrollBox;
     LockerPanel: TPanel;
     XPlusBtn: TCurvyPanel;
     YPlusBtn: TCurvyPanel;
     Label2: TLabel;
     Label3: TLabel;
-    procedure cxButton1Click(Sender: TObject);
+    SaveBtnPanel: TCurvyPanel;
+    SaveBtn: TLabel;
+    CloseBtnPanel: TCurvyPanel;
+    CloseBtn: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure XPlusBtnClick(Sender: TObject);
@@ -43,7 +44,22 @@ type
     procedure XMinusBtnClick(Sender: TObject);
     procedure YMinusBtnClick(Sender: TObject);
     procedure MinusBtnCreate(pXY : String; pN : Integer);
-    procedure Button1Click(Sender: TObject);
+    procedure SaveBtnClick(Sender: TObject);
+    procedure CloseBtnClick(Sender: TObject);
+    procedure SaveBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure SaveBtnMouseLeave(Sender: TObject);
+    procedure SaveBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure SaveBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure CloseBtnMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure CloseBtnMouseLeave(Sender: TObject);
+    procedure CloseBtnMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure CloseBtnMouseUp(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
   private
     { Private declarations }
   public
@@ -63,12 +79,12 @@ uses
 
 {$R *.dfm}
 
-procedure TfmLockerCreate.Button1Click(Sender: TObject);
+procedure TfmLockerCreate.SaveBtnClick(Sender: TObject);
 begin
   LockerController.TLockerController.LockerInsert(self,LockerX,LockerY);
 end;
 
-procedure TfmLockerCreate.cxButton1Click(Sender: TObject);
+procedure TfmLockerCreate.CloseBtnClick(Sender: TObject);
 begin
   ModalResult := mrOK;
 end;
@@ -94,7 +110,6 @@ end;
 {** X축 락커생성
   @param [Sender] XPlusBtn
 * }
-
 procedure TfmLockerCreate.XPlusBtnClick(Sender: TObject);
 var
   LockerCnt : Integer;
@@ -504,6 +519,52 @@ begin
     end;
   end;
 
+end;
+
+procedure TfmLockerCreate.SaveBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  SaveBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmLockerCreate.SaveBtnMouseLeave(Sender: TObject);
+begin
+  SaveBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmLockerCreate.SaveBtnMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+  SaveBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmLockerCreate.SaveBtnMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  SaveBtnPanel.Color := clWhite;
+end;
+
+procedure TfmLockerCreate.CloseBtnMouseDown(Sender: TObject;
+  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+  CloseBtnPanel.Color := $00FFF2E6;
+end;
+
+procedure TfmLockerCreate.CloseBtnMouseLeave(Sender: TObject);
+begin
+  CloseBtnPanel.BorderColor := $00B5B5B5;
+end;
+
+procedure TfmLockerCreate.CloseBtnMouseMove(Sender: TObject; Shift: TShiftState;
+  X, Y: Integer);
+begin
+  CloseBtnPanel.BorderColor := $00747474;
+end;
+
+procedure TfmLockerCreate.CloseBtnMouseUp(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+  CloseBtnPanel.Color := clWhite;
 end;
 
 end.
