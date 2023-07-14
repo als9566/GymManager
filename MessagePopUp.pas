@@ -9,16 +9,19 @@ uses
 
 type
   TfmMessagePopUp = class(TForm)
-    Button1: TButton;
-    Button2: TButton;
-    Label1: TLabel;
+    TitleLabel: TLabel;
     Shape1: TShape;
     CurvyPanel1: TCurvyPanel;
-    Label2: TLabel;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    ContentsLabel: TLabel;
+    OKPanel: TCurvyPanel;
+    Shape2: TShape;
+    CancelPanel: TCurvyPanel;
+    OKBtn: TLabel;
+    CancelBtn: TLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
+    procedure OKBtnClick(Sender: TObject);
+    procedure CancelBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,12 +38,7 @@ uses
 
 {$R *.dfm}
 
-procedure TfmMessagePopUp.Button1Click(Sender: TObject);
-begin
-  ModalResult := MROK;
-end;
-
-procedure TfmMessagePopUp.Button2Click(Sender: TObject);
+procedure TfmMessagePopUp.CancelBtnClick(Sender: TObject);
 begin
   ModalResult := MRCancel;
 end;
@@ -56,6 +54,11 @@ begin
   DrawRounded(Self,10);
 
   AnimateWindow(Self.Handle, 200, AW_ACTIVATE or AW_BLEND);
+end;
+
+procedure TfmMessagePopUp.OKBtnClick(Sender: TObject);
+begin
+  ModalResult := MROK;
 end;
 
 end.

@@ -456,7 +456,7 @@ begin
     sComponent := FindComponent(Format('LockerUse_%d_%d',[StrToInt(arrStr[1]),I]));
     if TEdit(sComponent).Text = '사용중' then
     begin
-      ShowMessage('사용중인 락커가 있습니다.');
+      Gym_MessageBox('사용중인 락커가 있습니다.','알림',1);
       Abort;
     end;
   end;
@@ -525,7 +525,7 @@ begin
     sComponent := FindComponent(Format('LockerUse_%d_%d',[I,StrToInt(arrStr[1])]));
     if TEdit(sComponent).Text = '사용중' then
     begin
-      ShowMessage('사용중인 락커가 있습니다.');
+      Gym_MessageBox('사용중인 락커가 있습니다.','알림',1);
       Abort;
     end;
   end;

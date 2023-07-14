@@ -31,7 +31,7 @@ implementation
 procedure TdmMain.DataModuleCreate(Sender: TObject);
 begin
   //실행파일 위치의 SQLite DB설정
-  GymConnection.Params.Database := ExtractFilePath(Application.ExeName)+ 'test.db';
+  GymConnection.Params.Database := ExtractFilePath(Application.ExeName)+ 'GymManager.db';
 end;
 
 end.

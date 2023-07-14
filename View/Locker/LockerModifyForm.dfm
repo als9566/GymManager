@@ -80,16 +80,14 @@ object fmLockerModify: TfmLockerModify
           object Label2: TLabel
             Left = 0
             Top = 0
-            Width = 80
-            Height = 60
+            Width = 8
+            Height = 13
             Cursor = crHandPoint
             Align = alClient
             Alignment = taCenter
             Caption = '+'
             Layout = tlCenter
             OnClick = XPlusBtnClick
-            ExplicitWidth = 8
-            ExplicitHeight = 13
           end
         end
         object YPlusBtn: TCurvyPanel
@@ -104,16 +102,14 @@ object fmLockerModify: TfmLockerModify
           object Label3: TLabel
             Left = 0
             Top = 0
-            Width = 80
-            Height = 60
+            Width = 8
+            Height = 13
             Cursor = crHandPoint
             Align = alClient
             Alignment = taCenter
             Caption = '+'
             Layout = tlCenter
             OnClick = YPlusBtnClick
-            ExplicitWidth = 8
-            ExplicitHeight = 13
           end
         end
       end
@@ -131,8 +127,8 @@ object fmLockerModify: TfmLockerModify
       object SaveBtn: TLabel
         Left = 0
         Top = 0
-        Width = 55
-        Height = 25
+        Width = 24
+        Height = 15
         Align = alClient
         Alignment = taCenter
         Caption = #51200#51109
@@ -150,8 +146,6 @@ object fmLockerModify: TfmLockerModify
         OnMouseMove = SaveBtnMouseMove
         OnMouseUp = SaveBtnMouseUp
         OnMouseLeave = SaveBtnMouseLeave
-        ExplicitWidth = 24
-        ExplicitHeight = 15
       end
     end
     object CloseBtnPanel: TCurvyPanel
@@ -167,8 +161,8 @@ object fmLockerModify: TfmLockerModify
       object CloseBtn: TLabel
         Left = 0
         Top = 0
-        Width = 45
-        Height = 25
+        Width = 10
+        Height = 21
         Align = alClient
         Alignment = taCenter
         Caption = 'X'
@@ -186,8 +180,6 @@ object fmLockerModify: TfmLockerModify
         OnMouseMove = CloseBtnMouseMove
         OnMouseUp = CloseBtnMouseUp
         OnMouseLeave = CloseBtnMouseLeave
-        ExplicitWidth = 10
-        ExplicitHeight = 21
       end
     end
   end

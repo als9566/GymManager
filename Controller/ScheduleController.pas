@@ -78,12 +78,12 @@ begin
 
     if ScheduleModule.Schedule.Insert(Schedule) = true then
     begin
-      ShowMessage('정상 등록되었습니다.');
+      Gym_MessageBox('정상 등록되었습니다.','알림',1);
       AView.close;
     end
     else
     begin
-      ShowMessage('등록중 에러가 발생하였습니다.');
+      Gym_MessageBox('등록중 에러가 발생하였습니다.','알림',1);
     end;
 
   finally
@@ -103,11 +103,11 @@ begin
   try
     if ScheduleModule.Schedule.Delete(Schedule) = true then
     begin
-      ShowMessage('정상 삭제되었습니다.');
+      Gym_MessageBox('정상 삭제되었습니다.','알림',1);
     end
     else
     begin
-      ShowMessage('삭제중 에러가 발생하였습니다.');
+      Gym_MessageBox('삭제중 에러가 발생하였습니다.','알림',1);
     end;
   finally
     Schedule.Free;

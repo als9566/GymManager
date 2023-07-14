@@ -44,7 +44,6 @@ type
     MaximizeImgBtn: TImage;
     ColseImgBtn: TImage;
     BarBtnImageList: TImageList;
-    Button1: TButton;
     procedure FormShow(Sender: TObject);
     procedure Panel1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -57,7 +56,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure catMenuItemsButtonClicked(Sender: TObject;
       const Button: TButtonItem);
-    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     procedure WMNCHitTest(var message: TWMNCHitTest); message WM_NCHITTEST;
@@ -157,6 +155,9 @@ end;
   @param [Sender] MaximizeImgBtn
 * }
 procedure TGymManagerForm.MaximizeImgBtnClick(Sender: TObject);
+var
+  Monitor: TMonitor;
+  WorkRect: TRect;
 begin
   if  Self.WindowState = wsMaximized  then
   begin
@@ -166,6 +167,11 @@ begin
   end
   else  begin
     Self.WindowState  :=  wsMaximized;
+
+    Monitor := Screen.MonitorFromWindow( Self.Handle );
+    WorkRect := Monitor.WorkareaRect;
+    Self.SetBounds( WorkRect.Left, WorkRect.Top, WorkRect.Right - WorkRect.Left, WorkRect.Bottom - WorkRect.Top );
+
     BarBtnImageList.GetBitmap(4,MaximizeImgBtn.Picture.Bitmap);
     MaximizeImgBtn.Refresh;
   end;
@@ -184,10 +190,8 @@ end;
 * }
 procedure TGymManagerForm.ColseImgBtnClick(Sender: TObject);
 begin
-  if Application.MessageBox('[*] 프로그램을 종료하시겠습니까?', '종료 확인', MB_OKCancel+MB_IConQuestion)=IDOK then
-  begin
+  if Gym_MessageBox('프로그램을 종료하시겠습니까?','종료 확인',2) = MROK then
     close;
-  end;
 end;
 
 {** ImgBtn MouseEnter Event
@@ -248,24 +252,6 @@ begin
     (Sender as TImage).Refresh;
   end;
 
-end;
-
-procedure TGymManagerForm.Button1Click(Sender: TObject);
-var
-  sComponent : TComponent;
-begin
-  fmMessagePopUp  := TfmMessagePopUp.Create(Application);
-
-  fmMessagePopUp.Top := (GymManagerForm.Height - fmMessagePopUp.Height) div 2 + GymManagerForm.Top;
-  fmMessagePopUp.Left := (GymManagerForm.Width - fmMessagePopUp.Width) div 2 + GymManagerForm.Left;
-
-  fmMessagePopUp.Caption := 'Caption';
-
-  //PopUpBoxForm.LabelContent.Caption  := 'LabelContent';
-
-  //PopUpBoxForm.Width := PopUpBoxForm.LabelContent.Width + 120;
-
-  fmMessagePopUp.ShowModal;
 end;
 
 procedure TGymManagerForm.catMenuItemsButtonClicked(Sender: TObject;

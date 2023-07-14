@@ -131,10 +131,8 @@ end;
 procedure TfmScheduleView.DeleteLabelBtnClick(Sender: TObject);
 begin
   PopupOutPanel.Visible := False;
-  if Application.MessageBox( PChar(' PT 등록을 삭제 하시겠습니까?'), '삭제확인', MB_YESNO+MB_IconQuestion) = IDNO  then
-  begin
-      Abort;
-  end;
+  if Gym_MessageBox('PT 등록을 삭제 하시겠습니까?','삭제확인',2) = MRCancel then
+    Abort;
   ScheduleController.TScheduleController.Schedule_Delete(self, iTempCol-1, iTempRow+5);
   refreshBtnClick(self);
 end;

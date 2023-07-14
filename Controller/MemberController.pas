@@ -97,13 +97,13 @@ begin
 
       if PaymentDetailsModule.PaymentDetails.Insert(PaymentDetails) = true then
       begin
-        ShowMessage('정상 등록되었습니다.');
+        Gym_MessageBox('정상 등록되었습니다.','알림',1);
         AView.close;
       end;
     end
     else
     begin
-      ShowMessage('등록중 에러가 발생하였습니다.');
+      Gym_MessageBox('등록중 에러가 발생하였습니다.','알림',1);
     end;
 
   finally

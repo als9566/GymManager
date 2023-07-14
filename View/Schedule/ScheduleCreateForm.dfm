@@ -516,8 +516,8 @@ object fmScheduleCreate: TfmScheduleCreate
       object CloseBtn: TLabel
         Left = 0
         Top = 0
-        Width = 45
-        Height = 25
+        Width = 10
+        Height = 21
         Align = alClient
         Alignment = taCenter
         Caption = 'X'
@@ -535,8 +535,6 @@ object fmScheduleCreate: TfmScheduleCreate
         OnMouseMove = CloseBtnMouseMove
         OnMouseUp = CloseBtnMouseUp
         OnMouseLeave = CloseBtnMouseLeave
-        ExplicitWidth = 10
-        ExplicitHeight = 21
       end
     end
   end

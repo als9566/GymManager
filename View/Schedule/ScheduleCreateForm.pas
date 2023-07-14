@@ -156,14 +156,12 @@ begin
 
     if StrToInt(Cells[6,iRow]) = 0 then
     begin
-      ShowMessage('PT 잔여 횟수가 없습니다...');
+      Gym_MessageBox('PT 잔여 횟수가 없습니다...','알림',1);
       Abort;
     end;
 
-    if Application.MessageBox( PChar(DayLabel.Caption + ' ' + Cells[2,iRow] + ' 회원을 PT 등록 하시겠습니까?'), '등록확인', MB_YESNO+MB_IconQuestion) = IDNO  then
-    begin
+    if Gym_MessageBox(DayLabel.Caption + ' ' + Cells[2,iRow] + ' 회원을 PT 등록 하시겠습니까?','등록확인',2) <> MROK then
       Abort;
-    end;
 
     ScheduleController.TScheduleController.Schedule_Create(self, iRow);
 

@@ -45,13 +45,13 @@ begin
         Locker.Y := I;
         if LockerModule.Locker.Insert(Locker) = false then
         begin
-          ShowMessage('등록중 에러가 발생하였습니다.');
+          Gym_MessageBox('등록중 에러가 발생하였습니다.','알림',1);
           Abort;
         end;
       end;
     end;
 
-    ShowMessage('정상 등록되었습니다.');
+    Gym_MessageBox('정상 등록되었습니다.','알림',1);
 
   finally
     Locker.Free;
@@ -79,7 +79,7 @@ begin
         if TEdit(sComponent).Text = '' then
         begin
           MainModule.dmMain.GymConnection.Rollback;
-          ShowMessage('락커번호를 입력해주세요.');
+          Gym_MessageBox('락커번호를 입력해주세요.','알림',1);
           Abort;
         end;
 
@@ -95,7 +95,7 @@ begin
           Locker.id := sComponent.Tag;
           if LockerModule.Locker.Update(Locker) = false then
           begin
-            ShowMessage('등록중 에러가 발생하였습니다.');
+            Gym_MessageBox('등록중 에러가 발생하였습니다.','알림',1);
             Abort;
           end;
         end
@@ -103,7 +103,7 @@ begin
         begin
           if LockerModule.Locker.Insert(Locker) = false then
           begin
-            ShowMessage('등록중 에러가 발생하였습니다.');
+            Gym_MessageBox('등록중 에러가 발생하였습니다.','알림',1);
             Abort;
           end;
         end;
@@ -116,11 +116,11 @@ begin
 
     if LockerModule.Locker.Delete(Locker) = false then
     begin
-      ShowMessage('등록중 에러가 발생하였습니다.');
+      Gym_MessageBox('등록중 에러가 발생하였습니다.','알림',1);
       Abort;
     end;
 
-    ShowMessage('정상 등록되었습니다.');
+    Gym_MessageBox('정상 등록되었습니다.','알림',1);
     AView.close;
 
   finally

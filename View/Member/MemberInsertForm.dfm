@@ -905,8 +905,8 @@ object fmMemberInsert: TfmMemberInsert
       object SaveBtn: TLabel
         Left = 0
         Top = 0
-        Width = 55
-        Height = 25
+        Width = 24
+        Height = 15
         Align = alClient
         Alignment = taCenter
         Caption = #51200#51109
@@ -939,8 +939,8 @@ object fmMemberInsert: TfmMemberInsert
       object CloseBtn: TLabel
         Left = 0
         Top = 0
-        Width = 45
-        Height = 25
+        Width = 10
+        Height = 21
         Align = alClient
         Alignment = taCenter
         Caption = 'X'
@@ -958,7 +958,6 @@ object fmMemberInsert: TfmMemberInsert
         OnMouseMove = CloseBtnMouseMove
         OnMouseUp = CloseBtnMouseUp
         OnMouseLeave = CloseBtnMouseLeave
-        ExplicitWidth = 41
       end
     end
   end

@@ -360,7 +360,7 @@ var
 begin
   if TCurvyPanel(Sender).Tag = 0 then
   begin
-    ShowMessage('사용중인 락커입니다.');
+    Gym_MessageBox('사용중인 락커입니다.','알림',1);
     Abort;
   end;
 
@@ -396,15 +396,15 @@ end;
 procedure TfmMemberInsert.SaveBtnClick(Sender: TObject);
 begin
   if NameEdit.Text = '' then
-    ShowMessage('이름을 입력해주세요...')
+    Gym_MessageBox('이름을 입력해주세요...','알림',1)
   else if BirthdayDateEdit.Text = '' then
-    ShowMessage('생년월일을 입력해주세요...')
+    Gym_MessageBox('생년월일을 입력해주세요...','알림',1)
   else if (Tel1Edit.Text = '') or (Tel2Edit.Text = '') or (Tel3Edit.Text = '') then
-    ShowMessage('전화번호를 입력해주세요...')
+    Gym_MessageBox('전화번호를 입력해주세요...','알림',1)
   else if StartDateEdit.Text = '' then
-    ShowMessage('시작일자를 입력해주세요...')
+    Gym_MessageBox('시작일자를 입력해주세요...','알림',1)
   else if MembershipComboBox.ItemIndex = -1 then
-    ShowMessage('회원권을 선택해주세요...')
+    Gym_MessageBox('회원권을 선택해주세요...','알림',1)
   else
   begin
     MemberController.TMemberController.MemberInsert(self, iChoiceLocker);

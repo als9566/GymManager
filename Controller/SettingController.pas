@@ -48,7 +48,7 @@ begin
     sSqlCheck := SettingModule.PriceSetting.Update(PriceSetting);
 
     if sSqlCheck = true then
-      ShowMessage('정상 등록되었습니다.');
+      Gym_MessageBox('정상 등록되었습니다.','알림',1);
   finally
     PriceSetting.Free;
   end;
@@ -94,9 +94,9 @@ begin
     AccountSetting.username := AView.UsernameEdit.Text;
     AccountSetting.password := AView.PasswordEdit.Text;
     if SettingModule.AccountSetting.Update(AccountSetting) then
-      ShowMessage('정상 등록되었습니다.')
+      Gym_MessageBox('정상 등록되었습니다.','알림',1)
     else
-      ShowMessage('등록 오류.');
+      Gym_MessageBox('등록 오류.','알림',1);
   finally
     AccountSetting.Free;
   end;
