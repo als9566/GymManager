@@ -28,7 +28,7 @@ uses
   FireDAC.VCLUI.Wait, Data.DB, FireDAC.Stan.Param, FireDAC.DatS,
   FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   FireDAC.Phys.SQLiteVDataSet, FireDAC.Comp.UI, Vcl.Imaging.pngimage,
-  System.ImageList, Vcl.ImgList, cxContainer, cxEdit, cxImage;
+  System.ImageList, Vcl.ImgList, cxContainer, cxEdit, cxImage, MessagePopUp;
 
 type
   TGymManagerForm = class(TForm)
@@ -44,6 +44,7 @@ type
     MaximizeImgBtn: TImage;
     ColseImgBtn: TImage;
     BarBtnImageList: TImageList;
+    Button1: TButton;
     procedure FormShow(Sender: TObject);
     procedure Panel1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -56,6 +57,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure catMenuItemsButtonClicked(Sender: TObject;
       const Button: TButtonItem);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     procedure WMNCHitTest(var message: TWMNCHitTest); message WM_NCHITTEST;
@@ -67,6 +69,7 @@ type
 
 var
   GymManagerForm: TGymManagerForm;
+  fmMessagePopUp : TfmMessagePopUp;
   bLogin: Boolean = false;
   sUserName: String;
 
@@ -77,7 +80,7 @@ implementation
 uses
   LockerManagingForm, MemberManagingForm,
   ScheduleViewForm, SettingViewForm,
-  DashboardForm,
+  DashboardForm, ShadowBoxMain,
   CommonFunction;
 
 procedure TGymManagerForm.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -245,6 +248,24 @@ begin
     (Sender as TImage).Refresh;
   end;
 
+end;
+
+procedure TGymManagerForm.Button1Click(Sender: TObject);
+var
+  sComponent : TComponent;
+begin
+  fmMessagePopUp  := TfmMessagePopUp.Create(Application);
+
+  fmMessagePopUp.Top := (GymManagerForm.Height - fmMessagePopUp.Height) div 2 + GymManagerForm.Top;
+  fmMessagePopUp.Left := (GymManagerForm.Width - fmMessagePopUp.Width) div 2 + GymManagerForm.Left;
+
+  fmMessagePopUp.Caption := 'Caption';
+
+  //PopUpBoxForm.LabelContent.Caption  := 'LabelContent';
+
+  //PopUpBoxForm.Width := PopUpBoxForm.LabelContent.Width + 120;
+
+  fmMessagePopUp.ShowModal;
 end;
 
 procedure TGymManagerForm.catMenuItemsButtonClicked(Sender: TObject;

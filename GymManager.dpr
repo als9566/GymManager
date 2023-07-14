@@ -34,7 +34,8 @@ uses
   DashboardForm in 'View\Dashboard\DashboardForm.pas' {fmDashboard},
   ShadowBoxMain in 'Function\ShadowBoxMain.pas',
   DashboardController in 'Controller\DashboardController.pas',
-  DashboardModule in 'DataModule\DashboardModule.pas' {dmDashboard: TDataModule};
+  DashboardModule in 'DataModule\DashboardModule.pas' {dmDashboard: TDataModule},
+  MessagePopUp in 'MessagePopUp.pas' {fmMessagePopUp};
 
 {$R *.res}
 
@@ -52,5 +53,6 @@ begin
   Application.CreateForm(TdmPaymentDetails, dmPaymentDetails);
   Application.CreateForm(TdmSchedule, dmSchedule);
   Application.CreateForm(TfmLogin, fmLogin);
+  Application.CreateForm(TfmMessagePopUp, fmMessagePopUp);
   Application.Run;
 end.
