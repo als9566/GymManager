@@ -66,4 +66,4 @@
 <br/>
 
 ## 데모 다운로드
-### 💾 <a href="[link/html-text-link.htm](http://naver.me/FNGrvRMt)">GymManager</a>
+### 💾 <a href="http://naver.me/FNGrvRMt">GymManager</a>
