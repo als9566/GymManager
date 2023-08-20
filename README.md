@@ -1,5 +1,6 @@
 # 💪 GymManager
 
+![main](https://github.com/als9566/GymManager/assets/66161303/94df5dd4-bb52-498d-a12f-c89e526cbfea)
 ## 헬스장 회원관리 프로그램
 
 <br/>
