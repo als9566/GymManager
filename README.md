@@ -67,3 +67,4 @@
 
 ## 데모 다운로드
 ### 💾 <a href="http://naver.me/FNGrvRMt">GymManager</a>
+### 프로그램 LOGIN [ ID : ADMIN, PW : 123456 ] 
