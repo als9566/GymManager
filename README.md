@@ -48,9 +48,19 @@
 <br/>
 
 
-## 💡핵심 기능
-<!--gif-->
-<!--gif에 해당하는 기능 핵심소스-->
-<!--반복-->
+## 💡 사용 방법
+
+### 1. 가격 설정
+- 회원권, PT, 운동복, 락커의 가격을 설정<br/>
+<img src="https://github.com/als9566/GymManager/assets/66161303/5f5611ed-e589-49f9-91a2-a67cfa90c2ca"  width="700"><br/>
+### 2. 신규 회원등록
+- 회원관리 메뉴에서 신규등록 버튼으로 신규회원 등록<br/>
+<img src="https://github.com/als9566/GymManager/assets/66161303/7e31b84b-44b8-46e0-afde-99f497e39665"  width="700"><br/>
+### 3. PT 일정 등록
+- PT Schedule 메뉴에서 원하는 날짜 시간을 더블클릭하여 회원을 선택<br/>
+<img src="https://github.com/als9566/GymManager/assets/66161303/9f44c877-ba49-478a-b992-4ae9487add14"  width="700"><br/>
+### 4. 락커 등록 및 수정
+- 락커메뉴에서 락커수정 혹은 락커등록 버튼을 눌러 락커를 추가 or 삭제
+<img src="https://github.com/als9566/GymManager/assets/66161303/8d93ebda-8a64-4730-9b21-5d87c8c933c4"  width="700"><br/>
 
 <br/>
