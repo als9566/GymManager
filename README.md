@@ -64,3 +64,6 @@
 <img src="https://github.com/als9566/GymManager/assets/66161303/8d93ebda-8a64-4730-9b21-5d87c8c933c4"  width="700"><br/>
 
 <br/>
+
+## 데모 다운로드
+### 💾 <a href="[link/html-text-link.htm](http://naver.me/FNGrvRMt)">GymManager</a>
