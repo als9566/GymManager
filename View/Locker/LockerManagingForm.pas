@@ -109,7 +109,7 @@ begin
   LockerCreateBtnPanel.Color := clWhite;
 end;
 
-{** ¼öÁ¤¹öÆ° ÀÌº¥Æ® (¶ôÄ¿¼öÁ¤Ã¢ ¶ç¿ì±â)
+{** ìˆ˜ì •ë²„íŠ¼ ì´ë²¤íŠ¸ (ë½ì»¤ìˆ˜ì •ì°½ ë„ìš°ê¸°)
   @param [Sender] NewInsertBtn
 * }
 procedure TfmLockerManaging.ModifyBtnClick(Sender: TObject);
@@ -124,7 +124,7 @@ begin
   refreshBtnClick(Self);
 end;
 
-{** ½Å±Ô¹öÆ° ÀÌº¥Æ® (¶ôÄ¿»ı¼ºÃ¢ ¶ç¿ì±â)
+{** ì‹ ê·œë²„íŠ¼ ì´ë²¤íŠ¸ (ë½ì»¤ìƒì„±ì°½ ë„ìš°ê¸°)
   @param [Sender] NewInsertBtn
 * }
 procedure TfmLockerManaging.NewInsertBtnClick(Sender: TObject);
@@ -139,7 +139,7 @@ begin
   refreshBtnClick(Self);
 end;
 
-{** »õ·Î°íÄ§
+{** ìƒˆë¡œê³ ì¹¨
 * }
 procedure TfmLockerManaging.refreshBtnClick(Sender: TObject);
 var
@@ -158,7 +158,7 @@ begin
   LockerController.TLockerController.CountSelect(Self);
 end;
 
-{** ¶ôÄ¿µ¿Àû »ı¼º
+{** ë½ì»¤ë™ì  ìƒì„±
   @param [Sender] TDataSet
 * }
 procedure TfmLockerManaging.ShowData(ALocker: TDataSet);
@@ -193,7 +193,7 @@ begin
           AutoSize := False;
           Caption := ALocker.FieldByName('num').AsString;
           Font.Color := $00707070;
-          Font.Name := '¸¼Àº °íµñ';
+          Font.Name := 'ë§‘ì€ ê³ ë”•';
           Font.Size := 12;
           Font.Style := [fsBold];
           ParentFont := False;
@@ -209,7 +209,7 @@ begin
           Alignment := taCenter;
           AutoSize := False;
           Font.Color := $00707070;
-          Font.Name := '¸¼Àº °íµñ';
+          Font.Name := 'ë§‘ì€ ê³ ë”•';
           Font.Size := 12;
           Font.Style := [fsBold];
           ParentFont := False;
@@ -229,7 +229,7 @@ begin
           Alignment := taCenter;
           AutoSize := False;
           Font.Color := $00959595;
-          Font.Name := '¸¼Àº °íµñ';
+          Font.Name := 'ë§‘ì€ ê³ ë”•';
           Font.Size := 8;
           Font.Style := [fsBold];
           ParentFont := False;
@@ -241,7 +241,7 @@ begin
           if ALocker.FieldByName('locker_end').AsString = '' then
             Caption := ''
           else
-            Caption := 'ÀÜ¿© '+IntToStr(ALocker.FieldByName('locker_end').AsInteger)+'ÀÏ';
+            Caption := 'ì”ì—¬ '+FloatToStr(ALocker.FieldByName('locker_end').AsFloat)+'ì¼';
       end;
       ALocker.Next;
     end;
@@ -249,7 +249,7 @@ begin
   LockWindowUpdate(0);
 end;
 
-{** ¶ôÄ¿ ¼ö ¹× ¹öÆ° µ¿Àû Àû¿ë
+{** ë½ì»¤ ìˆ˜ ë° ë²„íŠ¼ ë™ì  ì ìš©
   @param [Sender] TDataSet
 * }
 procedure TfmLockerManaging.BaseSetting(ALocker: TDataSet);
@@ -258,19 +258,19 @@ begin
 
   LockWindowUpdate(Handle);
 
-  LockerTotalCnt.Caption := ALocker.FieldByName('ÀüÃ¼').AsString;
-  LockerIngCnt.Caption := ALocker.FieldByName('»ç¿ë').AsString;
-  LockerEndCnt.Caption := IntToStr(ALocker.FieldByName('ÀüÃ¼').AsInteger - ALocker.FieldByName('»ç¿ë').AsInteger);
+  LockerTotalCnt.Caption := ALocker.FieldByName('ì „ì²´').AsString;
+  LockerIngCnt.Caption := ALocker.FieldByName('ì‚¬ìš©').AsString;
+  LockerEndCnt.Caption := IntToStr(ALocker.FieldByName('ì „ì²´').AsInteger - ALocker.FieldByName('ì‚¬ìš©').AsInteger);
 
-  if ALocker.FieldByName('ÀüÃ¼').AsInteger = 0 then
+  if ALocker.FieldByName('ì „ì²´').AsInteger = 0 then
   begin
-    LockerCreateBtn.Caption := '¶ôÄ¿»ı¼º';
+    LockerCreateBtn.Caption := 'ë½ì»¤ìƒì„±';
     LockerCreateBtn.OnClick := NewInsertBtnClick;
     GuideText.Visible := true;
   end
   else
   begin
-    LockerCreateBtn.Caption := '¶ôÄ¿¼öÁ¤';
+    LockerCreateBtn.Caption := 'ë½ì»¤ìˆ˜ì •';
     LockerCreateBtn.OnClick := ModifyBtnClick;
     GuideText.Visible := false;
   end;
